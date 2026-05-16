@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="no" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sukker – Kostnadsbrytaren</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300..700&family=DM+Serif+Display&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.0.1/dist/chartjs-plugin-annotation.min.js"></script>
+<style>
+  :root, [data-theme="light"] {
+    --color-bg: #f7f6f2;
+    --color-surface: #f9f8f5;
+    --color-surface-2: #fbfbf9;
+    --color-surface-offset: #f0ede8;
+    --color-border: oklch(0.2 0.01 80 / 0.12);
+    --color-text: #28251d;
+    --color-text-muted: #7a7974;
+    --color-text-faint: #bab9b4;
+    --color-primary: #01696f;
+    --color-primary-hover: #0c4e54;
+    --color-success: #437a22;
+    --color-error: #b33000;
+    --color-neutral-bar: #4a7fa5;
+    --shadow-sm: 0 1px 3px oklch(0.2 0.01 80 / 0.07);
+    --shadow-md: 0 4px 16px oklch(0.2 0.01 80 / 0.09);
+    --radius-md: 0.5rem; --radius-lg: 0.75rem;
+    --font-display: 'DM Serif Display', Georgia, serif;
+    --font-body: 'DM Sans', system-ui, sans-serif;
+    --text-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
+    --text-sm: clamp(0.875rem, 0.8rem + 0.35vw, 1rem);
+    --text-base: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+    --text-lg: clamp(1.125rem, 1rem + 0.75vw, 1.5rem);
+    --text-xl: clamp(1.5rem, 1.2rem + 1.25vw, 2.25rem);
+    --space-1:.25rem;--space-2:.5rem;--space-3:.75rem;--space-4:1rem;
+    --space-5:1.25rem;--space-6:1.5rem;--space-8:2rem;--space-12:3rem;
+  }
+  [data-theme="dark"] {
+    --color-bg:#171614;--color-surface:#1c1b19;--color-surface-2:#201f1d;
+    --color-surface-offset:#252422;--color-border:oklch(1 0 0/0.09);
+    --color-text:#cdccca;--color-text-muted:#797876;--color-text-faint:#5a5957;
+    --color-primary:#4f98a3;--color-primary-hover:#227f8b;
+    --color-success:#6daa45;--color-error:#e06030;--color-neutral-bar:#6fa8cc;
+    --shadow-sm:0 1px 3px oklch(0 0 0/0.25);--shadow-md:0 4px 16px oklch(0 0 0/0.35);
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+  body{min-height:100dvh;font-family:var(--font-body);font-size:var(--text-base);
+    color:var(--color-text);background:var(--color-bg);transition:background 200ms,color 200ms}
+  button{cursor:pointer;border:none;background:none;font:inherit;color:inherit}
+  input,select{font:inherit;color:inherit}
+
+  header{position:sticky;top:0;z-index:100;background:var(--color-surface);
+    border-bottom:1px solid var(--color-border);box-shadow:var(--shadow-sm);
+    padding:var(--space-3) var(--space-6);display:flex;align-items:center;
+    justify-content:space-between;gap:var(--space-4)}
+  .logo{display:flex;align-items:center;gap:var(--space-2);text-decoration:none;color:var(--color-text)}
+  .logo svg{color:var(--color-primary)}
+  .logo-text{font-family:var(--font-display);font-size:var(--text-lg);line-height:1}
+  .logo-sub{font-size:var(--text-xs);color:var(--color-text-muted);letter-spacing:.04em;text-transform:uppercase}
+  .theme-btn{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;
+    justify-content:center;background:var(--color-surface-offset);transition:background 180ms}
+  .theme-btn:hover{background:var(--color-border)}
+
+  main{max-width:1100px;margin:0 auto;padding:var(--space-8) var(--space-6)}
+
+  .controls-card{background:var(--color-surface);border:1px solid var(--color-border);
+    border-radius:var(--radius-lg);padding:var(--space-6);box-shadow:var(--shadow-sm);margin-bottom:var(--space-8)}
+  .controls-title{font-family:var(--font-display);font-size:var(--text-lg);margin-bottom:var(--space-4)}
+  .controls-row{display:flex;flex-wrap:wrap;gap:var(--space-4);align-items:flex-end}
+  .field{display:flex;flex-direction:column;gap:var(--space-1);flex:1;min-width:160px}
+  label{font-size:var(--text-xs);color:var(--color-text-muted);letter-spacing:.04em;text-transform:uppercase;font-weight:600}
+  input[type="date"]{height:44px;padding:0 var(--space-3);border:1px solid var(--color-border);
+    border-radius:var(--radius-md);background:var(--color-surface-2);font-size:var(--text-sm);width:100%;
+    transition:border-color 180ms,box-shadow 180ms}
+  input[type="date"]:focus{outline:none;border-color:var(--color-primary);
+    box-shadow:0 0 0 3px oklch(from var(--color-primary) l c h/0.15)}
+  .btn-primary{height:44px;padding:0 var(--space-6);background:var(--color-primary);color:#fff;
+    border-radius:var(--radius-md);font-size:var(--text-sm);font-weight:600;
+    transition:background 180ms,box-shadow 180ms;white-space:nowrap}
+  .btn-primary:hover{background:var(--color-primary-hover);box-shadow:var(--shadow-sm)}
+
+  #status{font-size:var(--text-xs);color:var(--color-text-muted);margin-top:var(--space-3);min-height:1.4em}
+  #status.error{color:var(--color-error)}
+  #status.loading{color:var(--color-primary)}
+
+  .kpi-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
+    gap:var(--space-4);margin-bottom:var(--space-8)}
+  .kpi-card{background:var(--color-surface);border:1px solid var(--color-border);
+    border-radius:var(--radius-lg);padding:var(--space-4) var(--space-5);box-shadow:var(--shadow-sm)}
+  .kpi-label{font-size:var(--text-xs);color:var(--color-text-muted);text-transform:uppercase;
+    letter-spacing:.04em;font-weight:600;margin-bottom:var(--space-1)}
+  .kpi-value{font-family:var(--font-display);font-size:var(--text-xl);line-height:1.1}
+  .kpi-sub{font-size:var(--text-xs);color:var(--color-text-muted);margin-top:var(--space-1)}
+  .kpi-value.up{color:var(--color-error)}.kpi-value.down{color:var(--color-success)}
+
+  .chart-card{background:var(--color-surface);border:1px solid var(--color-border);
+    border-radius:var(--radius-lg);padding:var(--space-6);box-shadow:var(--shadow-sm);margin-bottom:var(--space-6)}
+  .chart-title{font-family:var(--font-display);font-size:var(--text-lg)}
+  .chart-subtitle{font-size:var(--text-xs);color:var(--color-text-muted);margin-top:var(--space-1);margin-bottom:var(--space-4)}
+  .chart-wrap{position:relative;width:100%}
+  .legend{display:flex;flex-wrap:wrap;gap:var(--space-4);margin-top:var(--space-4)}
+  .legend-item{display:flex;align-items:center;gap:var(--space-2);font-size:var(--text-xs);color:var(--color-text-muted)}
+  .legend-dot{width:12px;height:12px;border-radius:2px;flex-shrink:0}
+  .note{background:var(--color-surface-offset);border-radius:var(--radius-md);
+    padding:var(--space-3) var(--space-4);font-size:var(--text-xs);color:var(--color-text-muted);margin-top:var(--space-4)}
+
+  footer{text-align:center;padding:var(--space-8) var(--space-6);font-size:var(--text-xs);
+    color:var(--color-text-faint);border-top:1px solid var(--color-border);margin-top:var(--space-8)}
+
+  @media(max-width:600px){
+    main{padding:var(--space-4)}
+    .controls-card,.chart-card{padding:var(--space-4)}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="logo" href="#">
+    <svg aria-label="Prisbrytaren logo" width="28" height="28" viewBox="0 0 28 28" fill="none">
+      <rect x="2" y="14" width="5" height="12" rx="1.5" fill="currentColor" opacity="0.35"/>
+      <rect x="9" y="8" width="5" height="18" rx="1.5" fill="currentColor" opacity="0.6"/>
+      <rect x="16" y="4" width="5" height="22" rx="1.5" fill="currentColor"/>
+      <path d="M4.5 13 L11.5 7 L18.5 3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/>
+    </svg>
+    <div>
+      <div class="logo-text">Prisbrytaren</div>
+      <div class="logo-sub">Kostnadsanalyse · Sukker</div>
+    </div>
+  </a>
+  <button class="theme-btn" data-theme-toggle aria-label="Bytt tema">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+    </svg>
+  </button>
+</header>
+
+<main>
+  <div class="controls-card">
+    <div class="controls-title">Velg tidsperiode</div>
+    <div class="controls-row">
+      <div class="field">
+        <label for="startDate">Startdato</label>
+        <input type="date" id="startDate" value="2021-01-01">
+      </div>
+      <div class="field">
+        <label for="endDate">Sluttdato</label>
+        <input type="date" id="endDate" value="2026-05-16">
+      </div>
+      <button class="btn-primary" onclick="updateCharts()">Oppdater graf</button>
+    </div>
+    <div id="status" class="loading">Laster inn data…</div>
+  </div>
+
+  <div class="kpi-grid">
+    <div class="kpi-card"><div class="kpi-label">Startpris</div><div class="kpi-value" id="kpiStart">–</div><div class="kpi-sub" id="kpiStartDate">–</div></div>
+    <div class="kpi-card"><div class="kpi-label">Sluttdato pris</div><div class="kpi-value" id="kpiEnd">–</div><div class="kpi-sub" id="kpiEndDate">–</div></div>
+    <div class="kpi-card"><div class="kpi-label">Total endring</div><div class="kpi-value" id="kpiTotal">–</div><div class="kpi-sub" id="kpiTotalPct">–</div></div>
+    <div class="kpi-card"><div class="kpi-label">Råvarepris endring</div><div class="kpi-value" id="kpiRaw">–</div><div class="kpi-sub">Hvitt sukker markedspris</div></div>
+    <div class="kpi-card"><div class="kpi-label">Bruttomargin endring</div><div class="kpi-value" id="kpiMargin">–</div><div class="kpi-sub">Produsent og butikk</div></div>
+  </div>
+
+  <div class="chart-card">
+    <div class="chart-title">Hva har drevet prisendringen?</div>
+    <div class="chart-subtitle" id="waterfallSubtitle">Fossefallsgraf – endring per kostnadskomponent (kr/kg)</div>
+    <div class="chart-wrap" style="height:420px"><canvas id="waterfallChart"></canvas></div>
+    <div class="legend">
+      <div class="legend-item"><div class="legend-dot" style="background:#437a22"></div> Pris gikk ned</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#b33000"></div> Pris gikk opp</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#4a7fa5"></div> Start- og sluttverdi</div>
+    </div>
+    <div class="note">Startdato-stolpen viser totalprisen. Mellomstolpene flyter og viser endringen for hver komponent. Sluttdato-stolpen viser ny totalpris.</div>
+  </div>
+
+  <div class="chart-card">
+    <div class="chart-title">Prisutvikling over tid</div>
+    <div class="chart-subtitle">Utsalgspris, markedspris og bruttomargin (kr/kg)</div>
+    <div class="chart-wrap" style="height:300px"><canvas id="lineChart"></canvas></div>
+  </div>
+</main>
+
+<footer>Data hentes automatisk fra Google Sheets · Oppdateres daglig · Prisbrytaren 2026</footer>
+
+<script>
+// ── CORS-proxy rundt Google Sheets CSV ────────────────────────────────────
+// Google Sheets sender en 307-redirect som blokkeres av nettleseren (CORS).
+// Vi bruker allorigins.win som gratis CORS-proxy for public sheets.
+const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQmTaejBjgaTSGQFzZaMN_FLJHzGyJg39EgKoPC6XOVysem075xRKYYA-_2RG5FKhSfW-8wffoxIRXH/pub?gid=1663124790&single=true&output=csv";
+const PROXY_URL = "https://api.allorigins.win/get?url=" + encodeURIComponent(SHEET_URL);
+
+const COL = { dato:0, markedspris:3, frakt:5, saravgift:6, pakking:7, fragtLager:8, total:9, bruttomargin:10, mva:11, utsalgspris:12 };
+const COMPONENTS = [
+  {key:'markedspris', label:'Hvitt sukker – markedspris'},
+  {key:'saravgift',   label:'Særavgift på sukker'},
+  {key:'frakt',       label:'Frakt til Norge'},
+  {key:'pakking',     label:'Pakking & emballasje'},
+  {key:'fragtLager',  label:'Frakt og lager i Norge'},
+  {key:'bruttomargin',label:'Bruttomargin'},
+  {key:'mva',         label:'MVA'},
+];
+
+let allData = [], waterfallChart = null, lineChart = null;
+
+// ── Theme ──────────────────────────────────────────────────────────────────
+(function(){
+  const btn=document.querySelector('[data-theme-toggle]'),root=document.documentElement;
+  let dark=matchMedia('(prefers-color-scheme:dark)').matches;
+  root.setAttribute('data-theme',dark?'dark':'light');
+  if(btn) btn.addEventListener('click',()=>{
+    dark=!dark;
+    root.setAttribute('data-theme',dark?'dark':'light');
+    btn.innerHTML=dark
+      ?'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>'
+      :'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
+    if(allData.length){rebuildLineChart(allData);updateCharts();}
+  });
+})();
+
+// ── Helpers ────────────────────────────────────────────────────────────────
+function parseNum(s){
+  if(!s||s==='#N/A'||s.trim()==='') return null;
+  return parseFloat(s.replace(/\s/g,'').replace(/\./g,'').replace(',','.'));
+}
+function parseDate(s){
+  if(!s) return null;
+  const p=s.trim().split('.');
+  if(p.length!==3) return null;
+  return new Date(+p[2],+p[1]-1,+p[0]);
+}
+function dateStr(d){ return d.toLocaleDateString('nb-NO',{day:'numeric',month:'long',year:'numeric'}); }
+function cssVar(n){ return getComputedStyle(document.documentElement).getPropertyValue(n).trim(); }
+function setStatus(msg,cls){ const e=document.getElementById('status'); e.textContent=msg; e.className=cls||''; }
+
+function parseCSV(text){
+  const rows=text.trim().split('\n');
+  const data=[];
+  for(let i=1;i<rows.length;i++){
+    // handle quoted CSV fields
+    const cols=rows[i].match(/(".*?"|[^,]+|(?<=,)(?=,)|^(?=,))/g)||rows[i].split(',');
+    const clean=cols.map(c=>c.replace(/^"|"$/g,'').trim());
+    const dato=parseDate(clean[COL.dato]);
+    if(!dato) continue;
+    const row={dato};
+    for(const[k,idx] of Object.entries(COL)){
+      if(k==='dato') continue;
+      row[k]=parseNum(clean[idx]);
+    }
+    if(row.total!==null) data.push(row);
+  }
+  data.sort((a,b)=>a.dato-b.dato);
+  return data;
+}
+
+function nearest(data,target){
+  let best=null,bestDiff=Infinity;
+  for(const row of data){
+    const d=Math.abs(row.dato-target);
+    if(d<bestDiff&&row.total!==null){bestDiff=d;best=row;}
+  }
+  return best;
+}
+
+// ── Waterfall ──────────────────────────────────────────────────────────────
+function buildWaterfall(s,e){
+  const labels=[s.dato.toLocaleDateString('nb-NO',{day:'numeric',month:'short',year:'numeric'})];
+  const bases=[0], values=[s.total], colors=[cssVar('--color-neutral-bar')];
+  let running=s.total;
+  for(const c of COMPONENTS){
+    const sv=s[c.key], ev=e[c.key];
+    if(sv===null||ev===null) continue;
+    const delta=ev-sv;
+    labels.push(c.label);
+    bases.push(delta>=0?running:running+delta);
+    values.push(Math.abs(delta));
+    colors.push(delta>=0?cssVar('--color-error'):cssVar('--color-success'));
+    running+=delta;
+  }
+  labels.push(e.dato.toLocaleDateString('nb-NO',{day:'numeric',month:'short',year:'numeric'}));
+  bases.push(0); values.push(e.total); colors.push(cssVar('--color-neutral-bar'));
+  return{labels,bases,values,colors};
+}
+
+function renderWaterfall(wf){
+  const ctx=document.getElementById('waterfallChart').getContext('2d');
+  if(waterfallChart) waterfallChart.destroy();
+  const tc=cssVar('--color-text'), mc=cssVar('--color-text-muted'), gc=cssVar('--color-border');
+  waterfallChart=new Chart(ctx,{
+    type:'bar',
+    data:{labels:wf.labels,datasets:[
+      {label:'base',data:wf.bases,backgroundColor:'transparent',borderColor:'transparent',borderWidth:0},
+      {label:'Endring',data:wf.values,backgroundColor:wf.colors,borderRadius:4,borderSkipped:false}
+    ]},
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      interaction:{mode:'index',intersect:false},
+      plugins:{
+        legend:{display:false},
+        tooltip:{
+          callbacks:{
+            title:items=>wf.labels[items[0].dataIndex],
+            label:item=>{
+              if(item.datasetIndex===0) return null;
+              const i=item.dataIndex, isEnd=(i===0||i===wf.labels.length-1);
+              const v=wf.values[i];
+              if(isEnd) return ' Totalpris: '+v.toFixed(2).replace('.',',')+' kr/kg';
+              const sign=wf.colors[i]===cssVar('--color-error')?'+':'−';
+              return ' Endring: '+sign+v.toFixed(2).replace('.',',')+' kr/kg';
+            },
+            filter:item=>item.datasetIndex!==0
+          },
+          backgroundColor:cssVar('--color-surface-2'),borderColor:gc,borderWidth:1,
+          titleColor:tc,bodyColor:mc,padding:12,cornerRadius:8
+        }
+      },
+      scales:{
+        x:{stacked:true,ticks:{color:mc,font:{size:11},maxRotation:35},grid:{display:false},border:{color:gc}},
+        y:{stacked:true,ticks:{color:mc,callback:v=>v.toFixed(1).replace('.',',')+' kr'},grid:{color:gc},border:{color:'transparent'}}
+      }
+    }
+  });
+}
+
+function rebuildLineChart(data){
+  const ctx=document.getElementById('lineChart').getContext('2d');
+  if(lineChart) lineChart.destroy();
+  const monthly=[]; let lastM=-1;
+  for(const r of data){
+    const m=r.dato.getFullYear()*12+r.dato.getMonth();
+    if(m!==lastM&&r.utsalgspris!==null){monthly.push(r);lastM=m;}
+  }
+  const labels=monthly.map(r=>r.dato.toLocaleDateString('nb-NO',{month:'short',year:'2-digit'}));
+  const mc=cssVar('--color-text-muted'), gc=cssVar('--color-border');
+  lineChart=new Chart(ctx,{
+    type:'line',
+    data:{labels,datasets:[
+      {label:'Utsalgspris (SSB)',data:monthly.map(r=>r.utsalgspris),borderColor:cssVar('--color-primary'),backgroundColor:cssVar('--color-primary')+'18',borderWidth:2.5,pointRadius:0,fill:true,tension:0.4},
+      {label:'Markedspris råvare',data:monthly.map(r=>r.markedspris),borderColor:cssVar('--color-error'),backgroundColor:'transparent',borderWidth:1.5,borderDash:[4,3],pointRadius:0,tension:0.4},
+      {label:'Bruttomargin',data:monthly.map(r=>r.bruttomargin),borderColor:cssVar('--color-success'),backgroundColor:'transparent',borderWidth:1.5,borderDash:[2,3],pointRadius:0,tension:0.4},
+    ]},
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      interaction:{mode:'index',intersect:false},
+      plugins:{
+        legend:{display:true,labels:{color:mc,boxWidth:14,font:{size:11}}},
+        tooltip:{backgroundColor:cssVar('--color-surface-2'),borderColor:gc,borderWidth:1,
+          titleColor:cssVar('--color-text'),bodyColor:mc,padding:12,cornerRadius:8,
+          callbacks:{label:item=>' '+item.dataset.label+': '+(item.raw||0).toFixed(2).replace('.',',')+' kr/kg'}}
+      },
+      scales:{
+        x:{ticks:{color:mc,font:{size:10},maxTicksLimit:18,maxRotation:0},grid:{display:false},border:{color:gc}},
+        y:{ticks:{color:mc,callback:v=>v.toFixed(0)+' kr',font:{size:11}},grid:{color:gc},border:{color:'transparent'}}
+      }
+    }
+  });
+}
+
+function updateKPIs(s,e){
+  const fmt=v=>v!==null?v.toFixed(2).replace('.',',')+' kr':'–';
+  const fmtD=v=>{if(v===null)return'–';const sign=v>0?'+':'';return sign+v.toFixed(2).replace('.',',')+' kr';};
+  document.getElementById('kpiStart').textContent=fmt(s.total);
+  document.getElementById('kpiStartDate').textContent=dateStr(s.dato);
+  document.getElementById('kpiEnd').textContent=fmt(e.total);
+  document.getElementById('kpiEndDate').textContent=dateStr(e.dato);
+  const td=e.total-s.total, pct=((td/s.total)*100).toFixed(1).replace('.',',');
+  const te=document.getElementById('kpiTotal');
+  te.textContent=fmtD(td); te.className='kpi-value '+(td>0?'up':'down');
+  document.getElementById('kpiTotalPct').textContent=(td>0?'+':'')+pct+'%';
+  const rd=(e.markedspris||0)-(s.markedspris||0);
+  const re=document.getElementById('kpiRaw');
+  re.textContent=fmtD(rd); re.className='kpi-value '+(rd>0?'up':'down');
+  const md=(e.bruttomargin||0)-(s.bruttomargin||0);
+  const me=document.getElementById('kpiMargin');
+  me.textContent=fmtD(md); me.className='kpi-value '+(md>0?'up':'down');
+}
+
+function updateCharts(){
+  if(!allData.length){setStatus('Data ikke lastet ennå.','error');return;}
+  const sd=new Date(document.getElementById('startDate').value);
+  const ed=new Date(document.getElementById('endDate').value);
+  if(isNaN(sd)||isNaN(ed)){setStatus('Ugyldig dato.','error');return;}
+  if(sd>=ed){setStatus('Startdato må være før sluttdato.','error');return;}
+  const sr=nearest(allData,sd), er=nearest(allData,ed);
+  if(!sr||!er){setStatus('Fant ikke data for valgte datoer.','error');return;}
+  const wf=buildWaterfall(sr,er);
+  renderWaterfall(wf);
+  updateKPIs(sr,er);
+  document.getElementById('waterfallSubtitle').textContent=
+    'Fossefallsgraf – endring mellom '+dateStr(sr.dato)+' og '+dateStr(er.dato);
+  setStatus('Sist oppdatert: '+new Date().toLocaleTimeString('nb-NO'),'');
+}
+
+// ── Load via CORS proxy ────────────────────────────────────────────────────
+async function loadData(){
+  setStatus('Laster inn data fra Google Sheets…','loading');
+  try{
+    const resp=await fetch(PROXY_URL);
+    if(!resp.ok) throw new Error('HTTP '+resp.status);
+    const json=await resp.json();
+    const text=json.contents;
+    if(!text) throw new Error('Tomt svar fra proxy');
+    allData=parseCSV(text);
+    if(!allData.length) throw new Error('Ingen gyldige rader funnet');
+
+    // Default: 1. jan 2021 → siste dato
+    document.getElementById('startDate').value='2021-01-01';
+    const last=allData[allData.length-1];
+    if(last) document.getElementById('endDate').value=last.dato.toISOString().slice(0,10);
+
+    rebuildLineChart(allData);
+    updateCharts();
+  }catch(err){
+    // Fallback: prøv direkte fetch (fungerer lokalt/GitHub Pages)
+    try{
+      const r2=await fetch(SHEET_URL);
+      const t2=await r2.text();
+      allData=parseCSV(t2);
+      if(!allData.length) throw new Error('Ingen data');
+      document.getElementById('startDate').value='2021-01-01';
+      const last=allData[allData.length-1];
+      if(last) document.getElementById('endDate').value=last.dato.toISOString().slice(0,10);
+      rebuildLineChart(allData);
+      updateCharts();
+    }catch(err2){
+      setStatus('Kunne ikke laste data. Feil: '+err.message+'. Prøv å åpne filen direkte i nettleseren (ikke i preview).','error');
+    }
+  }
+}
+
+loadData();
+</script>
+</body>
+</html>
