@@ -12,7 +12,7 @@
   :root,[data-theme="light"]{
     --bg:#f7f6f2;--surface:#f9f8f5;--surface-2:#fbfbf9;--surface-offset:#f0ede8;
     --border:rgba(40,37,29,0.12);--text:#28251d;--text-muted:#7a7974;--text-faint:#bab9b4;
-    --primary:#01696f;--primary-hover:#0c4e54;--primary-light:#e0f0f0;
+    --primary:#01696f;--primary-hover:#0c4e54;
     --up:#b94040;--up-bg:#fae8e8;--down:#437a22;--down-bg:#e8f4e0;
     --radius-sm:.375rem;--radius-md:.5rem;--radius-lg:.75rem;
     --shadow-sm:0 1px 2px oklch(0.2 0.01 80/0.06);--shadow-md:0 4px 12px oklch(0.2 0.01 80/0.08);
@@ -27,19 +27,15 @@
   [data-theme="dark"]{
     --bg:#171614;--surface:#1c1b19;--surface-2:#201f1d;--surface-offset:#1d1c1a;
     --border:rgba(205,204,202,0.12);--text:#cdccca;--text-muted:#797876;--text-faint:#5a5957;
-    --primary:#4f98a3;--primary-hover:#227f8b;--primary-light:#1e3535;
+    --primary:#4f98a3;--primary-hover:#227f8b;
     --up:#e07070;--up-bg:#3a2020;--down:#6daa45;--down-bg:#1e2e18;
-    --shadow-sm:0 1px 2px oklch(0 0 0/0.25);--shadow-md:0 4px 12px oklch(0 0 0/0.35);
   }
   *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
   html{-webkit-font-smoothing:antialiased;scroll-behavior:smooth}
   body{min-height:100dvh;font-family:var(--font);font-size:var(--text-base);color:var(--text);background:var(--bg);line-height:1.6}
   button,input{cursor:pointer;background:none;border:none;font:inherit;color:inherit;transition:color 160ms,background 160ms,border-color 160ms}
   input{cursor:text}
-
   .app{max-width:1140px;margin:0 auto;padding:var(--sp6) var(--sp4)}
-
-  /* ── HEADER ── */
   header{display:flex;align-items:center;justify-content:space-between;margin-bottom:var(--sp8);padding-bottom:var(--sp4);border-bottom:1px solid var(--border)}
   .logo{display:flex;align-items:center;gap:var(--sp3)}
   .logo svg{color:var(--primary)}
@@ -47,38 +43,27 @@
   .logo-sub{font-size:var(--text-xs);color:var(--text-muted)}
   .theme-btn{width:36px;height:36px;display:flex;align-items:center;justify-content:center;border-radius:var(--radius-md);color:var(--text-muted)}
   .theme-btn:hover{background:var(--surface-2);color:var(--text)}
-
-  /* ── PRODUKT-FANER (øverst) ── */
   .product-tabs{display:flex;gap:var(--sp2);flex-wrap:wrap;margin-bottom:var(--sp6)}
   .prod-tab{display:flex;align-items:center;gap:var(--sp2);padding:var(--sp2) var(--sp5);border-radius:var(--radius-lg);font-size:var(--text-sm);font-weight:500;color:var(--text-muted);background:var(--surface);border:1px solid var(--border);box-shadow:var(--shadow-sm)}
   .prod-tab:hover{color:var(--text);border-color:var(--primary)}
   .prod-tab.active{background:var(--primary);color:#fff;border-color:var(--primary)}
-  .prod-tab .prod-icon{font-size:1.1em}
   .prod-tab.soon{opacity:.45;cursor:not-allowed}
-
-  /* ── PRODUKT-PANEL ── */
   .product-panel{display:none}
   .product-panel.active{display:block}
-
-  /* ── INTERN SEKSJONSVELGER (Graf / Analyse / Metodikk) ── */
   .section-nav{display:flex;gap:0;border-bottom:2px solid var(--border);margin-bottom:var(--sp6)}
   .sec-btn{padding:var(--sp3) var(--sp5);font-size:var(--text-sm);font-weight:500;color:var(--text-muted);border-bottom:2px solid transparent;margin-bottom:-2px;border-radius:var(--radius-sm) var(--radius-sm) 0 0}
   .sec-btn:hover{color:var(--text);background:var(--surface-offset)}
   .sec-btn.active{color:var(--primary);border-bottom-color:var(--primary);background:var(--surface)}
   .sec-panel{display:none}
   .sec-panel.active{display:block}
-
-  /* ── CONTROLS ── */
   .controls{display:flex;gap:var(--sp4);align-items:flex-end;flex-wrap:wrap;margin-bottom:var(--sp6);padding:var(--sp5);background:var(--surface);border-radius:var(--radius-lg);border:1px solid var(--border);box-shadow:var(--shadow-sm)}
   .field{display:flex;flex-direction:column;gap:var(--sp1)}
   .field label{font-size:var(--text-xs);font-weight:500;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em}
   .field input[type="date"]{padding:var(--sp2) var(--sp3);border:1px solid var(--border);border-radius:var(--radius-md);background:var(--surface-2);color:var(--text);font-size:var(--text-sm)}
-  .field input[type="date"]:focus{outline:2px solid var(--primary);outline-offset:2px;cursor:text}
+  .field input[type="date"]:focus{outline:2px solid var(--primary);outline-offset:2px}
   .btn-primary{padding:var(--sp2) var(--sp6);background:var(--primary);color:#fff;border-radius:var(--radius-md);font-size:var(--text-sm);font-weight:500;height:38px;align-self:flex-end}
   .btn-primary:hover{background:var(--primary-hover)}
   .data-note{font-size:var(--text-xs);color:var(--text-muted);align-self:flex-end;padding-bottom:var(--sp2)}
-
-  /* ── KPI ── */
   .kpis{display:grid;grid-template-columns:repeat(auto-fill,minmax(165px,1fr));gap:var(--sp3);margin-bottom:var(--sp6)}
   .kpi{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:var(--sp4);box-shadow:var(--shadow-sm)}
   .kpi-label{font-size:var(--text-xs);color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:var(--sp1)}
@@ -87,8 +72,6 @@
   .kpi.up .kpi-value{color:var(--up)}
   .kpi.down .kpi-value{color:var(--down)}
   .kpi.neutral .kpi-value{color:var(--primary)}
-
-  /* ── CARD ── */
   .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:var(--sp6);box-shadow:var(--shadow-sm);margin-bottom:var(--sp6)}
   .card-title{font-size:var(--text-base);font-weight:600;margin-bottom:var(--sp1)}
   .card-desc{font-size:var(--text-xs);color:var(--text-muted);margin-bottom:var(--sp5);max-width:72ch}
@@ -96,11 +79,8 @@
   .legend{display:flex;gap:var(--sp4);flex-wrap:wrap;margin-top:var(--sp4)}
   .legend-item{display:flex;align-items:center;gap:var(--sp2);font-size:var(--text-xs);color:var(--text-muted)}
   .legend-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
-
   .chart-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp6)}
   @media(max-width:700px){.chart-grid{grid-template-columns:1fr}}
-
-  /* ── TABLE ── */
   .table-wrap{overflow-x:auto;margin-top:var(--sp4)}
   table{width:100%;border-collapse:collapse;font-size:var(--text-sm)}
   th{text-align:left;padding:var(--sp2) var(--sp3);font-size:var(--text-xs);font-weight:500;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em;border-bottom:1px solid var(--border);white-space:nowrap}
@@ -110,8 +90,6 @@
   .badge.up{background:var(--up-bg);color:var(--up)}
   .badge.down{background:var(--down-bg);color:var(--down)}
   .badge.flat{background:var(--surface-2);color:var(--text-muted)}
-
-  /* ── PROSE (analyse/metodikk) ── */
   .prose{font-size:var(--text-base);line-height:1.85;color:var(--text);max-width:72ch}
   .prose p{margin-bottom:var(--sp4)}
   .prose p:last-child{margin-bottom:0}
@@ -119,20 +97,12 @@
   .text-badge{background:var(--primary);color:#fff;padding:2px 10px;border-radius:9999px;font-size:var(--text-xs)}
   @keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
   .skeleton{background:linear-gradient(90deg,var(--surface-offset) 25%,var(--border) 50%,var(--surface-offset) 75%);background-size:200% 100%;animation:shimmer 1.5s ease-in-out infinite;border-radius:var(--radius-sm);height:1em;margin-bottom:.75em}
-  .skeleton:last-child{width:55%}
-
   footer{text-align:center;padding:var(--sp8) 0 var(--sp4);color:var(--text-faint);font-size:var(--text-xs)}
-  @media(max-width:600px){
-    .controls{flex-direction:column}
-    .btn-primary{width:100%}
-    .chart-wrap{height:260px}
-    .sec-btn{padding:var(--sp2) var(--sp3);font-size:var(--text-xs)}
-  }
+  @media(max-width:600px){.controls{flex-direction:column}.btn-primary{width:100%}.chart-wrap{height:260px}.sec-btn{padding:var(--sp2) var(--sp3);font-size:var(--text-xs)}}
 </style>
 </head>
 <body>
 <div class="app">
-
 <header>
   <div class="logo">
     <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
@@ -152,45 +122,33 @@
   </button>
 </header>
 
-<!-- PRODUKT-FANER -->
 <div class="product-tabs" role="tablist">
-  <button class="prod-tab active" role="tab" data-prod="sukker" aria-selected="true">
-    <span class="prod-icon">🍬</span> Sukker
-  </button>
-  <button class="prod-tab soon" role="tab" data-prod="kaffe" disabled title="Kommer snart">
-    <span class="prod-icon">☕</span> Kaffe <small style="font-size:.75em;opacity:.7">(snart)</small>
-  </button>
-  <button class="prod-tab soon" role="tab" data-prod="bensin" disabled title="Kommer snart">
-    <span class="prod-icon">⛽</span> Bensin <small style="font-size:.75em;opacity:.7">(snart)</small>
-  </button>
+  <button class="prod-tab active" role="tab" data-prod="sukker" aria-selected="true"><span>🍬</span> Sukker</button>
+  <button class="prod-tab soon" disabled title="Kommer snart"><span>☕</span> Kaffe <small style="font-size:.75em;opacity:.7">(snart)</small></button>
+  <button class="prod-tab soon" disabled title="Kommer snart"><span>⛽</span> Bensin <small style="font-size:.75em;opacity:.7">(snart)</small></button>
 </div>
 
-<!-- ══════════════════════════════════════════════ -->
-<!--  PRODUKT: SUKKER                              -->
-<!-- ══════════════════════════════════════════════ -->
 <div class="product-panel active" id="prod-sukker">
-
-  <div class="section-nav" role="tablist">
+  <div class="section-nav">
     <button class="sec-btn active" data-prod="sukker" data-sec="graf">Graf</button>
     <button class="sec-btn" data-prod="sukker" data-sec="analyse">Analyse</button>
     <button class="sec-btn" data-prod="sukker" data-sec="metodikk">Metodikk</button>
   </div>
 
-  <!-- GRAF -->
   <div class="sec-panel active" id="sukker-graf">
     <section class="controls">
       <div class="field"><label for="sukker-start">Startdato</label><input type="date" id="sukker-start" value="2021-01-01"></div>
-      <div class="field"><label for="sukker-end">Sluttdato</label><input type="date" id="sukker-end" value="2025-07-01"></div>
+      <div class="field"><label for="sukker-end">Sluttdato</label><input type="date" id="sukker-end" value="2025-01-01"></div>
       <button class="btn-primary" id="sukker-btn">Oppdater graf</button>
-      <span class="data-note" id="sukker-note">⚠ Demo-data</span>
+      <span class="data-note" id="sukker-note">Laster data...</span>
     </section>
     <div class="kpis" id="sukker-kpis"></div>
     <div class="card">
       <div class="card-title">Fossefallsanalyse – prisendring per kostnadskomponent</div>
-      <div class="card-desc">Første stolpe = utsalgspris (kol. M) på startdato. Midtstolpene viser endringen per komponent. Siste stolpe = utsalgspris på sluttdato.</div>
+      <div class="card-desc">Første stolpe = utsalgspris på startdato. Midtstolpene viser endringen per komponent. Siste stolpe = utsalgspris på sluttdato. Rød = økning, grønn = reduksjon.</div>
       <div class="chart-wrap"><canvas id="sukker-wf"></canvas></div>
       <div class="legend">
-        <div class="legend-item"><div class="legend-dot" style="background:var(--primary)"></div>Totalpris</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--primary)"></div>Totalpris (SSB)</div>
         <div class="legend-item"><div class="legend-dot" style="background:var(--up)"></div>Økning</div>
         <div class="legend-item"><div class="legend-dot" style="background:var(--down)"></div>Reduksjon</div>
       </div>
@@ -198,25 +156,24 @@
     <div class="card">
       <div class="card-title">Detaljtabell</div>
       <div class="table-wrap">
-        <table><thead><tr><th>Komponent</th><th>Kol.</th><th>Start</th><th>Slutt</th><th>Endring (kr)</th><th>Endring (%)</th></tr></thead>
+        <table><thead><tr><th>Komponent</th><th>Start (kr)</th><th>Slutt (kr)</th><th>Endring (kr)</th><th>Endring (%)</th></tr></thead>
         <tbody id="sukker-tbody"></tbody></table>
       </div>
     </div>
     <div class="chart-grid">
       <div class="card">
         <div class="card-title">Pristrend over tid</div>
-        <div class="card-desc" style="margin-bottom:var(--sp4)">Utsalgspris (M) og råvarepris (D)</div>
+        <div class="card-desc" style="margin-bottom:var(--sp4)">Utsalgspris (SSB) og råvarepris (NOK/kg)</div>
         <div class="chart-wrap" style="height:240px"><canvas id="sukker-trend"></canvas></div>
       </div>
       <div class="card">
         <div class="card-title">Kostnadssammensetning</div>
-        <div class="card-desc" style="margin-bottom:var(--sp4)">Andel per komponent på sluttdato</div>
+        <div class="card-desc" style="margin-bottom:var(--sp4)">Andel per komponent på valgt sluttdato</div>
         <div class="chart-wrap" style="height:240px"><canvas id="sukker-donut"></canvas></div>
       </div>
     </div>
   </div>
 
-  <!-- ANALYSE -->
   <div class="sec-panel" id="sukker-analyse">
     <div class="card">
       <div class="card-title">Analyse – Sukker</div>
@@ -226,257 +183,270 @@
       </div>
       <div class="prose" id="sukker-analyse-tekst">
         <div class="skeleton" style="width:100%"></div><div class="skeleton" style="width:88%"></div>
-        <div class="skeleton" style="width:94%"></div><div class="skeleton"></div>
+        <div class="skeleton" style="width:94%"></div><div class="skeleton" style="width:55%"></div>
       </div>
     </div>
   </div>
 
-  <!-- METODIKK -->
   <div class="sec-panel" id="sukker-metodikk">
     <div class="card">
       <div class="card-title">Metodikk – Sukker</div>
-      <div class="card-desc">Beskrivelse av kostnadsmodellen og datakildene.</div>
       <div class="prose" id="sukker-metodikk-tekst">
         <div class="skeleton" style="width:100%"></div><div class="skeleton" style="width:82%"></div>
-        <div class="skeleton" style="width:96%"></div><div class="skeleton"></div>
+        <div class="skeleton" style="width:96%"></div><div class="skeleton" style="width:55%"></div>
       </div>
     </div>
   </div>
+</div>
 
-</div><!-- /prod-sukker -->
-
-<footer>Clearfjord Prisbrytaren v5 · Kilde: SSB · Data fra Google Sheets · clearfjord.com</footer>
-</div><!-- /app -->
+<footer>Clearfjord Prisbrytaren v6 · Kilde: SSB, ICE Futures Europe · clearfjord.com</footer>
+</div>
 
 <script>
-// ════════════════════════════════════════════════════════════
-// KONFIGURASJON
-// Bytt null → URL når Google Sheets er publisert som CSV
-// ════════════════════════════════════════════════════════════
-const SOURCES = {
-  sukker: {
-    data:    "https://docs.google.com/spreadsheets/d/e/2PACX-1vQmTaejBjgaTSGQFzZaMN_FLJHzGyJg39EgKoPC6XOVysem075xRKYYA-_2RG5FKhSfW-8wffoxIRXH/pub?gid=1663124790&single=true&output=csv",
-    innhold: "https://docs.google.com/spreadsheets/d/e/2PACX-1vQmTaejBjgaTSGQFzZaMN_FLJHzGyJg39EgKoPC6XOVysem075xRKYYA-_2RG5FKhSfW-8wffoxIRXH/pub?gid=1485464095&single=true&output=csv",
-  }
-  // kaffe og bensin legges til her etter hvert
-};
+// ── KONFIGURASJON ──────────────────────────────────────────────────────────
+const SUKKER_URL  = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQmTaejBjgaTSGQFzZaMN_FLJHzGyJg39EgKoPC6XOVysem075xRKYYA-_2RG5FKhSfW-8wffoxIRXH/pub?gid=1663124790&single=true&output=csv";
+const INNHOLD_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQmTaejBjgaTSGQFzZaMN_FLJHzGyJg39EgKoPC6XOVysem075xRKYYA-_2RG5FKhSfW-8wffoxIRXH/pub?gid=1485464095&single=true&output=csv";
 
-// ════════════════════════════════════════════════════════════
-// KOLONNEKART – SUKKER
-// CSV-kol 0=Dato, 3=D, 5=F, 6=G, 7=H, 8=I, 10=K, 11=L, 12=M
-// I demo-array: [Dato, D, F, G, H, I, K, L, M]  (indeks 0–8)
-// ════════════════════════════════════════════════════════════
-const SUKKER_COMP = [
-  {key:"Råvarepris",           excelCol:"D", col:1, color:"#c0392b"},
-  {key:"Frakt til Norge",      excelCol:"F", col:2, color:"#e67e22"},
-  {key:"Særavgift sukker",     excelCol:"G", col:3, color:"#d4a017"},
-  {key:"Pakking & emballasje", excelCol:"H", col:4, color:"#27ae60"},
-  {key:"Frakt og lager i NO",  excelCol:"I", col:5, color:"#2980b9"},
-  {key:"Bruttofortjeneste",    excelCol:"K", col:6, color:"#8e44ad"},
-  {key:"MVA",                  excelCol:"L", col:7, color:"#16a085"},
+// ── KOLONNER I SUKKER-ARKET (0-basert CSV-indeks) ─────────────────────────
+// A=0  Dato
+// B=1  Sukker Marked USD/tonn
+// C=2  Markedspris USD/kg
+// D=3  Hvitt sukker NOK/kg  ← råvarepris
+// E=4  Raffinering
+// F=5  Frakt til Norge
+// G=6  Særavgift sukker
+// H=7  Pakking & Emballasje
+// I=8  Frakt og lager i Norge
+// J=9  Total
+// K=10 Bruttofortjeneste
+// L=11 MVA
+// M=12 Utsalgspris SSB      ← totalpris
+
+const COMP = [
+  {key:"Råvarepris (NOK/kg)", col:3,  color:"#c0392b"},
+  {key:"Raffinering",         col:4,  color:"#e67e22"},
+  {key:"Frakt til Norge",     col:5,  color:"#d4a017"},
+  {key:"Særavgift",           col:6,  color:"#27ae60"},
+  {key:"Pakking & emballasje",col:7,  color:"#2980b9"},
+  {key:"Frakt og lager i NO", col:8,  color:"#8e44ad"},
+  {key:"Bruttofortjeneste",   col:10, color:"#c0392b"},
+  {key:"MVA",                 col:11, color:"#16a085"},
 ];
-const SUKKER_PRICE = 8;
+const PRICE_COL = 12; // kol M = Utsalgspris SSB
 
-const SUKKER_DEMO = [
-  ["2020-01-01",  8.20,1.10,2.80,0.80,0.60,3.50,3.00,20.00],
-  ["2020-07-01",  8.40,1.12,2.80,0.80,0.61,3.55,3.05,20.33],
-  ["2021-01-01",  9.00,1.15,2.85,0.82,0.63,3.70,3.20,21.35],
-  ["2021-07-01",  9.50,1.18,2.85,0.83,0.64,3.80,3.30,22.10],
-  ["2022-01-01", 12.00,1.40,2.90,0.90,0.70,4.30,3.80,26.00],
-  ["2022-07-01", 14.50,1.60,2.90,0.95,0.75,4.60,4.20,29.50],
-  ["2023-01-01", 16.00,1.70,3.00,1.00,0.80,5.00,4.60,32.10],
-  ["2023-07-01", 16.80,1.75,3.00,1.02,0.82,5.20,4.80,33.39],
-  ["2024-01-01", 17.50,1.80,3.10,1.05,0.85,5.50,5.05,34.85],
-  ["2024-07-01", 18.00,1.82,3.10,1.06,0.86,5.70,5.20,35.74],
-  ["2025-01-01", 18.80,1.85,3.15,1.08,0.88,5.90,5.39,37.05],
-  ["2025-07-01", 19.20,1.88,3.15,1.09,0.89,6.10,5.54,37.85],
-];
-
-const SUKKER_DEMO_CONTENT = {
-  analyse_dato: "18.05.2026",
-  analyse_tekst: `Råvareprisen på hvitt sukker har steget kraftig siden 2021, og er den klart største enkeltdriveren bak den samlede prisveksten.
-
-Fra januar 2021 til juli 2025 har utsalgsprisen økt fra rundt 21 kr til nesten 38 kr per kilo – en vekst på over 75 prosent. Av denne økningen kan om lag 10 kr forklares med høyere råvarepris alene.
-
-Bruttofortjenesten (kol. K) har også økt i absolutte tall, selv om den prosentvise andelen er relativt stabil. Dette betyr at marginene i kronesbeløp har vokst i takt med prisnivået.`,
-  metodikk_tekst: `Kostnadsmodellen beregner utsalgsprisen ved å summere: råvarepris (D), frakt til Norge (F), særavgift sukker (G), pakking og emballasje (H), frakt og lager i Norge (I), bruttofortjeneste (K) og MVA (L).
-
-Utsalgsprisen (kol. M) er hentet fra SSB og brukes som referansepunkt. Råvareprisen baseres på London-børsens hvitt sukker-kontrakt (USD/tonn) omregnet til NOK/kg. Valutakurser hentes automatisk.`
-};
-
-// ════════════════════════════════════════════════════════════
-// UTILS
-// ════════════════════════════════════════════════════════════
+// ── UTILS ─────────────────────────────────────────────────────────────────
 const fmt = (n,d=2) => Number(n).toLocaleString("nb-NO",{minimumFractionDigits:d,maximumFractionDigits:d});
 const css = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
-const textToHtml = s => s.split(/\n+/).filter(l=>l.trim()).map(l=>`<p>${l.trim()}</p>`).join("");
+const toHtml = s => s.split(/\n+/).filter(l=>l.trim()).map(l=>`<p>${l.trim()}</p>`).join("");
 
-function findRow(rows,dateStr){
+function findRow(rows, dateStr){
   const t=new Date(dateStr).getTime();
   let best=null,bd=Infinity;
-  for(const r of rows){const d=new Date(r[0]).getTime(),diff=t-d;if(diff>=0&&diff<bd){bd=diff;best=r;}}
+  for(const r of rows){
+    const d=new Date(r[0]).getTime(),diff=t-d;
+    if(diff>=0&&diff<bd){bd=diff;best=r;}
+  }
   return best||rows[0];
 }
 
-// ════════════════════════════════════════════════════════════
-// TEMA
-// ════════════════════════════════════════════════════════════
+// ── TABS ──────────────────────────────────────────────────────────────────
+document.querySelectorAll(".sec-btn").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    const p=btn.dataset.prod;
+    document.querySelectorAll(`#prod-${p} .sec-btn`).forEach(b=>b.classList.remove("active"));
+    document.querySelectorAll(`#prod-${p} .sec-panel`).forEach(s=>s.classList.remove("active"));
+    btn.classList.add("active");
+    document.getElementById(`${p}-${btn.dataset.sec}`).classList.add("active");
+  });
+});
+
+// ── TEMA ──────────────────────────────────────────────────────────────────
 (function(){
   const btn=document.querySelector("[data-theme-toggle]"),html=document.documentElement;
   let dark=window.matchMedia("(prefers-color-scheme:dark)").matches;
   html.setAttribute("data-theme",dark?"dark":"light");icon();
-  btn.addEventListener("click",()=>{dark=!dark;html.setAttribute("data-theme",dark?"dark":"light");icon();rebuildAll();});
+  btn.addEventListener("click",()=>{dark=!dark;html.setAttribute("data-theme",dark?"dark":"light");icon();if(sukkerRows.length)buildSukker();});
   function icon(){btn.innerHTML=dark
     ?'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>'
     :'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';}
 })();
 
-// ════════════════════════════════════════════════════════════
-// PRODUKT-TABS
-// ════════════════════════════════════════════════════════════
-document.querySelectorAll(".prod-tab:not(.soon)").forEach(btn=>{
-  btn.addEventListener("click",()=>{
-    document.querySelectorAll(".prod-tab").forEach(b=>{b.classList.remove("active");b.setAttribute("aria-selected","false");});
-    document.querySelectorAll(".product-panel").forEach(p=>p.classList.remove("active"));
-    btn.classList.add("active");btn.setAttribute("aria-selected","true");
-    document.getElementById("prod-"+btn.dataset.prod).classList.add("active");
-  });
-});
-
-// ════════════════════════════════════════════════════════════
-// SEKSJONS-TABS (per produkt)
-// ════════════════════════════════════════════════════════════
-document.querySelectorAll(".sec-btn").forEach(btn=>{
-  btn.addEventListener("click",()=>{
-    const prod=btn.dataset.prod;
-    document.querySelectorAll(`#prod-${prod} .sec-btn`).forEach(b=>b.classList.remove("active"));
-    document.querySelectorAll(`#prod-${prod} .sec-panel`).forEach(p=>p.classList.remove("active"));
-    btn.classList.add("active");
-    document.getElementById(`${prod}-${btn.dataset.sec}`).classList.add("active");
-  });
-});
-
-// ════════════════════════════════════════════════════════════
-// SUKKER – DATA + CHARTS
-// ════════════════════════════════════════════════════════════
+// ── DATA ──────────────────────────────────────────────────────────────────
 let sukkerRows=[], sukkerWf=null, sukkerTrend=null, sukkerDonut=null;
 
+function parseCSVLine(line){
+  // Håndterer komma inni anførselstegn
+  const result=[];let cur="",inQ=false;
+  for(let i=0;i<line.length;i++){
+    if(line[i]==='"'&&line[i+1]==='"'){cur+='"';i++;}
+    else if(line[i]==='"'){inQ=!inQ;}
+    else if(line[i]===','&&!inQ){result.push(cur.trim());cur="";}
+    else cur+=line[i];
+  }
+  result.push(cur.trim());
+  return result;
+}
+
+function parseNumber(s){
+  if(!s||s.trim()==="")return 0;
+  // Støtter både 1.234,56 (NO) og 1,234.56 (EN)
+  let v=s.replace(/[\s ]/g,"");
+  if(/^[0-9.,\-]+$/.test(v)){
+    if((v.match(/,/g)||[]).length===1&&(v.match(/\./g)||[]).length===0)v=v.replace(",",".");
+    else v=v.replace(/\./g,"").replace(",",".");
+  }
+  return parseFloat(v)||0;
+}
+
 async function loadSukkerData(){
-  const src=SOURCES.sukker.data;
-  if(src){
-    try{
-      const lines=(await(await fetch(src)).text()).trim().split("\n").slice(1);
-      sukkerRows=lines.map(l=>{const c=l.split(",").map(x=>x.replace(/"/g,"").trim());
-        return[c[0],+c[3],+c[5],+c[6],+c[7],+c[8],+c[10],+c[11],+c[12]];
-      }).filter(r=>r[0]&&!isNaN(r[SUKKER_PRICE])&&r[SUKKER_PRICE]>0);
-      document.getElementById("sukker-note").textContent="✓ Google Sheets";
-      document.getElementById("sukker-note").style.color="var(--down)";
-    }catch{sukkerRows=SUKKER_DEMO;}
-  }else{sukkerRows=SUKKER_DEMO;}
+  const note=document.getElementById("sukker-note");
+  try{
+    const res=await fetch(SUKKER_URL);
+    if(!res.ok)throw new Error("HTTP "+res.status);
+    const text=await res.text();
+    const lines=text.trim().split("\n");
+    // Finn header-rad (første rad med "Dato" eller hopp over)
+    let startLine=0;
+    if(lines[0].toLowerCase().includes("dato")||lines[0].toLowerCase().includes("date"))startLine=1;
+    sukkerRows=[];
+    for(let i=startLine;i<lines.length;i++){
+      const cols=parseCSVLine(lines[i]);
+      if(cols.length<13)continue;
+      const dato=cols[0].replace(/"/g,"").trim();
+      if(!dato||dato.toLowerCase()==="dato")continue;
+      const price=parseNumber(cols[PRICE_COL]);
+      if(!price||price<=0)continue;
+      // Lagre alle kolonner som tall (indeks 0=dato, 1-12=tall)
+      const row=[dato];
+      for(let c=1;c<=12;c++)row.push(parseNumber(cols[c]));
+      sukkerRows.push(row);
+    }
+    if(sukkerRows.length===0)throw new Error("Ingen gyldige rader");
+    note.textContent="✓ Google Sheets ("+sukkerRows.length+" rader)";
+    note.style.color="var(--down)";
+    console.log("Første rad:", sukkerRows[0]);
+    console.log("Siste rad:", sukkerRows[sukkerRows.length-1]);
+  }catch(e){
+    note.textContent="⚠ Feil: "+e.message+" – kontakt administrator";
+    note.style.color="var(--up)";
+    console.error("Sheets-feil:",e);
+  }
 }
 
 async function loadSukkerContent(){
-  let c=SUKKER_DEMO_CONTENT;
-  const src=SOURCES.sukker.innhold;
-  if(src){
-    try{
-      const lines=(await(await fetch(src)).text()).trim().split("\n").slice(1);
-      c={};
-      for(const l of lines){const m=l.match(/^"?([^",]+)"?,(.*)$/);if(m)c[m[1].trim()]=m[2].replace(/^"|"$/g,"").replace(/""/g,'"').trim();}
-    }catch{}
+  try{
+    const res=await fetch(INNHOLD_URL);
+    if(!res.ok)throw new Error();
+    const text=await res.text();
+    const lines=text.trim().split("\n").slice(1);
+    const c={};
+    for(const l of lines){
+      const cols=parseCSVLine(l);
+      if(cols.length>=2)c[cols[0].trim()]=cols[1].trim();
+    }
+    const dato=c["analyse_dato"]||"";
+    document.getElementById("sukker-analyse-dato").textContent=dato?"Sist oppdatert: "+dato:"";
+    if(dato)document.getElementById("sukker-analyse-badge").style.display="inline";
+    document.getElementById("sukker-analyse-tekst").innerHTML=toHtml(c["analyse_tekst"]||"Analysetekst mangler i arket «innhold».");
+    document.getElementById("sukker-metodikk-tekst").innerHTML=toHtml(c["metodikk_tekst"]||"Metodikktekst mangler i arket «innhold».");
+  }catch(e){
+    console.warn("Innhold-feil:",e);
+    document.getElementById("sukker-analyse-tekst").textContent="Kunne ikke hente analysetekst.";
+    document.getElementById("sukker-metodikk-tekst").textContent="Kunne ikke hente metodikktekst.";
   }
-  const dato=c["analyse_dato"]||"";
-  document.getElementById("sukker-analyse-dato").textContent=dato?"Sist oppdatert: "+dato:"";
-  if(dato)document.getElementById("sukker-analyse-badge").style.display="inline";
-  document.getElementById("sukker-analyse-tekst").innerHTML=textToHtml(c["analyse_tekst"]||"Ingen tekst funnet.");
-  document.getElementById("sukker-metodikk-tekst").innerHTML=textToHtml(c["metodikk_tekst"]||"Ingen tekst funnet.");
 }
 
-function buildSukkerKPIs(s,e){
-  const diff=e[SUKKER_PRICE]-s[SUKKER_PRICE],pct=(diff/s[SUKKER_PRICE])*100;
-  const mChg=e[6]-s[6],rChg=e[1]-s[1];
-  let bk="",ba=0;for(const c of SUKKER_COMP){const ch=Math.abs(e[c.col]-s[c.col]);if(ch>ba){ba=ch;bk=c.key;}}
+// ── KPI ───────────────────────────────────────────────────────────────────
+function buildKPIs(s,e){
+  const diff=e[PRICE_COL]-s[PRICE_COL],pct=(diff/s[PRICE_COL])*100;
+  const rawChg=e[3]-s[3], marginChg=e[10]-s[10];
+  let bk="",ba=0;
+  for(const c of COMP){const ch=Math.abs(e[c.col]-s[c.col]);if(ch>ba){ba=ch;bk=c.key;}}
   document.getElementById("sukker-kpis").innerHTML=`
-    <div class="kpi neutral"><div class="kpi-label">Pris startdato</div><div class="kpi-value">${fmt(s[SUKKER_PRICE])} kr</div><div class="kpi-sub">${s[0]}</div></div>
-    <div class="kpi neutral"><div class="kpi-label">Pris sluttdato</div><div class="kpi-value">${fmt(e[SUKKER_PRICE])} kr</div><div class="kpi-sub">${e[0]}</div></div>
+    <div class="kpi neutral"><div class="kpi-label">Pris startdato</div><div class="kpi-value">${fmt(s[PRICE_COL])} kr</div><div class="kpi-sub">${s[0]}</div></div>
+    <div class="kpi neutral"><div class="kpi-label">Pris sluttdato</div><div class="kpi-value">${fmt(e[PRICE_COL])} kr</div><div class="kpi-sub">${e[0]}</div></div>
     <div class="kpi ${diff>=0?"up":"down"}"><div class="kpi-label">Samlet endring</div><div class="kpi-value">${diff>=0?"+":""}${fmt(diff)} kr</div><div class="kpi-sub">${(pct>=0?"+":"")+fmt(pct,1)+" %"}</div></div>
-    <div class="kpi ${rChg>=0?"up":"down"}"><div class="kpi-label">Råvarepris (D)</div><div class="kpi-value">${rChg>=0?"+":""}${fmt(rChg)} kr</div><div class="kpi-sub">av ${fmt(Math.abs(diff))} kr total</div></div>
-    <div class="kpi ${mChg>=0?"up":"down"}"><div class="kpi-label">Margin (K)</div><div class="kpi-value">${mChg>=0?"+":""}${fmt(mChg)} kr</div><div class="kpi-sub">Bruttofortjeneste</div></div>
-    <div class="kpi neutral"><div class="kpi-label">Største driver</div><div class="kpi-value" style="font-size:var(--text-sm);padding-top:2px">${bk}</div><div class="kpi-sub">+${fmt(ba)} kr</div></div>`;
+    <div class="kpi ${rawChg>=0?"up":"down"}"><div class="kpi-label">Råvarepris</div><div class="kpi-value">${rawChg>=0?"+":""}${fmt(rawChg)} kr</div><div class="kpi-sub">kol. D</div></div>
+    <div class="kpi ${marginChg>=0?"up":"down"}"><div class="kpi-label">Bruttofortjeneste</div><div class="kpi-value">${marginChg>=0?"+":""}${fmt(marginChg)} kr</div><div class="kpi-sub">kol. K</div></div>
+    <div class="kpi neutral"><div class="kpi-label">Største driver</div><div class="kpi-value" style="font-size:var(--text-sm);padding-top:4px">${bk}</div><div class="kpi-sub">${fmt(ba)} kr endring</div></div>`;
 }
 
-function buildSukkerWF(s,e){
+// ── FOSSEFALL ─────────────────────────────────────────────────────────────
+function buildWF(s,e){
   const mu=css("--text-muted"),bo=css("--border"),pr=css("--primary"),up=css("--up"),dn=css("--down"),tx=css("--text");
-  const labels=[s[0]],bases=[0],vals=[s[SUKKER_PRICE]],cols=[pr],tips=[];
-  let run=s[SUKKER_PRICE];
-  for(const c of SUKKER_COMP){
+  const labels=[s[0]],bases=[0],vals=[s[PRICE_COL]],cols=[pr],tips=[];
+  let run=s[PRICE_COL];
+  for(const c of COMP){
     const chg=e[c.col]-s[c.col];tips.push(chg);labels.push(c.key);
     if(chg>=0){bases.push(run);vals.push(chg);cols.push(up);}
     else{bases.push(run+chg);vals.push(-chg);cols.push(dn);}
     run+=chg;
   }
-  labels.push(e[0]);bases.push(0);vals.push(e[SUKKER_PRICE]);cols.push(pr);
+  labels.push(e[0]);bases.push(0);vals.push(e[PRICE_COL]);cols.push(pr);
   const ctx=document.getElementById("sukker-wf").getContext("2d");
   if(sukkerWf)sukkerWf.destroy();
   sukkerWf=new Chart(ctx,{type:"bar",data:{labels,datasets:[
     {data:bases,backgroundColor:"transparent",borderColor:"transparent",stack:"w"},
     {data:vals,backgroundColor:cols,borderRadius:4,borderSkipped:false,stack:"w"}
   ]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},
-    tooltip:{callbacks:{title:i=>i[0].label,label:i=>{if(i.datasetIndex===0)return null;
+    tooltip:{callbacks:{title:i=>i[0].label,label:i=>{
+      if(i.datasetIndex===0)return null;
       const idx=i.dataIndex,n=labels.length;
       if(idx===0)return` Utsalgspris (start): ${fmt(i.raw)} kr`;
       if(idx===n-1)return` Utsalgspris (slutt): ${fmt(i.raw)} kr`;
       const ch=tips[idx-1];return` Endring: ${ch>=0?"+":""}${fmt(ch)} kr`;},
       filter:i=>i.datasetIndex!==0},
       backgroundColor:css("--surface"),titleColor:tx,bodyColor:mu,borderColor:bo,borderWidth:1,padding:10}},
-    scales:{x:{stacked:true,grid:{display:false},ticks:{color:mu,font:{size:11},maxRotation:35},border:{color:bo}},
-      y:{stacked:true,grid:{color:bo},ticks:{color:mu,font:{size:11},callback:v=>fmt(v,0)+" kr"},border:{color:bo}}}}});
-  // tabell
+    scales:{
+      x:{stacked:true,grid:{display:false},ticks:{color:mu,font:{size:11},maxRotation:35},border:{color:bo}},
+      y:{stacked:true,grid:{color:bo},ticks:{color:mu,font:{size:11},callback:v=>fmt(v,0)+" kr"},border:{color:bo}}
+    }}});
+  // Tabell
   let rows="";
-  for(const c of SUKKER_COMP){
-    const sv=s[c.col],ev=e[c.col],chg=ev-sv,pp=(chg/sv)*100,cls=chg>0.005?"up":chg<-0.005?"down":"flat";
-    rows+=`<tr><td>${c.key}</td><td style="color:var(--text-muted)">${c.excelCol}</td><td>${fmt(sv)} kr</td><td>${fmt(ev)} kr</td><td>${chg>=0?"+":""}${fmt(chg)} kr</td><td><span class="badge ${cls}">${chg>=0?"+":""}${fmt(pp,1)} %</span></td></tr>`;
+  for(const c of COMP){
+    const sv=s[c.col],ev=e[c.col],chg=ev-sv,pp=sv?((chg/sv)*100):0,cls=chg>0.005?"up":chg<-0.005?"down":"flat";
+    rows+=`<tr><td>${c.key}</td><td>${fmt(sv)} kr</td><td>${fmt(ev)} kr</td><td>${chg>=0?"+":""}${fmt(chg)} kr</td><td><span class="badge ${cls}">${chg>=0?"+":""}${fmt(pp,1)} %</span></td></tr>`;
   }
-  const tc=e[SUKKER_PRICE]-s[SUKKER_PRICE],tp=(tc/s[SUKKER_PRICE])*100;
-  rows+=`<tr><td>Utsalgspris (M)</td><td style="color:var(--text-muted)">M</td><td>${fmt(s[SUKKER_PRICE])} kr</td><td>${fmt(e[SUKKER_PRICE])} kr</td><td>${tc>=0?"+":""}${fmt(tc)} kr</td><td><span class="badge ${tc>=0?"up":"down"}">${tc>=0?"+":""}${fmt(tp,1)} %</span></td></tr>`;
+  const tc=e[PRICE_COL]-s[PRICE_COL],tp=s[PRICE_COL]?(tc/s[PRICE_COL])*100:0;
+  rows+=`<tr><td>Utsalgspris (SSB)</td><td>${fmt(s[PRICE_COL])} kr</td><td>${fmt(e[PRICE_COL])} kr</td><td>${tc>=0?"+":""}${fmt(tc)} kr</td><td><span class="badge ${tc>=0?"up":"down"}">${tc>=0?"+":""}${fmt(tp,1)} %</span></td></tr>`;
   document.getElementById("sukker-tbody").innerHTML=rows;
 }
 
-function buildSukkerTrend(){
+function buildTrend(){
   const mu=css("--text-muted"),bo=css("--border"),pr=css("--primary");
   const ctx=document.getElementById("sukker-trend").getContext("2d");
   if(sukkerTrend)sukkerTrend.destroy();
-  sukkerTrend=new Chart(ctx,{type:"line",data:{labels:sukkerRows.map(r=>r[0].slice(0,7)),datasets:[
-    {label:"Utsalgspris (M)",data:sukkerRows.map(r=>r[SUKKER_PRICE]),borderColor:pr,backgroundColor:"transparent",pointRadius:0,tension:0.3,borderWidth:2},
-    {label:"Råvarepris (D)",data:sukkerRows.map(r=>r[1]),borderColor:"#c0392b",backgroundColor:"transparent",pointRadius:0,tension:0.3,borderWidth:2,borderDash:[4,3]}
-  ]},options:{responsive:true,maintainAspectRatio:false,
+  sukkerTrend=new Chart(ctx,{type:"line",data:{
+    labels:sukkerRows.map(r=>r[0]),
+    datasets:[
+      {label:"Utsalgspris SSB",data:sukkerRows.map(r=>r[PRICE_COL]),borderColor:pr,backgroundColor:"transparent",pointRadius:0,tension:0.3,borderWidth:2},
+      {label:"Råvarepris NOK/kg",data:sukkerRows.map(r=>r[3]),borderColor:"#c0392b",backgroundColor:"transparent",pointRadius:0,tension:0.3,borderWidth:2,borderDash:[4,3]}
+    ]},options:{responsive:true,maintainAspectRatio:false,
     plugins:{legend:{labels:{color:mu,font:{size:11}}},tooltip:{mode:"index",intersect:false}},
-    scales:{x:{grid:{display:false},ticks:{color:mu,font:{size:10},maxRotation:0,maxTicksLimit:6},border:{color:bo}},
+    scales:{x:{grid:{display:false},ticks:{color:mu,font:{size:10},maxRotation:0,maxTicksLimit:8},border:{color:bo}},
       y:{grid:{color:bo},ticks:{color:mu,font:{size:10},callback:v=>fmt(v,0)+" kr"},border:{color:bo}}}}});
 }
 
-function buildSukkerDonut(e){
+function buildDonut(e){
   const mu=css("--text-muted");
   const ctx=document.getElementById("sukker-donut").getContext("2d");
   if(sukkerDonut)sukkerDonut.destroy();
   sukkerDonut=new Chart(ctx,{type:"doughnut",data:{
-    labels:SUKKER_COMP.map(c=>c.key),
-    datasets:[{data:SUKKER_COMP.map(c=>e[c.col]),backgroundColor:SUKKER_COMP.map(c=>c.color),borderWidth:0,hoverOffset:6}]
+    labels:COMP.map(c=>c.key),
+    datasets:[{data:COMP.map(c=>e[c.col]),backgroundColor:COMP.map(c=>c.color),borderWidth:0,hoverOffset:6}]
   },options:{responsive:true,maintainAspectRatio:false,cutout:"62%",
     plugins:{legend:{position:"right",labels:{color:mu,font:{size:11},boxWidth:12,padding:8}},
-      tooltip:{callbacks:{label:i=>` ${fmt(i.raw)} kr (${fmt(i.raw/e[SUKKER_PRICE]*100,1)} %)`}}}}});
+      tooltip:{callbacks:{label:i=>` ${fmt(i.raw)} kr (${fmt(i.raw/e[PRICE_COL]*100,1)} %)`}}}}});
 }
 
 function buildSukker(){
+  if(!sukkerRows.length){console.warn("Ingen data");return;}
   const s=findRow(sukkerRows,document.getElementById("sukker-start").value);
   const e=findRow(sukkerRows,document.getElementById("sukker-end").value);
-  buildSukkerKPIs(s,e);buildSukkerWF(s,e);buildSukkerTrend();buildSukkerDonut(e);
+  buildKPIs(s,e);buildWF(s,e);buildTrend();buildDonut(e);
 }
 
-function rebuildAll(){if(sukkerRows.length)buildSukker();}
-
 document.getElementById("sukker-btn").addEventListener("click",buildSukker);
-
 Promise.all([loadSukkerData(),loadSukkerContent()]).then(buildSukker);
 </script>
 </body>
