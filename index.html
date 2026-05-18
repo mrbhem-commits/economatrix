@@ -322,7 +322,20 @@ async function loadSukkerData(){
       sukkerRows.push(row);
     }
     if(sukkerRows.length===0)throw new Error("Ingen gyldige rader");
-    // Sorter stigende på dato
+    // Normaliser og sorter datoer stigende
+    function parseDate(s){
+      if(!s)return new Date(0);
+      // DD.MM.YYYY
+      const dm=s.match(/^(\d{1,2})\.(\d{1,2})\.(\d{4})$/);
+      if(dm)return new Date(dm[3],dm[2]-1,dm[1]);
+      // DD/MM/YYYY
+      const ds=s.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+      if(ds)return new Date(ds[3],ds[2]-1,ds[1]);
+      // YYYY-MM-DD eller annet ISO
+      return new Date(s);
+    }
+    // Lagre normalisert dato som ISO for x-akse
+    sukkerRows=sukkerRows.map(r=>{const d=parseDate(r[0]);return[isNaN(d)?r[0]:d.toISOString().slice(0,10),...r.slice(1)];});
     sukkerRows.sort((a,b)=>new Date(a[0])-new Date(b[0]));
     note.textContent="✓ Google Sheets ("+sukkerRows.length+" rader)";
     note.style.color="var(--down)";
