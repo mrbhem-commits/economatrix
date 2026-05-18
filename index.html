@@ -137,8 +137,8 @@
 
   <div class="sec-panel active" id="sukker-graf">
     <section class="controls">
-      <div class="field"><label for="sukker-start">Startdato</label><input type="date" id="sukker-start" value="2021-01-01"></div>
-      <div class="field"><label for="sukker-end">Sluttdato</label><input type="date" id="sukker-end" value="2025-01-01"></div>
+      <div class="field"><label for="sukker-start">Startdato</label><input type="date" id="sukker-start" value="2023-11-06"></div>
+      <div class="field"><label for="sukker-end">Sluttdato</label><input type="date" id="sukker-end"></div>
       <button class="btn-primary" id="sukker-btn">Oppdater graf</button>
       <span class="data-note" id="sukker-note">Laster data...</span>
     </section>
@@ -203,6 +203,12 @@
 </div>
 
 <script>
+// Sett dagens dato som default sluttdato
+(function(){
+  const today = new Date().toISOString().slice(0,10);
+  document.getElementById("sukker-end").value = today;
+})();
+
 // ── KONFIGURASJON ──────────────────────────────────────────────────────────
 const SUKKER_URL  = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQmTaejBjgaTSGQFzZaMN_FLJHzGyJg39EgKoPC6XOVysem075xRKYYA-_2RG5FKhSfW-8wffoxIRXH/pub?gid=1663124790&single=true&output=csv";
 const INNHOLD_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQmTaejBjgaTSGQFzZaMN_FLJHzGyJg39EgKoPC6XOVysem075xRKYYA-_2RG5FKhSfW-8wffoxIRXH/pub?gid=1485464095&single=true&output=csv";
