@@ -5,116 +5,109 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Prisinnsyn – Clearfjord</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <style>
-  :root,[data-theme="light"]{
-    --bg:#f7f6f2;--surface:#f9f8f5;--surface-2:#fbfbf9;--surface-offset:#f0ede8;
-    --border:rgba(40,37,29,0.12);--text:#28251d;--text-muted:#7a7974;--text-faint:#bab9b4;
-    --primary:#01696f;--primary-hover:#0c4e54;
-    --up:#b94040;--up-bg:#fae8e8;--down:#437a22;--down-bg:#e8f4e0;
-    --radius-sm:.375rem;--radius-md:.5rem;--radius-lg:.75rem;
-    --shadow-sm:0 1px 2px oklch(0.2 0.01 80/0.06);
-    --font:"Inter",sans-serif;
-    --text-xs:clamp(0.72rem,0.68rem + 0.2vw,0.82rem);
-    --text-sm:clamp(0.875rem,0.82rem + 0.28vw,1rem);
-    --text-base:clamp(1rem,0.95rem + 0.25vw,1.125rem);
-    --text-lg:clamp(1.125rem,1rem + 0.6vw,1.4rem);
-    --text-xl:clamp(1.4rem,1.1rem + 1.2vw,2.1rem);
-    --sp1:.25rem;--sp2:.5rem;--sp3:.75rem;--sp4:1rem;--sp5:1.25rem;--sp6:1.5rem;--sp8:2rem;
-  }
-  [data-theme="dark"]{
-    --bg:#171614;--surface:#1c1b19;--surface-2:#201f1d;--surface-offset:#1d1c1a;
-    --border:rgba(205,204,202,0.12);--text:#cdccca;--text-muted:#797876;--text-faint:#5a5957;
-    --primary:#4f98a3;--primary-hover:#227f8b;
-    --up:#e07070;--up-bg:#3a2020;--down:#6daa45;--down-bg:#1e2e18;
-  }
-  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-  html{-webkit-font-smoothing:antialiased;scroll-behavior:smooth}
-  body{min-height:100dvh;font-family:var(--font);font-size:var(--text-base);color:var(--text);background:var(--bg);line-height:1.6}
-  button,input{cursor:pointer;background:none;border:none;font:inherit;color:inherit;transition:color 160ms,background 160ms,border-color 160ms}
-  input{cursor:text}
-  .app{max-width:1140px;margin:0 auto;padding:var(--sp6) var(--sp4)}
-  header{display:flex;align-items:center;justify-content:space-between;margin-bottom:var(--sp8);padding-bottom:var(--sp4);border-bottom:1px solid var(--border)}
-  .logo{display:flex;align-items:center;gap:var(--sp3)}
-  .logo svg{color:var(--primary)}
-  .logo-text{font-size:var(--text-lg);font-weight:700;letter-spacing:-0.02em}
-  .logo-sub{font-size:var(--text-xs);color:var(--text-muted)}
-  .theme-btn{width:36px;height:36px;display:flex;align-items:center;justify-content:center;border-radius:var(--radius-md);color:var(--text-muted)}
-  .theme-btn:hover{background:var(--surface-2);color:var(--text)}
-  .product-tabs{display:flex;gap:var(--sp2);flex-wrap:wrap;margin-bottom:var(--sp6)}
-  .prod-tab{display:flex;align-items:center;gap:var(--sp2);padding:var(--sp2) var(--sp5);border-radius:var(--radius-lg);font-size:var(--text-sm);font-weight:500;color:var(--text-muted);background:var(--surface);border:1px solid var(--border);box-shadow:var(--shadow-sm)}
-  .prod-tab:hover{color:var(--text);border-color:var(--primary)}
-  .prod-tab.active{background:var(--primary);color:#fff;border-color:var(--primary)}
-  .prod-tab.soon{opacity:.45;cursor:not-allowed}
-  .product-panel{display:none}
-  .product-panel.active{display:block}
-  .section-nav{display:flex;gap:0;border-bottom:2px solid var(--border);margin-bottom:var(--sp6)}
-  .sec-btn{padding:var(--sp3) var(--sp5);font-size:var(--text-sm);font-weight:500;color:var(--text-muted);border-bottom:2px solid transparent;margin-bottom:-2px;border-radius:var(--radius-sm) var(--radius-sm) 0 0}
-  .sec-btn:hover{color:var(--text);background:var(--surface-offset)}
-  .sec-btn.active{color:var(--primary);border-bottom-color:var(--primary);background:var(--surface)}
-  .sec-panel{display:none}
-  .sec-panel.active{display:block}
-  .controls{display:flex;gap:var(--sp4);align-items:flex-end;flex-wrap:wrap;margin-bottom:var(--sp6);padding:var(--sp5);background:var(--surface);border-radius:var(--radius-lg);border:1px solid var(--border);box-shadow:var(--shadow-sm)}
-  .field{display:flex;flex-direction:column;gap:var(--sp1)}
-  .field label{font-size:var(--text-xs);font-weight:500;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em}
-  .field input[type="date"],.field input[type="number"]{padding:var(--sp2) var(--sp3);border:1px solid var(--border);border-radius:var(--radius-md);background:var(--surface-2);color:var(--text);font-size:var(--text-sm);width:160px}
-  .field input:focus{outline:2px solid var(--primary);outline-offset:2px}
-  .field .hint{font-size:var(--text-xs);color:var(--text-muted);margin-top:2px}
-  .btn-primary{padding:var(--sp2) var(--sp6);background:var(--primary);color:#fff;border-radius:var(--radius-md);font-size:var(--text-sm);font-weight:500;height:38px;align-self:flex-end}
-  .btn-primary:hover{background:var(--primary-hover)}
-  .data-note{font-size:var(--text-xs);color:var(--text-muted);align-self:flex-end;padding-bottom:var(--sp2)}
-  .kpis{display:grid;grid-template-columns:repeat(auto-fill,minmax(165px,1fr));gap:var(--sp3);margin-bottom:var(--sp6)}
-  .kpi{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:var(--sp4);box-shadow:var(--shadow-sm)}
-  .kpi-label{font-size:var(--text-xs);color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:var(--sp1)}
-  .kpi-value{font-size:var(--text-xl);font-weight:600;font-variant-numeric:tabular-nums;letter-spacing:-0.02em;line-height:1.1}
-  .kpi-sub{font-size:var(--text-xs);color:var(--text-muted);margin-top:2px}
-  .kpi.up .kpi-value{color:var(--up)}
-  .kpi.down .kpi-value{color:var(--down)}
-  .kpi.neutral .kpi-value{color:var(--primary)}
-  .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:var(--sp6);box-shadow:var(--shadow-sm);margin-bottom:var(--sp6)}
-  .card-title{font-size:var(--text-base);font-weight:600;margin-bottom:var(--sp1)}
-  .card-desc{font-size:var(--text-xs);color:var(--text-muted);margin-bottom:var(--sp5);max-width:72ch}
-  .chart-wrap{position:relative;height:400px}
-  .legend{display:flex;gap:var(--sp4);flex-wrap:wrap;margin-top:var(--sp4)}
-  .legend-item{display:flex;align-items:center;gap:var(--sp2);font-size:var(--text-xs);color:var(--text-muted)}
-  .legend-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
-  .chart-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp6)}
-  .chart-grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:var(--sp6)}
-  @media(max-width:900px){.chart-grid-3{grid-template-columns:1fr 1fr}}
-  @media(max-width:700px){.chart-grid,.chart-grid-3{grid-template-columns:1fr}}
-  .table-wrap{overflow-x:auto;margin-top:var(--sp4)}
-  table{width:100%;border-collapse:collapse;font-size:var(--text-sm)}
-  th{text-align:left;padding:var(--sp2) var(--sp3);font-size:var(--text-xs);font-weight:500;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em;border-bottom:1px solid var(--border);white-space:nowrap}
-  td{padding:var(--sp2) var(--sp3);border-bottom:1px solid var(--border);font-variant-numeric:tabular-nums;white-space:nowrap}
-  tr:last-child td{border-bottom:none;font-weight:600;border-top:2px solid var(--border)}
-  .badge{display:inline-flex;align-items:center;padding:1px 8px;border-radius:9999px;font-size:var(--text-xs);font-weight:500}
-  .badge.up{background:var(--up-bg);color:var(--up)}
-  .badge.down{background:var(--down-bg);color:var(--down)}
-  .badge.flat{background:var(--surface-2);color:var(--text-muted)}
-  /* pris-input-kort */
-  .price-input-card{background:var(--primary);color:#fff;border-radius:var(--radius-lg);padding:var(--sp4) var(--sp5);display:flex;align-items:center;gap:var(--sp4);flex-wrap:wrap;margin-bottom:var(--sp4)}
-  .price-input-card label{font-size:var(--text-xs);font-weight:600;text-transform:uppercase;letter-spacing:.05em;opacity:.85}
-  .price-input-card input{width:110px;padding:var(--sp2) var(--sp3);border-radius:var(--radius-md);border:none;background:rgba(255,255,255,.2);color:#fff;font-size:var(--text-sm);font-weight:600}
-  .price-input-card input::placeholder{opacity:.6}
-  .price-input-card .price-hint{font-size:var(--text-xs);opacity:.75}
-  .prose{font-size:var(--text-base);line-height:1.85;color:var(--text);max-width:72ch}
-  .prose p{margin-bottom:var(--sp4)}
-  .prose p:last-child{margin-bottom:0}
-  .text-meta{display:flex;align-items:center;gap:var(--sp3);margin-bottom:var(--sp5);font-size:var(--text-xs);color:var(--text-muted)}
-  .text-badge{background:var(--primary);color:#fff;padding:2px 10px;border-radius:9999px;font-size:var(--text-xs)}
-  @keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
-  .skeleton{background:linear-gradient(90deg,var(--surface-offset) 25%,var(--border) 50%,var(--surface-offset) 75%);background-size:200% 100%;animation:shimmer 1.5s ease-in-out infinite;border-radius:var(--radius-sm);height:1em;margin-bottom:.75em}
-  footer{text-align:center;padding:var(--sp8) 0 var(--sp4);color:var(--text-faint);font-size:var(--text-xs)}
-  @media(max-width:600px){.controls{flex-direction:column}.btn-primary{width:100%}.chart-wrap{height:260px}.sec-btn{padding:var(--sp2) var(--sp3)}}
+:root,[data-theme="light"]{
+  --bg:#f7f6f2;--surface:#f9f8f5;--surface-2:#fbfbf9;--surface-offset:#f0ede8;
+  --border:rgba(40,37,29,0.12);--text:#28251d;--text-muted:#7a7974;--text-faint:#bab9b4;
+  --primary:#01696f;--primary-hover:#0c4e54;
+  --up:#b94040;--up-bg:#fae8e8;--down:#437a22;--down-bg:#e8f4e0;
+  --radius-sm:.375rem;--radius-md:.5rem;--radius-lg:.75rem;
+  --shadow-sm:0 1px 2px rgba(0,0,0,0.06);
+  --font:"Inter",sans-serif;
+  --text-xs:clamp(0.72rem,0.68rem + 0.2vw,0.82rem);
+  --text-sm:clamp(0.875rem,0.82rem + 0.28vw,1rem);
+  --text-base:clamp(1rem,0.95rem + 0.25vw,1.125rem);
+  --text-lg:clamp(1.125rem,1rem + 0.6vw,1.4rem);
+  --text-xl:clamp(1.4rem,1.1rem + 1.2vw,2.1rem);
+  --sp1:.25rem;--sp2:.5rem;--sp3:.75rem;--sp4:1rem;--sp5:1.25rem;--sp6:1.5rem;--sp8:2rem;
+}
+[data-theme="dark"]{
+  --bg:#171614;--surface:#1c1b19;--surface-2:#201f1d;--surface-offset:#1d1c1a;
+  --border:rgba(205,204,202,0.12);--text:#cdccca;--text-muted:#797876;--text-faint:#5a5957;
+  --primary:#4f98a3;--primary-hover:#227f8b;
+  --up:#e07070;--up-bg:#3a2020;--down:#6daa45;--down-bg:#1e2e18;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-font-smoothing:antialiased;scroll-behavior:smooth}
+body{min-height:100dvh;font-family:var(--font);font-size:var(--text-base);color:var(--text);background:var(--bg);line-height:1.6}
+button,input{cursor:pointer;background:none;border:none;font:inherit;color:inherit;transition:color 160ms,background 160ms}
+input{cursor:text}
+.app{max-width:1140px;margin:0 auto;padding:var(--sp6) var(--sp4)}
+header{display:flex;align-items:center;justify-content:space-between;margin-bottom:var(--sp8);padding-bottom:var(--sp4);border-bottom:1px solid var(--border)}
+.logo{display:flex;align-items:center;gap:var(--sp3)}
+.logo svg{color:var(--primary)}
+.logo-text{font-size:var(--text-lg);font-weight:700;letter-spacing:-0.02em}
+.logo-sub{font-size:var(--text-xs);color:var(--text-muted)}
+.theme-btn{width:36px;height:36px;display:flex;align-items:center;justify-content:center;border-radius:var(--radius-md);color:var(--text-muted)}
+.theme-btn:hover{background:var(--surface-2);color:var(--text)}
+.product-tabs{display:flex;gap:var(--sp2);flex-wrap:wrap;margin-bottom:var(--sp6)}
+.prod-tab{display:flex;align-items:center;gap:var(--sp2);padding:var(--sp2) var(--sp5);border-radius:var(--radius-lg);font-size:var(--text-sm);font-weight:500;color:var(--text-muted);background:var(--surface);border:1px solid var(--border)}
+.prod-tab:hover{color:var(--text);border-color:var(--primary)}
+.prod-tab.active{background:var(--primary);color:#fff;border-color:var(--primary)}
+.prod-tab.soon{opacity:.45;cursor:not-allowed}
+.product-panel{display:none}
+.product-panel.active{display:block}
+.section-nav{display:flex;gap:0;border-bottom:2px solid var(--border);margin-bottom:var(--sp6)}
+.sec-btn{padding:var(--sp3) var(--sp5);font-size:var(--text-sm);font-weight:500;color:var(--text-muted);border-bottom:2px solid transparent;margin-bottom:-2px;border-radius:var(--radius-sm) var(--radius-sm) 0 0}
+.sec-btn:hover{color:var(--text);background:var(--surface-offset)}
+.sec-btn.active{color:var(--primary);border-bottom-color:var(--primary);background:var(--surface)}
+.sec-panel{display:none}
+.sec-panel.active{display:block}
+.controls{display:flex;gap:var(--sp4);align-items:flex-end;flex-wrap:wrap;margin-bottom:var(--sp6);padding:var(--sp5);background:var(--surface);border-radius:var(--radius-lg);border:1px solid var(--border)}
+.field{display:flex;flex-direction:column;gap:var(--sp1)}
+.field label{font-size:var(--text-xs);font-weight:500;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em}
+.field input[type="date"],.field input[type="number"]{padding:var(--sp2) var(--sp3);border:1px solid var(--border);border-radius:var(--radius-md);background:var(--surface-2);color:var(--text);font-size:var(--text-sm);width:160px}
+.btn-primary{padding:var(--sp2) var(--sp6);background:var(--primary);color:#fff;border-radius:var(--radius-md);font-size:var(--text-sm);font-weight:500;height:38px;align-self:flex-end}
+.btn-primary:hover{background:var(--primary-hover)}
+.data-note{font-size:var(--text-xs);color:var(--text-muted);align-self:flex-end;padding-bottom:var(--sp2)}
+.kpis{display:grid;grid-template-columns:repeat(auto-fill,minmax(165px,1fr));gap:var(--sp3);margin-bottom:var(--sp6)}
+.kpi{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:var(--sp4)}
+.kpi-label{font-size:var(--text-xs);color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:var(--sp1)}
+.kpi-value{font-size:var(--text-xl);font-weight:600;letter-spacing:-0.02em;line-height:1.1}
+.kpi-sub{font-size:var(--text-xs);color:var(--text-muted);margin-top:2px}
+.kpi.up .kpi-value{color:var(--up)}
+.kpi.down .kpi-value{color:var(--down)}
+.kpi.neutral .kpi-value{color:var(--primary)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:var(--sp6);margin-bottom:var(--sp6)}
+.card-title{font-size:var(--text-base);font-weight:600;margin-bottom:var(--sp1)}
+.card-desc{font-size:var(--text-xs);color:var(--text-muted);margin-bottom:var(--sp5);max-width:72ch}
+.chart-wrap{position:relative;height:400px}
+.legend{display:flex;gap:var(--sp4);flex-wrap:wrap;margin-top:var(--sp4)}
+.legend-item{display:flex;align-items:center;gap:var(--sp2);font-size:var(--text-xs);color:var(--text-muted)}
+.legend-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.chart-grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:var(--sp6)}
+@media(max-width:900px){.chart-grid-3{grid-template-columns:1fr 1fr}}
+@media(max-width:700px){.chart-grid-3{grid-template-columns:1fr}}
+.table-wrap{overflow-x:auto;margin-top:var(--sp4)}
+table{width:100%;border-collapse:collapse;font-size:var(--text-sm)}
+th{text-align:left;padding:var(--sp2) var(--sp3);font-size:var(--text-xs);font-weight:500;color:var(--text-muted);text-transform:uppercase;border-bottom:1px solid var(--border);white-space:nowrap}
+td{padding:var(--sp2) var(--sp3);border-bottom:1px solid var(--border);white-space:nowrap}
+tr:last-child td{border-bottom:none;font-weight:600;border-top:2px solid var(--border)}
+.badge{display:inline-flex;align-items:center;padding:1px 8px;border-radius:9999px;font-size:var(--text-xs);font-weight:500}
+.badge.up{background:var(--up-bg);color:var(--up)}
+.badge.down{background:var(--down-bg);color:var(--down)}
+.badge.flat{background:var(--surface-2);color:var(--text-muted)}
+.price-input-card{background:var(--primary);color:#fff;border-radius:var(--radius-lg);padding:var(--sp4) var(--sp5);display:flex;align-items:center;gap:var(--sp4);flex-wrap:wrap;margin-bottom:var(--sp4)}
+.price-input-card label{font-size:var(--text-xs);font-weight:600;text-transform:uppercase;letter-spacing:.05em;opacity:.85}
+.price-input-card input{width:110px;padding:var(--sp2) var(--sp3);border-radius:var(--radius-md);border:none;background:rgba(255,255,255,.2);color:#fff;font-size:var(--text-sm);font-weight:600}
+.price-input-card .price-hint{font-size:var(--text-xs);opacity:.75}
+.prose{font-size:var(--text-base);line-height:1.85;color:var(--text);max-width:72ch}
+.prose p{margin-bottom:var(--sp4)}
+.prose p:last-child{margin-bottom:0}
+.text-meta{display:flex;align-items:center;gap:var(--sp3);margin-bottom:var(--sp5);font-size:var(--text-xs);color:var(--text-muted)}
+.text-badge{background:var(--primary);color:#fff;padding:2px 10px;border-radius:9999px;font-size:var(--text-xs)}
+.skeleton{background:var(--surface-offset);border-radius:var(--radius-sm);height:1em;margin-bottom:.75em}
+footer{text-align:center;padding:var(--sp8) 0 var(--sp4);color:var(--text-faint);font-size:var(--text-xs)}
+@media(max-width:600px){.controls{flex-direction:column}.btn-primary{width:100%}.chart-wrap{height:260px}}
 </style>
 </head>
 <body>
 <div class="app">
 <header>
   <div class="logo">
-    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-label="Prisinnsyn logo">
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
       <rect x="2" y="16" width="6" height="14" fill="currentColor" opacity=".3" rx="1"/>
       <rect x="10" y="8" width="6" height="22" fill="currentColor" opacity=".6" rx="1"/>
       <rect x="18" y="12" width="6" height="18" fill="currentColor" opacity=".45" rx="1"/>
@@ -126,18 +119,18 @@
       <div class="logo-sub">Hva driver prisene på dagligvarer?</div>
     </div>
   </div>
-  <button class="theme-btn" data-theme-toggle aria-label="Bytt tema">
+  <button class="theme-btn" id="themeBtn">
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
   </button>
 </header>
 
-<div class="product-tabs" role="tablist">
-  <button class="prod-tab active" role="tab" data-prod="sukker">🍬 Sukker</button>
-  <button class="prod-tab" role="tab" data-prod="kaffe">☕ Kaffe</button>
-  <button class="prod-tab soon" disabled>⛽ Bensin <small style="font-size:.75em;opacity:.7">(snart)</small></button>
+<div class="product-tabs">
+  <button class="prod-tab active" data-prod="sukker">🍬 Sukker</button>
+  <button class="prod-tab" data-prod="kaffe">☕ Kaffe</button>
+  <button class="prod-tab soon" disabled>⛽ Bensin <small>(snart)</small></button>
 </div>
 
-<!-- ═══════════ SUKKER ═══════════ -->
+<!-- SUKKER -->
 <div class="product-panel active" id="prod-sukker">
   <div class="section-nav">
     <button class="sec-btn active" data-prod="sukker" data-sec="graf">Graf</button>
@@ -146,8 +139,8 @@
   </div>
   <div class="sec-panel active" id="sukker-graf">
     <section class="controls">
-      <div class="field"><label for="sukker-start">Startdato</label><input type="date" id="sukker-start" value="2023-11-06"></div>
-      <div class="field"><label for="sukker-end">Sluttdato</label><input type="date" id="sukker-end"></div>
+      <div class="field"><label>Startdato</label><input type="date" id="sukker-start" value="2023-11-06"></div>
+      <div class="field"><label>Sluttdato</label><input type="date" id="sukker-end"></div>
       <button class="btn-primary" id="sukker-btn">Oppdater graf</button>
       <span class="data-note" id="sukker-note">Laster...</span>
     </section>
@@ -157,7 +150,7 @@
       <div class="card-desc">Første stolpe = utsalgspris på startdato. Midtstolpene viser endringen per komponent. Siste stolpe = utsalgspris på sluttdato.</div>
       <div class="chart-wrap"><canvas id="sukker-wf"></canvas></div>
       <div class="legend">
-        <div class="legend-item"><div class="legend-dot" style="background:var(--primary)"></div>Totalpris (SSB)</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--primary)"></div>Totalpris</div>
         <div class="legend-item"><div class="legend-dot" style="background:var(--up)"></div>Økning</div>
         <div class="legend-item"><div class="legend-dot" style="background:var(--down)"></div>Reduksjon</div>
       </div>
@@ -169,18 +162,18 @@
     <div class="chart-grid-3">
       <div class="card">
         <div class="card-title">Pristrend</div>
-        <div class="card-desc" style="margin-bottom:var(--sp4)">Utsalgspris vs. råvarepris over tid</div>
+        <div class="card-desc">Utsalgspris vs. råvarepris over tid</div>
         <div class="chart-wrap" style="height:220px"><canvas id="sukker-trend"></canvas></div>
       </div>
       <div class="card">
         <div class="card-title">Kostnadsutvikling</div>
-        <div class="card-desc" style="margin-bottom:var(--sp4)">Stablet areal – alle komponenter over tid</div>
+        <div class="card-desc">Stablet areal – alle komponenter over tid</div>
         <div class="chart-wrap" style="height:220px"><canvas id="sukker-area"></canvas></div>
       </div>
       <div class="card">
         <div class="card-title">Kostnadssammensetning</div>
         <div class="price-input-card">
-          <div><label for="sukker-custom-price">Din butikkpris (kr/kg)</label><div class="price-hint">Standard: SSB-pris</div></div>
+          <div><label for="sukker-custom-price">Din butikkpris (kr/kg)</label><div class="price-hint">Standard: siste SSB-pris</div></div>
           <input type="number" id="sukker-custom-price" placeholder="f.eks. 45" min="1" max="200" step="0.5">
         </div>
         <div class="chart-wrap" style="height:220px"><canvas id="sukker-donut"></canvas></div>
@@ -191,18 +184,18 @@
     <div class="card">
       <div class="card-title">Analyse – Sukker</div>
       <div class="text-meta"><span id="sukker-analyse-dato"></span><span id="sukker-analyse-badge" class="text-badge" style="display:none">Oppdatert</span></div>
-      <div class="prose" id="sukker-analyse-tekst"><div class="skeleton" style="width:100%"></div><div class="skeleton" style="width:88%"></div><div class="skeleton" style="width:55%"></div></div>
+      <div class="prose" id="sukker-analyse-tekst"><div class="skeleton" style="width:100%"></div><div class="skeleton" style="width:80%"></div></div>
     </div>
   </div>
   <div class="sec-panel" id="sukker-metodikk">
     <div class="card">
       <div class="card-title">Metodikk – Sukker</div>
-      <div class="prose" id="sukker-metodikk-tekst"><div class="skeleton" style="width:100%"></div><div class="skeleton" style="width:82%"></div><div class="skeleton" style="width:55%"></div></div>
+      <div class="prose" id="sukker-metodikk-tekst"><div class="skeleton" style="width:100%"></div><div class="skeleton" style="width:80%"></div></div>
     </div>
   </div>
 </div>
 
-<!-- ═══════════ KAFFE ═══════════ -->
+<!-- KAFFE -->
 <div class="product-panel" id="prod-kaffe">
   <div class="section-nav">
     <button class="sec-btn active" data-prod="kaffe" data-sec="graf">Graf</button>
@@ -211,8 +204,8 @@
   </div>
   <div class="sec-panel active" id="kaffe-graf">
     <section class="controls">
-      <div class="field"><label for="kaffe-start">Startdato</label><input type="date" id="kaffe-start" value="2023-11-06"></div>
-      <div class="field"><label for="kaffe-end">Sluttdato</label><input type="date" id="kaffe-end"></div>
+      <div class="field"><label>Startdato</label><input type="date" id="kaffe-start" value="2023-11-06"></div>
+      <div class="field"><label>Sluttdato</label><input type="date" id="kaffe-end"></div>
       <button class="btn-primary" id="kaffe-btn">Oppdater graf</button>
       <span class="data-note" id="kaffe-note">Laster...</span>
     </section>
@@ -222,7 +215,7 @@
       <div class="card-desc">Første stolpe = utsalgspris på startdato. Midtstolpene viser endringen per komponent. Siste stolpe = utsalgspris på sluttdato.</div>
       <div class="chart-wrap"><canvas id="kaffe-wf"></canvas></div>
       <div class="legend">
-        <div class="legend-item"><div class="legend-dot" style="background:var(--primary)"></div>Totalpris (SSB)</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--primary)"></div>Totalpris</div>
         <div class="legend-item"><div class="legend-dot" style="background:var(--up)"></div>Økning</div>
         <div class="legend-item"><div class="legend-dot" style="background:var(--down)"></div>Reduksjon</div>
       </div>
@@ -234,19 +227,19 @@
     <div class="chart-grid-3">
       <div class="card">
         <div class="card-title">Pristrend</div>
-        <div class="card-desc" style="margin-bottom:var(--sp4)">Utsalgspris vs. råvarepris over tid</div>
+        <div class="card-desc">Utsalgspris vs. råvarepris over tid</div>
         <div class="chart-wrap" style="height:220px"><canvas id="kaffe-trend"></canvas></div>
       </div>
       <div class="card">
         <div class="card-title">Kostnadsutvikling</div>
-        <div class="card-desc" style="margin-bottom:var(--sp4)">Stablet areal – alle komponenter over tid</div>
+        <div class="card-desc">Stablet areal – alle komponenter over tid</div>
         <div class="chart-wrap" style="height:220px"><canvas id="kaffe-area"></canvas></div>
       </div>
       <div class="card">
         <div class="card-title">Kostnadssammensetning</div>
         <div class="price-input-card">
-          <div><label for="kaffe-custom-price">Din butikkpris (kr/250g)</label><div class="price-hint">Standard: SSB-pris</div></div>
-          <input type="number" id="kaffe-custom-price" placeholder="f.eks. 60" min="1" max="500" step="0.5">
+          <div><label for="kaffe-custom-price">Din butikkpris (kr/250g)</label><div class="price-hint">Standard: siste SSB-pris</div></div>
+          <input type="number" id="kaffe-custom-price" placeholder="f.eks. 65" min="1" max="500" step="0.5">
         </div>
         <div class="chart-wrap" style="height:220px"><canvas id="kaffe-donut"></canvas></div>
       </div>
@@ -256,13 +249,13 @@
     <div class="card">
       <div class="card-title">Analyse – Kaffe</div>
       <div class="text-meta"><span id="kaffe-analyse-dato"></span><span id="kaffe-analyse-badge" class="text-badge" style="display:none">Oppdatert</span></div>
-      <div class="prose" id="kaffe-analyse-tekst"><div class="skeleton" style="width:100%"></div><div class="skeleton" style="width:88%"></div><div class="skeleton" style="width:55%"></div></div>
+      <div class="prose" id="kaffe-analyse-tekst"><div class="skeleton" style="width:100%"></div><div class="skeleton" style="width:80%"></div></div>
     </div>
   </div>
   <div class="sec-panel" id="kaffe-metodikk">
     <div class="card">
       <div class="card-title">Metodikk – Kaffe</div>
-      <div class="prose" id="kaffe-metodikk-tekst"><div class="skeleton" style="width:100%"></div><div class="skeleton" style="width:82%"></div><div class="skeleton" style="width:55%"></div></div>
+      <div class="prose" id="kaffe-metodikk-tekst"><div class="skeleton" style="width:100%"></div><div class="skeleton" style="width:80%"></div></div>
     </div>
   </div>
 </div>
@@ -271,20 +264,13 @@
 </div>
 
 <script>
-// ════════════════════════════════════════════════════
-// KONFIGURASJON
-// ════════════════════════════════════════════════════
-const SUKKER_URL  = "https://corsproxy.io/?url=https://docs.google.com/spreadsheets/d/e/2PACX-1vQmTaejBjgaTSGQFzZaMN_FLJHzGyJg39EgKoPC6XOVysem075xRKYYA-_2RG5FKhSfW-8wffoxIRXH/pub?gid=1663124790&single=true&output=csv";
-const INNHOLD_URL = "https://corsproxy.io/?url=https://docs.google.com/spreadsheets/d/e/2PACX-1vQmTaejBjgaTSGQFzZaMN_FLJHzGyJg39EgKoPC6XOVysem075xRKYYA-_2RG5FKhSfW-8wffoxIRXH/pub?gid=1485464095&single=true&output=csv";
-// Bytt null med URL når kaffe-arket er publisert:
-const KAFFE_URL   = "https://corsproxy.io/?url=https://docs.google.com/spreadsheets/d/e/2PACX-1vQmTaejBjgaTSGQFzZaMN_FLJHzGyJg39EgKoPC6XOVysem075xRKYYA-_2RG5FKhSfW-8wffoxIRXH/pub?gid=1338885147&single=true&output=csv";
+// URLs
+var SUKKER_URL  = "https://corsproxy.io/?url=https://docs.google.com/spreadsheets/d/e/2PACX-1vQmTaejBjgaTSGQFzZaMN_FLJHzGyJg39EgKoPC6XOVysem075xRKYYA-_2RG5FKhSfW-8wffoxIRXH/pub?gid=1663124790&single=true&output=csv";
+var INNHOLD_URL = "https://corsproxy.io/?url=https://docs.google.com/spreadsheets/d/e/2PACX-1vQmTaejBjgaTSGQFzZaMN_FLJHzGyJg39EgKoPC6XOVysem075xRKYYA-_2RG5FKhSfW-8wffoxIRXH/pub?gid=1485464095&single=true&output=csv";
+var KAFFE_URL   = "https://corsproxy.io/?url=https://docs.google.com/spreadsheets/d/e/2PACX-1vQmTaejBjgaTSGQFzZaMN_FLJHzGyJg39EgKoPC6XOVysem075xRKYYA-_2RG5FKhSfW-8wffoxIRXH/pub?gid=1338885147&single=true&output=csv";
 
-// ════════════════════════════════════════════════════
-// KOLONNER
-// Sukker: A=0,D=3,E=4,F=5,G=6,H=7,I=8,J=9,K=10,L=11,M=12
-// Kaffe:  A=0,E=4,F=5,G=6,H=7,I=8,K=10,L=11,M=12
-// ════════════════════════════════════════════════════
-const SUKKER_COMP = [
+// Kolonner
+var SUKKER_COMP = [
   {key:"Råvarepris",           col:3,  color:"#e63946"},
   {key:"Raffinering",          col:4,  color:"#f4a261"},
   {key:"Frakt til Norge",      col:5,  color:"#e9c46a"},
@@ -292,410 +278,361 @@ const SUKKER_COMP = [
   {key:"Pakking & emballasje", col:7,  color:"#457b9d"},
   {key:"Frakt og lager i NO",  col:8,  color:"#a8dadc"},
   {key:"Bruttofortjeneste",    col:10, color:"#6a0572"},
-  {key:"MVA",                  col:11, color:"#606c38"},
+  {key:"MVA",                  col:11, color:"#606c38"}
 ];
-const SUKKER_PRICE = 12;
+var SUKKER_PRICE = 12;
 
-const KAFFE_COMP = [
-  {key:"Råvarepris (m/svinn)",  col:4,  color:"#6f4e37"},
-  {key:"Frakt til Norge",       col:5,  color:"#c7a165"},
-  {key:"Brenning & pakking",    col:6,  color:"#e9c46a"},
-  {key:"Emballasje",            col:7,  color:"#457b9d"},
-  {key:"Frakt og lager i NO",   col:8,  color:"#a8dadc"},
-  {key:"Bruttofortjeneste",     col:10, color:"#6a0572"},
-  {key:"MVA",                   col:11, color:"#606c38"},
+var KAFFE_COMP = [
+  {key:"Råvarepris (m/svinn)", col:4,  color:"#6f4e37"},
+  {key:"Frakt til Norge",      col:5,  color:"#c7a165"},
+  {key:"Brenning & pakking",   col:6,  color:"#e9c46a"},
+  {key:"Emballasje",           col:7,  color:"#457b9d"},
+  {key:"Frakt og lager i NO",  col:8,  color:"#a8dadc"},
+  {key:"Bruttofortjeneste",    col:10, color:"#6a0572"},
+  {key:"MVA",                  col:11, color:"#606c38"}
 ];
-const KAFFE_PRICE = 12;
+var KAFFE_PRICE = 12;
 
-// Demo-data kaffe (NOK/250g, realistiske verdier)
-const KAFFE_DEMO = [
-  ["2020-01-01",0,0,0,0, 12.50,2.10,4.20,1.80,1.40,0,12.00,5.10,39.10],
-  ["2020-07-01",0,0,0,0, 13.00,2.15,4.25,1.82,1.42,0,12.20,5.18,40.02],
-  ["2021-01-01",0,0,0,0, 14.20,2.20,4.30,1.85,1.45,0,12.80,5.44,42.24],
-  ["2021-07-01",0,0,0,0, 15.50,2.25,4.35,1.88,1.48,0,13.20,5.62,44.28],
-  ["2022-01-01",0,0,0,0, 20.10,2.50,4.50,1.95,1.55,0,14.50,6.26,51.36],
-  ["2022-07-01",0,0,0,0, 24.80,2.70,4.65,2.00,1.60,0,15.80,7.02,58.57],
-  ["2023-01-01",0,0,0,0, 27.50,2.85,4.80,2.05,1.65,0,17.00,7.67,63.52],
-  ["2023-07-01",0,0,0,0, 28.90,2.90,4.85,2.08,1.68,0,17.60,7.98,65.99],
-  ["2023-11-01",0,0,0,0, 30.20,2.95,4.90,2.10,1.70,0,18.20,8.26,68.31],
-  ["2024-01-01",0,0,0,0, 31.50,3.00,4.95,2.12,1.72,0,18.80,8.54,70.63],
-  ["2024-07-01",0,0,0,0, 34.20,3.10,5.00,2.15,1.75,0,19.60,8.94,74.74],
-  ["2025-01-01",0,0,0,0, 38.50,3.20,5.10,2.18,1.78,0,20.80,9.46,81.02],
-  ["2025-07-01",0,0,0,0, 41.00,3.30,5.15,2.20,1.80,0,21.50,9.77,84.72],
+var KAFFE_DEMO = [
+  ["2020-01-01",0,0,0,0,12.50,2.10,4.20,1.80,1.40,0,12.00,5.10,39.10],
+  ["2021-01-01",0,0,0,0,14.20,2.20,4.30,1.85,1.45,0,12.80,5.44,42.24],
+  ["2022-01-01",0,0,0,0,20.10,2.50,4.50,1.95,1.55,0,14.50,6.26,51.36],
+  ["2022-07-01",0,0,0,0,24.80,2.70,4.65,2.00,1.60,0,15.80,7.02,58.57],
+  ["2023-01-01",0,0,0,0,27.50,2.85,4.80,2.05,1.65,0,17.00,7.67,63.52],
+  ["2023-11-01",0,0,0,0,30.20,2.95,4.90,2.10,1.70,0,18.20,8.26,68.31],
+  ["2024-07-01",0,0,0,0,34.20,3.10,5.00,2.15,1.75,0,19.60,8.94,74.74],
+  ["2025-01-01",0,0,0,0,38.50,3.20,5.10,2.18,1.78,0,20.80,9.46,81.02],
+  ["2025-07-01",0,0,0,0,41.00,3.30,5.15,2.20,1.80,0,21.50,9.77,84.72]
 ];
 
-// ════════════════════════════════════════════════════
-// UTILS
-// ════════════════════════════════════════════════════
-const fmt = (n,d=2) => Number(n).toLocaleString("nb-NO",{minimumFractionDigits:d,maximumFractionDigits:d});
-const css = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
-const toHtml = s => s.split(/
-+/).filter(l=>l.trim()).map(l=>`<p>${l.trim()}</p>`).join("");
+var DEMO_INNHOLD = {
+  analyse_dato:"18.05.2026",
+  analyse_tekst:"Sukker er blant de mest påslåtte dagligvarene i norske butikker. I Tyskland koster en kilo sukker rundt 1 euro – det vil si omtrent 11–12 kroner. I Norge betaler du 38 kroner for det samme kiloet.\n\nButikkjedene peker gjerne på den norske særavgiften på sukker som forklaring. Men særavgiften er på 9,50 kroner per kilo – selv om du legger til høyere norske lønninger og transport, er det langt igjen til 38 kroner. Differansen havner i stor grad som fortjeneste hos dagligvarekjedene.\n\nDet som gjør dette ekstra påfallende er utviklingen de siste årene. Råvareprisen på sukker på verdensmarkedet nådde en topp for fire til fem år siden, og har siden falt betydelig. Likevel har utsalgsprisen i norske butikker økt fra rundt 30–32 kroner per kilo til 38 kroner i dag.",
+  metodikk_tekst:"Kostnadsmodellen beregner hva en kilo sukker koster å bringe fra verdensmarked til norsk butikkhylle, komponent for komponent.\n\nRåvareprisen hentes automatisk fra London-børsen (ICE Futures Europe), der hvitt sukker handles i USD per tonn. Prisen omregnes til norske kroner per kilo ved hjelp av daglig valutakurs NOK/USD.\n\nTransport til Norge dekker sjøfrakt fra produksjonsland til norsk havn. Pakking og emballasje er et estimat basert på bransjenormer for 1 kg forbrukerpakninger. Frakt og lager i Norge dekker innlands logistikk fra havn til butikk. Særavgiften på sukker er fastsatt av norske myndigheter og oppdateres manuelt. MVA er 15 prosent av prisen eksklusive MVA.",
+  kaffe_analyse_dato:"18.05.2026",
+  kaffe_analyse_tekst:"Kaffe er verdens nest mest handlede råvare etter olje, og prisene på verdensmarkedet har de siste årene svingt kraftig. Norske forbrukere har merket dette godt: en pakke kaffe på 250 gram koster i dag over 80 kroner i mange norske butikker.\n\nDa kaffeprisene på New York-børsen skjøt i været i 2022–2024, fulgte norske butikkpriser raskt etter. Men da råvareprisene siden har stabilisert seg, har butikkprisene holdt seg høye. Mønsteret er det samme som for sukker: priser går raskt opp, men sakte ned.\n\nBruttofortjenesten til butikkjedene har økt i absolutte kroner i takt med prisveksten. Smultringdiagrammet viser hvordan din lokale butikkpris brytes ned – skriv inn prisen du faktisk betalte, så ser du nøyaktig hva som gikk til råvare, transport, brenning og butikkmargin.",
+  kaffe_metodikk_tekst:"Kostnadsmodellen for kaffe beregner prisen per 250 gram ferdig kaffe fra råbønne på verdensmarked til norsk butikkhylle.\n\nRåvareprisen hentes fra ICE Futures (New York) for arabica-kaffe, notert i USD per pund. Prisen omregnes til NOK per kilo via daglig valutakurs. Et viktig justeringsledd er svinnfaktoren for tørking: under tørkeprosessen mister kaffebønnene 18–20 prosent av vekten. Modellen legger derfor til et tillegg på ca. 22 prosent på råvareprisen for å kompensere for dette vekttapet.\n\nFrakt til Norge dekker sjøfrakt fra produksjonsland (primært Brasil, Colombia og Vietnam) til norsk havn. Brenning og pakking inkluderer kostnadene ved industriell kaffebrenning samt pakking i forbrukerpakninger. MVA på kaffe er 15 prosent i Norge. Bruttofortjenesten er differansen mellom utsalgspris eksklusive MVA og summen av alle kostnadsledd."
+};
+
+// Utils
+function fmt(n,d){d=d||2;return Number(n).toLocaleString("nb-NO",{minimumFractionDigits:d,maximumFractionDigits:d});}
+function css(v){return getComputedStyle(document.documentElement).getPropertyValue(v).trim();}
+function toHtml(s){return s.split("\n").filter(function(l){return l.trim();}).map(function(l){return "<p>"+l.trim()+"</p>";}).join("");}
 
 function parseDate(s){
-  if(!s)return new Date(0);
-  const dm=s.match(/^(\d{1,2})\.(\d{1,2})\.(\d{4})$/);
-  if(dm)return new Date(dm[3],dm[2]-1,dm[1]);
-  const ds=s.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
-  if(ds)return new Date(ds[3],ds[2]-1,ds[1]);
+  if(!s) return new Date(0);
+  var dm=s.match(/^(\d{1,2})\.(\d{1,2})\.(\d{4})$/);
+  if(dm) return new Date(dm[3],dm[2]-1,dm[1]);
+  var ds=s.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+  if(ds) return new Date(ds[3],ds[2]-1,ds[1]);
   return new Date(s);
 }
 
 function parseCSVLine(line){
-  const r=[];let cur="",inQ=false;
-  for(let i=0;i<line.length;i++){
-    if(line[i]==='"\'&&line[i+1]==='"'){cur+='"';i++;}
-    else if(line[i]==='"\'){inQ=!inQ;}
-    else if(line[i]===','&&!inQ){r.push(cur.trim());cur="";}
-    else cur+=line[i];
+  var r=[],cur="",inQ=false;
+  for(var i=0;i<line.length;i++){
+    var ch=line[i];
+    if(ch==='"' && inQ && line[i+1]==='"'){cur+='"';i++;}
+    else if(ch==='"'){inQ=!inQ;}
+    else if(ch===',' && !inQ){r.push(cur.trim());cur="";}
+    else cur+=ch;
   }
   r.push(cur.trim());return r;
 }
 
 function parseNum(s){
-  if(!s||s.trim()==="")return 0;
-  let v=s.replace(/[\s\u00a0]/g,"");
-  if((v.match(/,/g)||[]).length===1&&!(v.match(/\./g)))v=v.replace(",",".");
+  if(!s||s.trim()==="") return 0;
+  var v=s.replace(/[\s\u00a0]/g,"");
+  if((v.match(/,/g)||[]).length===1 && !v.match(/\./)) v=v.replace(",",".");
   else v=v.replace(/\./g,"").replace(",",".");
   return parseFloat(v)||0;
 }
 
 function findRow(rows,dateStr){
-  const t=new Date(dateStr).getTime();
-  let best=null,bd=Infinity;
-  for(const r of rows){const d=new Date(r[0]).getTime(),diff=t-d;if(diff>=0&&diff<bd){bd=diff;best=r;}}
+  var t=new Date(dateStr).getTime(),best=null,bd=Infinity;
+  for(var i=0;i<rows.length;i++){
+    var d=new Date(rows[i][0]).getTime(),diff=t-d;
+    if(diff>=0&&diff<bd){bd=diff;best=rows[i];}
+  }
   return best||rows[0];
 }
 
-// ════════════════════════════════════════════════════
-// TABS
-// ════════════════════════════════════════════════════
-document.querySelectorAll(".prod-tab:not(.soon)").forEach(btn=>{
-  btn.addEventListener("click",()=>{
-    document.querySelectorAll(".prod-tab").forEach(b=>{b.classList.remove("active");});
-    document.querySelectorAll(".product-panel").forEach(p=>p.classList.remove("active"));
+// Tabs
+document.querySelectorAll(".prod-tab:not(.soon)").forEach(function(btn){
+  btn.addEventListener("click",function(){
+    document.querySelectorAll(".prod-tab").forEach(function(b){b.classList.remove("active");});
+    document.querySelectorAll(".product-panel").forEach(function(p){p.classList.remove("active");});
     btn.classList.add("active");
     document.getElementById("prod-"+btn.dataset.prod).classList.add("active");
   });
 });
-document.querySelectorAll(".sec-btn").forEach(btn=>{
-  btn.addEventListener("click",()=>{
-    const p=btn.dataset.prod;
-    document.querySelectorAll(`#prod-${p} .sec-btn`).forEach(b=>b.classList.remove("active"));
-    document.querySelectorAll(`#prod-${p} .sec-panel`).forEach(s=>s.classList.remove("active"));
+document.querySelectorAll(".sec-btn").forEach(function(btn){
+  btn.addEventListener("click",function(){
+    var p=btn.dataset.prod;
+    document.querySelectorAll("#prod-"+p+" .sec-btn").forEach(function(b){b.classList.remove("active");});
+    document.querySelectorAll("#prod-"+p+" .sec-panel").forEach(function(s){s.classList.remove("active");});
     btn.classList.add("active");
-    document.getElementById(`${p}-${btn.dataset.sec}`).classList.add("active");
+    document.getElementById(p+"-"+btn.dataset.sec).classList.add("active");
   });
 });
 
-// ════════════════════════════════════════════════════
-// TEMA
-// ════════════════════════════════════════════════════
-(function(){
-  const btn=document.querySelector("[data-theme-toggle]"),html=document.documentElement;
-  let dark=window.matchMedia("(prefers-color-scheme:dark)").matches;
-  html.setAttribute("data-theme",dark?"dark":"light");icon();
-  btn.addEventListener("click",()=>{dark=!dark;html.setAttribute("data-theme",dark?"dark":"light");icon();rebuildAll();});
-  function icon(){btn.innerHTML=dark
-    ?'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>'
-    :'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';}
-})();
+// Tema
+var darkMode=window.matchMedia("(prefers-color-scheme:dark)").matches;
+document.documentElement.setAttribute("data-theme",darkMode?"dark":"light");
+document.getElementById("themeBtn").addEventListener("click",function(){
+  darkMode=!darkMode;
+  document.documentElement.setAttribute("data-theme",darkMode?"dark":"light");
+  rebuildAll();
+});
 
-// Dagens dato
-(function(){
-  const today=new Date().toISOString().slice(0,10);
-  document.getElementById("sukker-end").value=today;
-  document.getElementById("kaffe-end").value=today;
-})();
+// Sett sluttdato til i dag
+var today=new Date().toISOString().slice(0,10);
+document.getElementById("sukker-end").value=today;
+document.getElementById("kaffe-end").value=today;
 
-// ════════════════════════════════════════════════════
-// GENERISKE CHART-BYGGER-FUNKSJONER
-// ════════════════════════════════════════════════════
-function buildKPIs(elId, s, e, comp, priceCol){
-  const diff=e[priceCol]-s[priceCol], pct=(diff/s[priceCol])*100;
-  const rawChg=e[comp[0].col]-s[comp[0].col];
-  const marginComp=comp.find(c=>c.key.includes("Brutto"));
-  const marginChg=marginComp?(e[marginComp.col]-s[marginComp.col]):0;
-  let bk="",ba=0;
-  for(const c of comp){const ch=Math.abs(e[c.col]-s[c.col]);if(ch>ba){ba=ch;bk=c.key;}}
-  document.getElementById(elId).innerHTML=`
-    <div class="kpi neutral"><div class="kpi-label">Pris startdato</div><div class="kpi-value">${fmt(s[priceCol])} kr</div><div class="kpi-sub">${s[0]}</div></div>
-    <div class="kpi neutral"><div class="kpi-label">Pris sluttdato</div><div class="kpi-value">${fmt(e[priceCol])} kr</div><div class="kpi-sub">${e[0]}</div></div>
-    <div class="kpi ${diff>=0?"up":"down"}"><div class="kpi-label">Samlet endring</div><div class="kpi-value">${diff>=0?"+":""}${fmt(diff)} kr</div><div class="kpi-sub">${(pct>=0?"+":"")+fmt(pct,1)+" %"}</div></div>
-    <div class="kpi ${rawChg>=0?"up":"down"}"><div class="kpi-label">Råvarepris</div><div class="kpi-value">${rawChg>=0?"+":""}${fmt(rawChg)} kr</div><div class="kpi-sub">endring</div></div>
-    <div class="kpi ${marginChg>=0?"up":"down"}"><div class="kpi-label">Bruttofortjeneste</div><div class="kpi-value">${marginChg>=0?"+":""}${fmt(marginChg)} kr</div><div class="kpi-sub">endring</div></div>
-    <div class="kpi neutral"><div class="kpi-label">Største driver</div><div class="kpi-value" style="font-size:var(--text-sm);padding-top:4px">${bk}</div><div class="kpi-sub">${fmt(ba)} kr</div></div>`;
-}
-
-let charts={};
+// Charts
+var charts={};
 function destroyChart(id){if(charts[id]){charts[id].destroy();delete charts[id];}}
 
-function buildWF(canvasId, tbodyId, s, e, comp, priceCol){
-  const mu=css("--text-muted"),bo=css("--border"),pr=css("--primary"),up=css("--up"),dn=css("--down"),tx=css("--text");
-  const labels=[s[0]],bases=[0],vals=[s[priceCol]],cols=[pr],tips=[];
-  let run=s[priceCol];
-  for(const c of comp){
-    const chg=e[c.col]-s[c.col];tips.push(chg);labels.push(c.key);
+function buildKPIs(elId,s,e,comp,pc){
+  var diff=e[pc]-s[pc],pct=(diff/s[pc])*100;
+  var rawChg=e[comp[0].col]-s[comp[0].col];
+  var mComp=null;
+  for(var i=0;i<comp.length;i++){if(comp[i].key.indexOf("Brutto")>=0){mComp=comp[i];break;}}
+  var mChg=mComp?(e[mComp.col]-s[mComp.col]):0;
+  var bk="",ba=0;
+  for(var i=0;i<comp.length;i++){var ch=Math.abs(e[comp[i].col]-s[comp[i].col]);if(ch>ba){ba=ch;bk=comp[i].key;}}
+  document.getElementById(elId).innerHTML=
+    '<div class="kpi neutral"><div class="kpi-label">Pris startdato</div><div class="kpi-value">'+fmt(s[pc])+' kr</div><div class="kpi-sub">'+s[0]+'</div></div>'+
+    '<div class="kpi neutral"><div class="kpi-label">Pris sluttdato</div><div class="kpi-value">'+fmt(e[pc])+' kr</div><div class="kpi-sub">'+e[0]+'</div></div>'+
+    '<div class="kpi '+(diff>=0?"up":"down")+'"><div class="kpi-label">Samlet endring</div><div class="kpi-value">'+(diff>=0?"+":"")+fmt(diff)+' kr</div><div class="kpi-sub">'+(pct>=0?"+":"")+fmt(pct,1)+' %</div></div>'+
+    '<div class="kpi '+(rawChg>=0?"up":"down")+'"><div class="kpi-label">Råvarepris</div><div class="kpi-value">'+(rawChg>=0?"+":"")+fmt(rawChg)+' kr</div><div class="kpi-sub">endring</div></div>'+
+    '<div class="kpi '+(mChg>=0?"up":"down")+'"><div class="kpi-label">Bruttofortjeneste</div><div class="kpi-value">'+(mChg>=0?"+":"")+fmt(mChg)+' kr</div><div class="kpi-sub">endring</div></div>'+
+    '<div class="kpi neutral"><div class="kpi-label">Største driver</div><div class="kpi-value" style="font-size:var(--text-sm)">'+bk+'</div><div class="kpi-sub">'+fmt(ba)+' kr</div></div>';
+}
+
+function buildWF(cid,tid,s,e,comp,pc){
+  var mu=css("--text-muted"),bo=css("--border"),pr=css("--primary"),up=css("--up"),dn=css("--down"),tx=css("--text");
+  var labels=[s[0]],bases=[0],vals=[s[pc]],cols=[pr],tips=[];
+  var run=s[pc];
+  for(var i=0;i<comp.length;i++){
+    var chg=e[comp[i].col]-s[comp[i].col];
+    tips.push(chg);labels.push(comp[i].key);
     if(chg>=0){bases.push(run);vals.push(chg);cols.push(up);}
     else{bases.push(run+chg);vals.push(-chg);cols.push(dn);}
     run+=chg;
   }
-  labels.push(e[0]);bases.push(0);vals.push(e[priceCol]);cols.push(pr);
-  destroyChart(canvasId);
-  charts[canvasId]=new Chart(document.getElementById(canvasId).getContext("2d"),{
-    type:"bar",data:{labels,datasets:[
+  labels.push(e[0]);bases.push(0);vals.push(e[pc]);cols.push(pr);
+  destroyChart(cid);
+  charts[cid]=new Chart(document.getElementById(cid),{
+    type:"bar",
+    data:{labels:labels,datasets:[
       {data:bases,backgroundColor:"transparent",borderColor:"transparent",stack:"w"},
       {data:vals,backgroundColor:cols,borderRadius:4,borderSkipped:false,stack:"w"}
-    ]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},
-      tooltip:{callbacks:{title:i=>i[0].label,label:i=>{
-        if(i.datasetIndex===0)return null;
-        const idx=i.dataIndex,n=labels.length;
-        if(idx===0)return` Start: ${fmt(i.raw)} kr`;
-        if(idx===n-1)return` Slutt: ${fmt(i.raw)} kr`;
-        const ch=tips[idx-1];return` Endring: ${ch>=0?"+":""}${fmt(ch)} kr`;},
-        filter:i=>i.datasetIndex!==0},
-        backgroundColor:css("--surface"),titleColor:tx,bodyColor:mu,borderColor:bo,borderWidth:1,padding:10}},
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false},
+        tooltip:{callbacks:{
+          title:function(i){return i[0].label;},
+          label:function(i){
+            if(i.datasetIndex===0) return null;
+            var idx=i.dataIndex,n=labels.length;
+            if(idx===0) return " Start: "+fmt(i.raw)+" kr";
+            if(idx===n-1) return " Slutt: "+fmt(i.raw)+" kr";
+            var ch=tips[idx-1];return " Endring: "+(ch>=0?"+":"")+fmt(ch)+" kr";
+          },
+          filter:function(i){return i.datasetIndex!==0;}
+        },backgroundColor:css("--surface"),titleColor:tx,bodyColor:mu,borderColor:bo,borderWidth:1,padding:10}
+      },
       scales:{
         x:{stacked:true,grid:{display:false},ticks:{color:mu,font:{size:11},maxRotation:35},border:{color:bo}},
-        y:{stacked:true,grid:{color:bo},ticks:{color:mu,font:{size:11},callback:v=>fmt(v,0)+" kr"},border:{color:bo}}
-      }}});
-  let rows="";
-  for(const c of comp){
-    const sv=s[c.col],ev=e[c.col],chg=ev-sv,pp=sv?((chg/sv)*100):0,cls=chg>0.005?"up":chg<-0.005?"down":"flat";
-    rows+=`<tr><td>${c.key}</td><td>${fmt(sv)} kr</td><td>${fmt(ev)} kr</td><td>${chg>=0?"+":""}${fmt(chg)} kr</td><td><span class="badge ${cls}">${chg>=0?"+":""}${fmt(pp,1)} %</span></td></tr>`;
+        y:{stacked:true,grid:{color:bo},ticks:{color:mu,font:{size:11},callback:function(v){return fmt(v,0)+" kr";}},border:{color:bo}}
+      }
+    }
+  });
+  var rows="";
+  for(var i=0;i<comp.length;i++){
+    var sv=s[comp[i].col],ev=e[comp[i].col],chg=ev-sv,pp=sv?((chg/sv)*100):0,cl=chg>0.005?"up":chg<-0.005?"down":"flat";
+    rows+="<tr><td>"+comp[i].key+"</td><td>"+fmt(sv)+" kr</td><td>"+fmt(ev)+" kr</td><td>"+(chg>=0?"+":"")+fmt(chg)+" kr</td><td><span class='badge "+cl+"'>"+(chg>=0?"+":"")+fmt(pp,1)+" %</span></td></tr>";
   }
-  const tc=e[priceCol]-s[priceCol],tp=s[priceCol]?(tc/s[priceCol])*100:0;
-  rows+=`<tr><td>Utsalgspris (SSB)</td><td>${fmt(s[priceCol])} kr</td><td>${fmt(e[priceCol])} kr</td><td>${tc>=0?"+":""}${fmt(tc)} kr</td><td><span class="badge ${tc>=0?"up":"down"}">${tc>=0?"+":""}${fmt(tp,1)} %</span></td></tr>`;
-  document.getElementById(tbodyId).innerHTML=rows;
+  var tc=e[pc]-s[pc],tp=s[pc]?(tc/s[pc]*100):0;
+  rows+="<tr><td>Utsalgspris (SSB)</td><td>"+fmt(s[pc])+" kr</td><td>"+fmt(e[pc])+" kr</td><td>"+(tc>=0?"+":"")+fmt(tc)+" kr</td><td><span class='badge "+(tc>=0?"up":"down")+"'>"+(tc>=0?"+":"")+fmt(tp,1)+" %</span></td></tr>";
+  document.getElementById(tid).innerHTML=rows;
 }
 
-function buildTrend(canvasId, rows, comp, priceCol){
-  const mu=css("--text-muted"),bo=css("--border"),pr=css("--primary");
-  destroyChart(canvasId);
-  charts[canvasId]=new Chart(document.getElementById(canvasId).getContext("2d"),{
-    type:"line",data:{labels:rows.map(r=>r[0]),datasets:[
-      {label:"Utsalgspris",data:rows.map(r=>r[priceCol]),borderColor:pr,backgroundColor:"transparent",pointRadius:0,tension:0.3,borderWidth:2},
-      {label:"Råvarepris",data:rows.map(r=>r[comp[0].col]),borderColor:comp[0].color,backgroundColor:"transparent",pointRadius:0,tension:0.3,borderWidth:2,borderDash:[4,3]}
-    ]},options:{responsive:true,maintainAspectRatio:false,
+function buildTrend(cid,rows,comp,pc){
+  var mu=css("--text-muted"),bo=css("--border"),pr=css("--primary");
+  destroyChart(cid);
+  charts[cid]=new Chart(document.getElementById(cid),{
+    type:"line",
+    data:{labels:rows.map(function(r){return r[0];}),datasets:[
+      {label:"Utsalgspris",data:rows.map(function(r){return r[pc];}),borderColor:pr,backgroundColor:"transparent",pointRadius:0,tension:0.3,borderWidth:2},
+      {label:"Råvarepris",data:rows.map(function(r){return r[comp[0].col];}),borderColor:comp[0].color,backgroundColor:"transparent",pointRadius:0,tension:0.3,borderWidth:2,borderDash:[4,3]}
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,
       plugins:{legend:{labels:{color:mu,font:{size:11}}},tooltip:{mode:"index",intersect:false}},
-      scales:{x:{grid:{display:false},ticks:{color:mu,font:{size:10},maxRotation:0,maxTicksLimit:7},border:{color:bo}},
-        y:{grid:{color:bo},ticks:{color:mu,font:{size:10},callback:v=>fmt(v,0)+" kr"},border:{color:bo}}}}});
+      scales:{
+        x:{grid:{display:false},ticks:{color:mu,font:{size:10},maxRotation:0,maxTicksLimit:7},border:{color:bo}},
+        y:{grid:{color:bo},ticks:{color:mu,font:{size:10},callback:function(v){return fmt(v,0)+" kr";}},border:{color:bo}}
+      }
+    }
+  });
 }
 
-function buildArea(canvasId, rows, comp){
-  const mu=css("--text-muted"),bo=css("--border");
-  const datasets=comp.map(c=>({
-    label:c.key,
-    data:rows.map(r=>r[c.col]),
-    backgroundColor:c.color+"99",
-    borderColor:c.color,
-    borderWidth:1,
-    fill:true,
-    pointRadius:0,
-    tension:0.3,
-    stack:"area"
-  }));
-  destroyChart(canvasId);
-  charts[canvasId]=new Chart(document.getElementById(canvasId).getContext("2d"),{
-    type:"line",data:{labels:rows.map(r=>r[0]),datasets},
+function buildArea(cid,rows,comp){
+  var mu=css("--text-muted"),bo=css("--border");
+  var datasets=comp.map(function(c){return {
+    label:c.key,data:rows.map(function(r){return r[c.col];}),
+    backgroundColor:c.color+"99",borderColor:c.color,borderWidth:1,
+    fill:true,pointRadius:0,tension:0.3,stack:"area"
+  };});
+  destroyChart(cid);
+  charts[cid]=new Chart(document.getElementById(cid),{
+    type:"line",data:{labels:rows.map(function(r){return r[0];}),datasets:datasets},
     options:{responsive:true,maintainAspectRatio:false,
       plugins:{legend:{display:false},tooltip:{mode:"index",intersect:false}},
       scales:{
         x:{grid:{display:false},ticks:{color:mu,font:{size:10},maxRotation:0,maxTicksLimit:7},border:{color:bo}},
-        y:{stacked:true,grid:{color:bo},ticks:{color:mu,font:{size:10},callback:v=>fmt(v,0)+" kr"},border:{color:bo}}
-      }}});
+        y:{stacked:true,grid:{color:bo},ticks:{color:mu,font:{size:10},callback:function(v){return fmt(v,0)+" kr";}},border:{color:bo}}
+      }
+    }
+  });
 }
 
-function buildDonut(canvasId, row, comp, priceCol, customPrice){
-  const mu=css("--text-muted");
-  // Beregn komponenter basert på custom-pris hvis angitt
-  let compVals, totalPrice;
-  if(customPrice && customPrice>0 && customPrice!==row[priceCol]){
-    totalPrice=customPrice;
-    const exMva=customPrice/1.15;
-    const mvaComp=comp.find(c=>c.key==="MVA");
-    const marginComp=comp.find(c=>c.key.includes("Brutto"));
-    const fixedSum=comp.filter(c=>c!==mvaComp&&c!==marginComp).reduce((s,c)=>s+row[c.col],0);
-    const newMva=exMva*0.15;
-    const newMargin=exMva-fixedSum;
-    compVals=comp.map(c=>{
-      if(c===mvaComp)return Math.max(0,newMva);
-      if(c===marginComp)return Math.max(0,newMargin);
+function buildDonut(cid,row,comp,pc,cp){
+  var mu=css("--text-muted");
+  var compVals,totalPrice;
+  if(cp && cp>0 && cp!==row[pc]){
+    totalPrice=cp;
+    var exMva=cp/1.15,mvaComp=null,marginComp=null,fixedSum=0;
+    for(var i=0;i<comp.length;i++){
+      if(comp[i].key==="MVA") mvaComp=comp[i];
+      else if(comp[i].key.indexOf("Brutto")>=0) marginComp=comp[i];
+      else fixedSum+=row[comp[i].col];
+    }
+    var newMva=exMva*0.15,newMargin=exMva-fixedSum;
+    compVals=comp.map(function(c){
+      if(c===mvaComp) return Math.max(0,newMva);
+      if(c===marginComp) return Math.max(0,newMargin);
       return row[c.col];
     });
   } else {
-    totalPrice=row[priceCol];
-    compVals=comp.map(c=>row[c.col]);
+    totalPrice=row[pc];
+    compVals=comp.map(function(c){return row[c.col];});
   }
-  destroyChart(canvasId);
-  charts[canvasId]=new Chart(document.getElementById(canvasId).getContext("2d"),{
+  destroyChart(cid);
+  charts[cid]=new Chart(document.getElementById(cid),{
     type:"doughnut",
-    data:{labels:comp.map(c=>c.key),datasets:[{data:compVals,backgroundColor:comp.map(c=>c.color),borderWidth:0,hoverOffset:6}]},
+    data:{labels:comp.map(function(c){return c.key;}),datasets:[{data:compVals,backgroundColor:comp.map(function(c){return c.color;}),borderWidth:0,hoverOffset:6}]},
     options:{responsive:true,maintainAspectRatio:false,cutout:"62%",
       plugins:{
         legend:{position:"right",labels:{color:mu,font:{size:11},boxWidth:12,padding:8}},
-        tooltip:{callbacks:{label:i=>` ${fmt(i.raw)} kr (${fmt(i.raw/totalPrice*100,1)} %)`}}
-      }}});
+        tooltip:{callbacks:{label:function(i){return " "+fmt(i.raw)+" kr ("+fmt(i.raw/totalPrice*100,1)+" %)";}}}}
+    }
+  });
 }
 
-// ════════════════════════════════════════════════════
-// INNHOLD (tekst fra Sheets)
-// ════════════════════════════════════════════════════
-const DEMO_INNHOLD = {
-  analyse_dato:"18.05.2026",
-  analyse_tekst:`Sukker er blant de mest påslåtte dagligvarene i norske butikker. I Tyskland koster en kilo sukker rundt 1 euro – det vil si omtrent 11–12 kroner. I Norge betaler du 38 kroner for det samme kiloet.
-
-Butikkjedene peker gjerne på den norske særavgiften på sukker som forklaring. Men særavgiften er på 9,50 kroner per kilo – selv om du legger til høyere norske lønninger og transport, er det langt igjen til 38 kroner. Differansen havner i stor grad som fortjeneste hos dagligvarekjedene.
-
-Det som gjør dette ekstra påfallende er utviklingen de siste årene. Råvareprisen på sukker på verdensmarkedet nådde en topp for fire til fem år siden, og har siden falt betydelig. Likevel har utsalgsprisen i norske butikker økt fra rundt 30–32 kroner per kilo til 38 kroner i dag. Prisene på råvarene har gått ned – men det merker ikke norske forbrukere.
-
-Fossefallsgrafen over viser akkurat dette: hvilke komponenter som faktisk har drevet prisveksten, og hvor mye av slutt­prisen som går til produsent, avgifter og butikkjeden.`,
-  metodikk_tekst:`Kostnadsmodellen beregner hva en kilo sukker koster å bringe fra verdensmarked til norsk butikkhylle, komponent for komponent.
-
-Råvareprisen hentes automatisk fra London-børsen (ICE Futures Europe), der hvitt sukker handles i USD per tonn. Prisen omregnes til norske kroner per kilo ved hjelp av daglig valutakurs NOK/USD.
-
-Transport til Norge dekker sjøfrakt fra produksjonsland til norsk havn. Pakking og emballasje er et estimat basert på bransjenormer for 1 kg forbrukerpakninger. Frakt og lager i Norge dekker innlands logistikk fra havn til butikk.
-
-Særavgiften på sukker er fastsatt av norske myndigheter og oppdateres manuelt. MVA er 15 prosent av prisen eksklusive MVA. Bruttofortjenesten er differansen mellom utsalgsprisen (SSB) og summen av alle øvrige komponenter – det er det faktiske beløpet som er igjen til pakker og butikkjede.`,
-  kaffe_analyse_dato:"18.05.2026",
-  kaffe_analyse_tekst:`Kaffe er verdens nest mest handlede råvare etter olje, og prisene på verdensmarkedet har de siste årene svingt kraftig. Norske forbrukere har merket dette godt: en pakke kaffe på 250 gram koster i dag over 80 kroner i mange norske butikker.
-
-Det som er interessant er sammenhengen mellom råvarepris og utsalgspris. Da kaffeprisene på New York-børsen skjøt i været i 2022–2024, fulgte norske butikkpriser raskt etter. Men da råvareprisene siden har stabilisert seg, har butikkprisene holdt seg høye. Mønsteret er det samme som for sukker: priser går raskt opp, men sakte ned.
-
-Bruttofortjenesten til butikkjedene har økt i absolutte kroner i takt med prisveksten. Smultringdiagrammet viser hvordan din lokale butikkpris brytes ned – skriv inn prisen du faktisk betalte, så ser du nøyaktig hva som gikk til råvare, transport, brenning og butikkmargin.`,
-  kaffe_metodikk_tekst:`Kostnadsmodellen for kaffe beregner prisen per 250 gram ferdig kaffe fra råbønne på verdensmarked til norsk butikkhylle.
-
-Råvareprisen hentes fra ICE Futures (New York) for arabica-kaffe (koffeinholdig standardkaffe), notert i USD per pund. Prisen omregnes til NOK per kilo via daglig valutakurs. Et viktig justeringsledd er svinnfaktoren for tørking: under tørkeprosessen mister kaffebønnene 18–20 prosent av vekten. Modellen legger derfor til et tillegg på ca. 22 prosent på råvareprisen for å kompensere for dette vekttapet, slik at prisen reflekterer kostnaden per kilo ferdig (tørket) råkaffebunn.
-
-Frakt til Norge dekker sjøfrakt fra produksjonsland (primært Brasil, Colombia og Vietnam) til norsk havn. Brenning og pakking inkluderer kostnadene ved industriell kaffebrenning samt pakking i forbrukerpakninger. Emballasje er estimert separat da kaffepakninger (ventilposer, aluminiumsfolie) er mer kostbare enn standard matvarepakninger.
-
-MVA på kaffe er 15 prosent i Norge. Bruttofortjenesten er beregnet som differansen mellom utsalgspris eksklusive MVA og summen av alle kostnadsledd. Denne reflekterer samlet margin for importør, grossist og butikk.`
-};
-
+// Tekst
 async function loadInnhold(){
-  let c=DEMO_INNHOLD;
+  var c=Object.assign({},DEMO_INNHOLD);
   try{
-    const res=await fetch(INNHOLD_URL);
-    if(!res.ok)throw new Error();
-    const lines=(await res.text()).trim().split("
-").slice(1);
-    c={...DEMO_INNHOLD};
-    for(const l of lines){
-      const cols=parseCSVLine(l);
-      if(cols.length>=2&&cols[0])c[cols[0].trim()]=cols[1].replace(/^"|"$/g,"").replace(/""/g,'"').trim();
+    var res=await fetch(INNHOLD_URL);
+    if(!res.ok) throw new Error();
+    var text=await res.text();
+    var lines=text.trim().split("\n").slice(1);
+    for(var i=0;i<lines.length;i++){
+      var cols=parseCSVLine(lines[i]);
+      if(cols.length>=2&&cols[0]) c[cols[0].trim()]=cols[1].replace(/^"|"$/g,"").replace(/""/g,'"').trim();
     }
-  }catch(e){console.warn("Innhold-feil, bruker demo");}
+  }catch(e){console.warn("Innhold-feil, bruker demo-tekst");}
 
-  // Sukker
-  const sd=c["analyse_dato"]||"";
+  var sd=c["analyse_dato"]||"";
   document.getElementById("sukker-analyse-dato").textContent=sd?"Sist oppdatert: "+sd:"";
-  if(sd)document.getElementById("sukker-analyse-badge").style.display="inline";
+  if(sd) document.getElementById("sukker-analyse-badge").style.display="inline";
   document.getElementById("sukker-analyse-tekst").innerHTML=toHtml(c["analyse_tekst"]||"");
   document.getElementById("sukker-metodikk-tekst").innerHTML=toHtml(c["metodikk_tekst"]||"");
 
-  // Kaffe
-  const kd=c["kaffe_analyse_dato"]||"";
+  var kd=c["kaffe_analyse_dato"]||"";
   document.getElementById("kaffe-analyse-dato").textContent=kd?"Sist oppdatert: "+kd:"";
-  if(kd)document.getElementById("kaffe-analyse-badge").style.display="inline";
+  if(kd) document.getElementById("kaffe-analyse-badge").style.display="inline";
   document.getElementById("kaffe-analyse-tekst").innerHTML=toHtml(c["kaffe_analyse_tekst"]||"");
   document.getElementById("kaffe-metodikk-tekst").innerHTML=toHtml(c["kaffe_metodikk_tekst"]||"");
 }
 
-// ════════════════════════════════════════════════════
-// DATA-LASTING
-// ════════════════════════════════════════════════════
-let sukkerRows=[], kaffeRows=[];
+// Data
+var sukkerRows=[],kaffeRows=[];
 
-async function loadRows(url, note, demo){
-  if(!url){
-    if(note)note.textContent="⚠ Demo-data";
-    return demo;
-  }
+async function loadRows(url,note,demo){
   try{
-    const res=await fetch(url);
-    if(!res.ok)throw new Error("HTTP "+res.status);
-    const lines=(await res.text()).trim().split("
-");
-    let start=0;
-    if(lines[0].toLowerCase().includes("dato")||lines[0].toLowerCase().includes("date"))start=1;
-    const rows=[];
-    for(let i=start;i<lines.length;i++){
-      const cols=parseCSVLine(lines[i]);
-      if(cols.length<13)continue;
-      const dato=cols[0].replace(/"/g,"").trim();
-      if(!dato||dato.toLowerCase()==="dato")continue;
-      const row=[dato];
-      for(let c=1;c<=12;c++)row.push(parseNum(cols[c]));
-      if(row[12]<=0)continue;
+    var res=await fetch(url);
+    if(!res.ok) throw new Error("HTTP "+res.status);
+    var text=await res.text();
+    var lines=text.trim().split("\n");
+    var start=(lines[0].toLowerCase().indexOf("dato")>=0||lines[0].toLowerCase().indexOf("date")>=0)?1:0;
+    var rows=[];
+    for(var i=start;i<lines.length;i++){
+      var cols=parseCSVLine(lines[i]);
+      if(cols.length<13) continue;
+      var dato=cols[0].replace(/"/g,"").trim();
+      if(!dato||dato.toLowerCase()==="dato") continue;
+      var row=[dato];
+      for(var c=1;c<=12;c++) row.push(parseNum(cols[c]));
+      if(row[12]<=0) continue;
       rows.push(row);
     }
-    if(!rows.length)throw new Error("Ingen rader");
-    rows.sort((a,b)=>{const da=parseDate(a[0]),db=parseDate(b[0]);return da-db;});
-    rows.forEach(r=>{const d=parseDate(r[0]);if(!isNaN(d))r[0]=d.toISOString().slice(0,10);});
-    if(note){note.textContent="✓ Google Sheets ("+rows.length+" rader)";note.style.color="var(--down)";}
+    if(!rows.length) throw new Error("Ingen rader");
+    rows.sort(function(a,b){return parseDate(a[0])-parseDate(b[0]);});
+    rows.forEach(function(r){var d=parseDate(r[0]);if(!isNaN(d))r[0]=d.toISOString().slice(0,10);});
+    note.textContent="✓ "+rows.length+" rader lastet";
+    note.style.color="var(--down)";
     return rows;
   }catch(e){
-    if(note){note.textContent="⚠ "+e.message;note.style.color="var(--up)";}
+    note.textContent="⚠ "+e.message;
+    note.style.color="var(--up)";
     return demo;
   }
 }
 
-// ════════════════════════════════════════════════════
-// BUILD SUKKER
-// ════════════════════════════════════════════════════
 function buildSukker(){
-  if(!sukkerRows.length)return;
-  const s=findRow(sukkerRows,document.getElementById("sukker-start").value);
-  const e=findRow(sukkerRows,document.getElementById("sukker-end").value);
+  if(!sukkerRows.length) return;
+  var s=findRow(sukkerRows,document.getElementById("sukker-start").value);
+  var e=findRow(sukkerRows,document.getElementById("sukker-end").value);
   buildKPIs("sukker-kpis",s,e,SUKKER_COMP,SUKKER_PRICE);
   buildWF("sukker-wf","sukker-tbody",s,e,SUKKER_COMP,SUKKER_PRICE);
   buildTrend("sukker-trend",sukkerRows,SUKKER_COMP,SUKKER_PRICE);
   buildArea("sukker-area",sukkerRows,SUKKER_COMP);
-  const cp=parseFloat(document.getElementById("sukker-custom-price").value)||0;
+  var cp=parseFloat(document.getElementById("sukker-custom-price").value)||0;
   buildDonut("sukker-donut",e,SUKKER_COMP,SUKKER_PRICE,cp);
 }
 document.getElementById("sukker-btn").addEventListener("click",buildSukker);
-document.getElementById("sukker-custom-price").addEventListener("input",()=>{
-  if(sukkerRows.length){
-    const e=findRow(sukkerRows,document.getElementById("sukker-end").value);
-    const cp=parseFloat(document.getElementById("sukker-custom-price").value)||0;
-    buildDonut("sukker-donut",e,SUKKER_COMP,SUKKER_PRICE,cp);
-  }
+document.getElementById("sukker-custom-price").addEventListener("input",function(){
+  if(sukkerRows.length){var e=findRow(sukkerRows,document.getElementById("sukker-end").value);buildDonut("sukker-donut",e,SUKKER_COMP,SUKKER_PRICE,parseFloat(this.value)||0);}
 });
 
-// ════════════════════════════════════════════════════
-// BUILD KAFFE
-// ════════════════════════════════════════════════════
 function buildKaffe(){
-  if(!kaffeRows.length)return;
-  const s=findRow(kaffeRows,document.getElementById("kaffe-start").value);
-  const e=findRow(kaffeRows,document.getElementById("kaffe-end").value);
+  if(!kaffeRows.length) return;
+  var s=findRow(kaffeRows,document.getElementById("kaffe-start").value);
+  var e=findRow(kaffeRows,document.getElementById("kaffe-end").value);
   buildKPIs("kaffe-kpis",s,e,KAFFE_COMP,KAFFE_PRICE);
   buildWF("kaffe-wf","kaffe-tbody",s,e,KAFFE_COMP,KAFFE_PRICE);
   buildTrend("kaffe-trend",kaffeRows,KAFFE_COMP,KAFFE_PRICE);
   buildArea("kaffe-area",kaffeRows,KAFFE_COMP);
-  const cp=parseFloat(document.getElementById("kaffe-custom-price").value)||0;
+  var cp=parseFloat(document.getElementById("kaffe-custom-price").value)||0;
   buildDonut("kaffe-donut",e,KAFFE_COMP,KAFFE_PRICE,cp);
 }
 document.getElementById("kaffe-btn").addEventListener("click",buildKaffe);
-document.getElementById("kaffe-custom-price").addEventListener("input",()=>{
-  if(kaffeRows.length){
-    const e=findRow(kaffeRows,document.getElementById("kaffe-end").value);
-    const cp=parseFloat(document.getElementById("kaffe-custom-price").value)||0;
-    buildDonut("kaffe-donut",e,KAFFE_COMP,KAFFE_PRICE,cp);
-  }
+document.getElementById("kaffe-custom-price").addEventListener("input",function(){
+  if(kaffeRows.length){var e=findRow(kaffeRows,document.getElementById("kaffe-end").value);buildDonut("kaffe-donut",e,KAFFE_COMP,KAFFE_PRICE,parseFloat(this.value)||0);}
 });
 
 function rebuildAll(){buildSukker();buildKaffe();}
 
-// ════════════════════════════════════════════════════
-// INIT
-// ════════════════════════════════════════════════════
+// Init
 Promise.all([
-  loadRows(SUKKER_URL, document.getElementById("sukker-note"), []).then(r=>{sukkerRows=r;}),
-  loadRows(KAFFE_URL,  document.getElementById("kaffe-note"),  KAFFE_DEMO).then(r=>{kaffeRows=r;}),
+  loadRows(SUKKER_URL,document.getElementById("sukker-note"),[]).then(function(r){sukkerRows=r;}),
+  loadRows(KAFFE_URL,document.getElementById("kaffe-note"),KAFFE_DEMO).then(function(r){kaffeRows=r;}),
   loadInnhold()
-]).then(()=>{buildSukker();buildKaffe();});
+]).then(function(){buildSukker();buildKaffe();});
 </script>
 </body>
 </html>
