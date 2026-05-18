@@ -3,104 +3,108 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sukkerprismodell</title>
+<title>Sukkerprismodell – Clearfjord</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <style>
   :root,[data-theme="light"]{
-    --bg:#f7f6f2;--surface:#f9f8f5;--surface-2:#fbfbf9;
+    --bg:#f7f6f2;--surface:#f9f8f5;--surface-2:#fbfbf9;--surface-offset:#f3f0ec;
     --border:rgba(40,37,29,0.12);--text:#28251d;--text-muted:#7a7974;--text-faint:#bab9b4;
-    --primary:#01696f;--primary-hover:#0c4e54;--primary-hi:#cedcd8;
-    --up:#b94040;--up-bg:#fae8e8;--down:#437a22;--down-bg:#e8f4e0;--neutral:#5a6978;
-    --radius-sm:0.375rem;--radius-md:0.5rem;--radius-lg:0.75rem;
+    --primary:#01696f;--primary-hover:#0c4e54;
+    --up:#b94040;--up-bg:#fae8e8;--down:#437a22;--down-bg:#e8f4e0;
+    --radius-sm:0.375rem;--radius-md:0.5rem;--radius-lg:0.75rem;--radius-xl:1rem;
     --shadow-sm:0 1px 2px oklch(0.2 0.01 80/0.06);--shadow-md:0 4px 12px oklch(0.2 0.01 80/0.08);
-    --font:'Inter',sans-serif;
+    --font:"Inter",sans-serif;
     --text-xs:clamp(0.75rem,0.7rem + 0.25vw,0.875rem);
     --text-sm:clamp(0.875rem,0.8rem + 0.35vw,1rem);
     --text-base:clamp(1rem,0.95rem + 0.25vw,1.125rem);
     --text-lg:clamp(1.125rem,1rem + 0.75vw,1.5rem);
     --text-xl:clamp(1.5rem,1.2rem + 1.25vw,2.25rem);
-    --space-1:0.25rem;--space-2:0.5rem;--space-3:0.75rem;--space-4:1rem;
-    --space-6:1.5rem;--space-8:2rem;--space-12:3rem;
+    --space-1:.25rem;--space-2:.5rem;--space-3:.75rem;--space-4:1rem;
+    --space-5:1.25rem;--space-6:1.5rem;--space-8:2rem;--space-12:3rem;
   }
   [data-theme="dark"]{
-    --bg:#171614;--surface:#1c1b19;--surface-2:#201f1d;
+    --bg:#171614;--surface:#1c1b19;--surface-2:#201f1d;--surface-offset:#1d1c1a;
     --border:rgba(205,204,202,0.12);--text:#cdccca;--text-muted:#797876;--text-faint:#5a5957;
-    --primary:#4f98a3;--primary-hover:#227f8b;--primary-hi:#313b3b;
-    --up:#e07070;--up-bg:#3a2020;--down:#6daa45;--down-bg:#1e2e18;--neutral:#8a9aa8;
+    --primary:#4f98a3;--primary-hover:#227f8b;
+    --up:#e07070;--up-bg:#3a2020;--down:#6daa45;--down-bg:#1e2e18;
+    --shadow-sm:0 1px 2px oklch(0 0 0/0.2);--shadow-md:0 4px 12px oklch(0 0 0/0.3);
   }
+  @media(prefers-color-scheme:dark){:root:not([data-theme]){
+    --bg:#171614;--surface:#1c1b19;--surface-2:#201f1d;--surface-offset:#1d1c1a;
+    --border:rgba(205,204,202,0.12);--text:#cdccca;--text-muted:#797876;--text-faint:#5a5957;
+    --primary:#4f98a3;--primary-hover:#227f8b;
+    --up:#e07070;--up-bg:#3a2020;--down:#6daa45;--down-bg:#1e2e18;
+  }}
   *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
   html{-webkit-font-smoothing:antialiased;scroll-behavior:smooth}
   body{min-height:100dvh;font-family:var(--font);font-size:var(--text-base);color:var(--text);background:var(--bg);line-height:1.6}
   button{cursor:pointer;background:none;border:none;font:inherit;color:inherit}
-  input{font:inherit;color:inherit}
-  a,button,input{transition:color 180ms ease,background 180ms ease,border-color 180ms ease,box-shadow 180ms ease}
+  input,select{font:inherit;color:inherit}
+  a,button,input,select{transition:color 180ms ease,background 180ms ease,border-color 180ms ease,box-shadow 180ms ease}
 
-  /* Layout */
   .app{max-width:1100px;margin:0 auto;padding:var(--space-6) var(--space-4)}
+
   header{display:flex;align-items:center;justify-content:space-between;margin-bottom:var(--space-8);padding-bottom:var(--space-4);border-bottom:1px solid var(--border)}
   .logo{display:flex;align-items:center;gap:var(--space-3)}
   .logo svg{color:var(--primary)}
   .logo-text{font-size:var(--text-lg);font-weight:600;letter-spacing:-0.02em}
-  .logo-sub{font-size:var(--text-xs);color:var(--text-muted);font-weight:400}
+  .logo-sub{font-size:var(--text-xs);color:var(--text-muted)}
   .theme-btn{width:36px;height:36px;display:flex;align-items:center;justify-content:center;border-radius:var(--radius-md);color:var(--text-muted)}
   .theme-btn:hover{background:var(--surface-2);color:var(--text)}
 
-  /* Controls */
   .controls{display:flex;gap:var(--space-4);align-items:flex-end;flex-wrap:wrap;margin-bottom:var(--space-6);padding:var(--space-6);background:var(--surface);border-radius:var(--radius-lg);border:1px solid var(--border);box-shadow:var(--shadow-sm)}
   .field{display:flex;flex-direction:column;gap:var(--space-1)}
-  .field label{font-size:var(--text-xs);font-weight:500;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em}
+  .field label{font-size:var(--text-xs);font-weight:500;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em}
   .field input[type="date"]{padding:var(--space-2) var(--space-3);border:1px solid var(--border);border-radius:var(--radius-md);background:var(--surface-2);color:var(--text);font-size:var(--text-sm)}
   .field input[type="date"]:focus{outline:2px solid var(--primary);outline-offset:2px}
-  .btn-primary{padding:var(--space-2) var(--space-6);background:var(--primary);color:#fff;border-radius:var(--radius-md);font-size:var(--text-sm);font-weight:500;height:38px}
+  .btn-primary{padding:var(--space-2) var(--space-6);background:var(--primary);color:#fff;border-radius:var(--radius-md);font-size:var(--text-sm);font-weight:500;height:38px;align-self:flex-end}
   .btn-primary:hover{background:var(--primary-hover)}
+  .data-note{font-size:var(--text-xs);color:var(--text-muted);align-self:flex-end;padding-bottom:var(--space-2)}
 
-  /* KPI strip */
-  .kpis{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:var(--space-3);margin-bottom:var(--space-6)}
+  .kpis{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:var(--space-3);margin-bottom:var(--space-6)}
   .kpi{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:var(--space-4);box-shadow:var(--shadow-sm)}
-  .kpi-label{font-size:var(--text-xs);color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:var(--space-1)}
-  .kpi-value{font-size:var(--text-xl);font-weight:600;font-variant-numeric:tabular-nums;letter-spacing:-0.02em}
+  .kpi-label{font-size:var(--text-xs);color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:var(--space-1)}
+  .kpi-value{font-size:var(--text-xl);font-weight:600;font-variant-numeric:tabular-nums;letter-spacing:-0.02em;line-height:1.1}
   .kpi-sub{font-size:var(--text-xs);color:var(--text-muted);margin-top:2px}
   .kpi.up .kpi-value{color:var(--up)}
   .kpi.down .kpi-value{color:var(--down)}
   .kpi.neutral .kpi-value{color:var(--primary)}
 
-  /* Chart card */
   .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:var(--space-6);box-shadow:var(--shadow-sm);margin-bottom:var(--space-6)}
   .card-title{font-size:var(--text-base);font-weight:600;margin-bottom:var(--space-1)}
-  .card-desc{font-size:var(--text-xs);color:var(--text-muted);margin-bottom:var(--space-6);max-width:70ch}
-  .chart-wrap{position:relative;height:380px}
+  .card-desc{font-size:var(--text-xs);color:var(--text-muted);margin-bottom:var(--space-6);max-width:72ch}
+  .chart-wrap{position:relative;height:400px}
 
-  /* Legend */
   .legend{display:flex;gap:var(--space-4);flex-wrap:wrap;margin-top:var(--space-4)}
   .legend-item{display:flex;align-items:center;gap:var(--space-2);font-size:var(--text-xs);color:var(--text-muted)}
-  .legend-dot{width:10px;height:10px;border-radius:50%}
+  .legend-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
 
-  /* Two-col grid for secondary charts */
   .chart-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-6)}
   @media(max-width:700px){.chart-grid{grid-template-columns:1fr}}
 
-  /* Table */
   .table-wrap{overflow-x:auto;margin-top:var(--space-4)}
   table{width:100%;border-collapse:collapse;font-size:var(--text-sm)}
-  th{text-align:left;padding:var(--space-2) var(--space-3);font-size:var(--text-xs);font-weight:500;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;border-bottom:1px solid var(--border)}
-  td{padding:var(--space-2) var(--space-3);border-bottom:1px solid var(--border);font-variant-numeric:tabular-nums}
-  tr:last-child td{border-bottom:none;font-weight:600}
-  .badge{display:inline-flex;align-items:center;padding:1px 8px;border-radius:var(--radius-full,9999px);font-size:var(--text-xs);font-weight:500}
+  th{text-align:left;padding:var(--space-2) var(--space-3);font-size:var(--text-xs);font-weight:500;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em;border-bottom:1px solid var(--border);white-space:nowrap}
+  td{padding:var(--space-2) var(--space-3);border-bottom:1px solid var(--border);font-variant-numeric:tabular-nums;white-space:nowrap}
+  tr:last-child td{border-bottom:none;font-weight:600;border-top:2px solid var(--border)}
+  .badge{display:inline-flex;align-items:center;padding:1px 8px;border-radius:9999px;font-size:var(--text-xs);font-weight:500}
   .badge.up{background:var(--up-bg);color:var(--up)}
   .badge.down{background:var(--down-bg);color:var(--down)}
   .badge.flat{background:var(--surface-2);color:var(--text-muted)}
 
-  /* No-data state */
-  .no-data{display:flex;flex-direction:column;align-items:center;justify-content:center;height:200px;color:var(--text-muted);gap:var(--space-2);font-size:var(--text-sm)}
-
   footer{text-align:center;padding:var(--space-8) 0 var(--space-4);color:var(--text-faint);font-size:var(--text-xs)}
+
+  @media(max-width:600px){
+    .controls{flex-direction:column}
+    .btn-primary{width:100%}
+    .chart-wrap{height:280px}
+  }
 </style>
 </head>
 <body>
-
 <div class="app">
   <header>
     <div class="logo">
@@ -128,33 +132,34 @@
     </div>
     <div class="field">
       <label for="date-end">Sluttdato</label>
-      <input type="date" id="date-end" value="2024-01-01">
+      <input type="date" id="date-end" value="2025-07-01">
     </div>
     <button class="btn-primary" id="btn-update">Oppdater graf</button>
+    <span class="data-note" id="data-note">⚠ Demo-data – koble til Google Sheets for ekte priser</span>
   </section>
 
-  <div class="kpis" id="kpi-strip">
-    <!-- filled by JS -->
-  </div>
+  <div class="kpis" id="kpi-strip"></div>
 
   <div class="card">
-    <div class="card-title">Prisutvikling – fossefallsanalyse</div>
-    <div class="card-desc">Første stolpe viser totalprisen på startdato. Deretter viser hver stolpe hvor mye den aktuelle kostnadskomponenten har endret seg. Siste stolpe er totalprisen på sluttdato.</div>
-    <div class="chart-wrap">
-      <canvas id="waterfall-chart"></canvas>
-    </div>
+    <div class="card-title">Fossefallsanalyse – prisendring per kostnadskomponent</div>
+    <div class="card-desc">Første stolpe = utsalgspris (kol. M) på startdato. Hver midtstolpe viser endringen i den komponenten. Siste stolpe = utsalgspris på sluttdato. Rød = prisøkning, grønn = prisreduksjon.</div>
+    <div class="chart-wrap"><canvas id="waterfall-chart"></canvas></div>
     <div class="legend">
-      <div class="legend-item"><div class="legend-dot" style="background:var(--primary)"></div>Totalpris</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--primary)"></div>Totalpris (kol. M)</div>
       <div class="legend-item"><div class="legend-dot" style="background:var(--up)"></div>Økning</div>
       <div class="legend-item"><div class="legend-dot" style="background:var(--down)"></div>Reduksjon</div>
     </div>
   </div>
 
   <div class="card">
-    <div class="card-title">Detaljtabell</div>
+    <div class="card-title">Detaljtabell – endring per komponent</div>
     <div class="table-wrap">
-      <table id="detail-table">
-        <thead><tr><th>Kostnadskomponent</th><th>Startbeløp (kr)</th><th>Sluttbeløp (kr)</th><th>Endring (kr)</th><th>Endring (%)</th></tr></thead>
+      <table>
+        <thead><tr>
+          <th>Kostnadskomponent</th><th>Excel-kol.</th>
+          <th>Startbeløp</th><th>Sluttbeløp</th>
+          <th>Endring (kr)</th><th>Endring (%)</th>
+        </tr></thead>
         <tbody id="table-body"></tbody>
       </table>
     </div>
@@ -163,59 +168,77 @@
   <div class="chart-grid">
     <div class="card">
       <div class="card-title">Pristrend over tid</div>
-      <div class="card-desc" style="margin-bottom:var(--space-4)">Utsalgspris og råvarepris 2020–nå</div>
+      <div class="card-desc" style="margin-bottom:var(--space-4)">Utsalgspris (kol. M) og råvarepris (kol. D)</div>
       <div class="chart-wrap" style="height:240px"><canvas id="trend-chart"></canvas></div>
     </div>
     <div class="card">
       <div class="card-title">Kostnadssammensetning</div>
-      <div class="card-desc" style="margin-bottom:var(--space-4)">Andel per komponent på sluttdato</div>
+      <div class="card-desc" style="margin-bottom:var(--space-4)">Andel per komponent på valgt sluttdato</div>
       <div class="chart-wrap" style="height:240px"><canvas id="donut-chart"></canvas></div>
     </div>
   </div>
 
-  <footer>Data: Google Sheets (sukkermodell) · Prisbrytaren v2</footer>
+  <footer>
+    Kilde: SSB (utsalgspris, kol. M) · Kostnadskomponenter: kol. D, F, G, H, I, K, L<br>
+    Clearfjord Prisbrytaren v3 · Demo-data inntil Google Sheets kobles til
+  </footer>
 </div>
 
 <script>
-// ─── CONFIG ────────────────────────────────────────────────────────────────
-// Bytt til Google Sheets CSV-URL når klar:
+// ─── KONFIGURASJON ────────────────────────────────────────────────────────
+// Sett DATA_SOURCE til Google Sheets CSV-URL når klar:
 // const DATA_SOURCE = "https://docs.google.com/spreadsheets/d/DIN_ID/gviz/tq?tqx=out:csv&sheet=sukker";
 const DATA_SOURCE = null;
 
-// ─── DEMO DATA (erstattes av ekte Sheet) ──────────────────────────────────
-// Kolonner: Dato, Råvarepris, Særavgift, Frakt til Norge, Pakking, Frakt og lager, Bruttomargin, MVA, Utsalgspris
-const DEMO_ROWS = [
-  ["2020-01-01", 3.20, 1.10, 0.40, 0.30, 0.25, 1.50, 1.08, 7.83],
-  ["2020-07-01", 3.30, 1.10, 0.41, 0.30, 0.25, 1.55, 1.11, 8.02],
-  ["2021-01-01", 3.45, 1.15, 0.42, 0.31, 0.26, 1.60, 1.15, 8.34],
-  ["2021-07-01", 3.60, 1.15, 0.44, 0.32, 0.27, 1.65, 1.19, 8.62],
-  ["2022-01-01", 4.10, 1.20, 0.50, 0.35, 0.30, 1.80, 1.30, 9.55],
-  ["2022-07-01", 5.20, 1.25, 0.58, 0.38, 0.33, 1.90, 1.45, 11.09],
-  ["2023-01-01", 5.80, 1.30, 0.62, 0.40, 0.35, 2.10, 1.56, 12.13],
-  ["2023-07-01", 6.20, 1.35, 0.65, 0.42, 0.36, 2.20, 1.64, 12.82],
-  ["2024-01-01", 6.50, 1.40, 0.68, 0.44, 0.37, 2.35, 1.72, 13.46],
-  ["2024-07-01", 6.80, 1.42, 0.70, 0.45, 0.38, 2.45, 1.78, 13.98],
-  ["2025-01-01", 7.10, 1.45, 0.72, 0.46, 0.39, 2.55, 1.84, 14.51],
-  ["2025-07-01", 7.40, 1.48, 0.74, 0.47, 0.40, 2.65, 1.90, 15.04],
-];
+// ─── KOLONNEKART (fra Excel/Sheets) ───────────────────────────────────────
+// Når du kobler til Google Sheets, mappes CSV-kolonnene 0-basert:
+// CSV-kol 0 = Dato (kol A i Excel)
+// CSV-kol 3 = Råvarepris (kol D)
+// CSV-kol 5 = Frakt til Norge (kol F)
+// CSV-kol 6 = Særavgift sukker (kol G)
+// CSV-kol 7 = Pakking & emballasje (kol H)
+// CSV-kol 8 = Frakt og lager i Norge (kol I)
+// CSV-kol 10 = Bruttofortjeneste (kol K)
+// CSV-kol 11 = MVA (kol L)
+// CSV-kol 12 = Utsalgspris SSB (kol M)  ← TOTALPRIS
+
+// I demo-arrayen nedenfor er strukturen komprimert til:
+// [Dato, D, F, G, H, I, K, L, M]
+// index: 0   1  2  3  4  5  6  7  8
 
 const COMPONENTS = [
-  {key:"Råvarepris",       col:1, color:"#e07a5f"},
-  {key:"Særavgift",        col:2, color:"#f2cc8f"},
-  {key:"Frakt til Norge",  col:3, color:"#81b29a"},
-  {key:"Pakking",          col:4, color:"#3d405b"},
-  {key:"Frakt og lager",   col:5, color:"#8ecae6"},
-  {key:"Bruttomargin",     col:6, color:"#264653"},
-  {key:"MVA",              col:7, color:"#e9c46a"},
+  {key:"Råvarepris",           excelCol:"D", col:1, color:"#c0392b"},
+  {key:"Frakt til Norge",      excelCol:"F", col:2, color:"#e67e22"},
+  {key:"Særavgift sukker",     excelCol:"G", col:3, color:"#f1c40f"},
+  {key:"Pakking & emballasje", excelCol:"H", col:4, color:"#27ae60"},
+  {key:"Frakt og lager i NO",  excelCol:"I", col:5, color:"#2980b9"},
+  {key:"Bruttofortjeneste",    excelCol:"K", col:6, color:"#8e44ad"},
+  {key:"MVA",                  excelCol:"L", col:7, color:"#16a085"},
+];
+const PRICE_COL = 8; // kol M = utsalgspris SSB
+
+// ─── DEMO-DATA (realistiske SSB-baserte verdier ~20-38 kr) ───────────────
+const DEMO_ROWS = [
+  ["2020-01-01",  8.20, 1.10, 2.80, 0.80, 0.60, 3.50, 3.00, 20.00],
+  ["2020-07-01",  8.40, 1.12, 2.80, 0.80, 0.61, 3.55, 3.05, 20.33],
+  ["2021-01-01",  9.00, 1.15, 2.85, 0.82, 0.63, 3.70, 3.20, 21.35],
+  ["2021-07-01",  9.50, 1.18, 2.85, 0.83, 0.64, 3.80, 3.30, 22.10],
+  ["2022-01-01", 12.00, 1.40, 2.90, 0.90, 0.70, 4.30, 3.80, 26.00],
+  ["2022-07-01", 14.50, 1.60, 2.90, 0.95, 0.75, 4.60, 4.20, 29.50],
+  ["2023-01-01", 16.00, 1.70, 3.00, 1.00, 0.80, 5.00, 4.60, 32.10],
+  ["2023-07-01", 16.80, 1.75, 3.00, 1.02, 0.82, 5.20, 4.80, 33.39],
+  ["2024-01-01", 17.50, 1.80, 3.10, 1.05, 0.85, 5.50, 5.05, 34.85],
+  ["2024-07-01", 18.00, 1.82, 3.10, 1.06, 0.86, 5.70, 5.20, 35.74],
+  ["2025-01-01", 18.80, 1.85, 3.15, 1.08, 0.88, 5.90, 5.39, 37.05],
+  ["2025-07-01", 19.20, 1.88, 3.15, 1.09, 0.89, 6.10, 5.54, 37.85],
 ];
 
 // ─── UTILS ────────────────────────────────────────────────────────────────
-function fmt(n, dec=2){ return n.toLocaleString("nb-NO",{minimumFractionDigits:dec,maximumFractionDigits:dec}); }
-function pct(n){ return (n>=0?"+":"")+fmt(n,1)+" %"; }
-function getCSSVar(v){ return getComputedStyle(document.documentElement).getPropertyValue(v).trim(); }
+const fmt = (n, d=2) => Number(n).toLocaleString("nb-NO",{minimumFractionDigits:d,maximumFractionDigits:d});
+const pct = n => (n>=0?"+":"")+fmt(n,1)+" %";
+const css = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
 
 function findRow(rows, dateStr) {
-  // Find the row closest to (but not after) the given date
   const target = new Date(dateStr).getTime();
   let best = null, bestDiff = Infinity;
   for (const row of rows) {
@@ -226,23 +249,35 @@ function findRow(rows, dateStr) {
   return best || rows[0];
 }
 
-// ─── STATE ────────────────────────────────────────────────────────────────
+// ─── DATA ─────────────────────────────────────────────────────────────────
 let allRows = [];
-let wfChart = null, trendChart = null, donutChart = null;
+let wfChart=null, trendChart=null, donutChart=null;
 
-// ─── LOAD DATA ────────────────────────────────────────────────────────────
 async function loadData() {
   if (DATA_SOURCE) {
     try {
       const res = await fetch(DATA_SOURCE);
       const text = await res.text();
-      const lines = text.trim().split("\n").slice(1); // skip header
+      const lines = text.trim().split("\n").slice(1);
       allRows = lines.map(line => {
-        const cols = line.split(",").map(c => c.replace(/"/g,"").trim());
-        return [cols[0], ...cols.slice(1).map(Number)];
-      }).filter(r => r[0]);
+        const cols = line.split(",").map(c=>c.replace(/"/g,"").trim());
+        // Map Excel columns: A(0), D(3), F(5), G(6), H(7), I(8), K(10), L(11), M(12)
+        return [
+          cols[0],   // Dato
+          +cols[3],  // D Råvarepris
+          +cols[5],  // F Frakt til Norge
+          +cols[6],  // G Særavgift
+          +cols[7],  // H Pakking
+          +cols[8],  // I Frakt og lager
+          +cols[10], // K Bruttofortjeneste
+          +cols[11], // L MVA
+          +cols[12], // M Utsalgspris SSB
+        ];
+      }).filter(r => r[0] && !isNaN(r[PRICE_COL]) && r[PRICE_COL] > 0);
+      document.getElementById("data-note").textContent = "✓ Kobles til Google Sheets";
+      document.getElementById("data-note").style.color = "var(--down)";
     } catch(e) {
-      console.warn("Feil ved lasting av Sheet, bruker demo-data:", e);
+      console.warn("Sheet-feil, bruker demo-data:", e);
       allRows = DEMO_ROWS;
     }
   } else {
@@ -250,257 +285,199 @@ async function loadData() {
   }
 }
 
-// ─── THEME ────────────────────────────────────────────────────────────────
+// ─── TEMA ─────────────────────────────────────────────────────────────────
 (function(){
   const btn = document.querySelector("[data-theme-toggle]");
   const html = document.documentElement;
   let dark = window.matchMedia("(prefers-color-scheme:dark)").matches;
-  html.setAttribute("data-theme", dark ? "dark" : "light");
-  updateThemeIcon();
-  btn.addEventListener("click", () => {
-    dark = !dark;
-    html.setAttribute("data-theme", dark ? "dark" : "light");
-    updateThemeIcon();
-    if (allRows.length) buildCharts();
-  });
-  function updateThemeIcon() {
-    btn.innerHTML = dark
-      ? `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>`
-      : `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>`;
-  }
+  html.setAttribute("data-theme", dark?"dark":"light");
+  setIcon();
+  btn.addEventListener("click",()=>{dark=!dark;html.setAttribute("data-theme",dark?"dark":"light");setIcon();if(allRows.length)buildAll();});
+  function setIcon(){btn.innerHTML=dark
+    ?'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>'
+    :'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';}
 })();
 
 // ─── KPI STRIP ────────────────────────────────────────────────────────────
-function renderKPIs(startRow, endRow) {
-  const startTotal = startRow[8];
-  const endTotal = endRow[8];
-  const diff = endTotal - startTotal;
-  const diffPct = (diff / startTotal) * 100;
-
-  // Find biggest driver
-  let biggestKey = "", biggestAbs = 0;
-  for (const c of COMPONENTS) {
-    const chg = endRow[c.col] - startRow[c.col];
-    if (Math.abs(chg) > biggestAbs) { biggestAbs = Math.abs(chg); biggestKey = c.key; }
-  }
-  const marginChg = endRow[6] - startRow[6];
-  const rawChg = endRow[1] - startRow[1];
-
-  const strip = document.getElementById("kpi-strip");
-  const cls = diff >= 0 ? "up" : "down";
-  strip.innerHTML = `
-    <div class="kpi neutral"><div class="kpi-label">Pris startdato</div><div class="kpi-value">${fmt(startTotal)} kr</div><div class="kpi-sub">${startRow[0]}</div></div>
-    <div class="kpi neutral"><div class="kpi-label">Pris sluttdato</div><div class="kpi-value">${fmt(endTotal)} kr</div><div class="kpi-sub">${endRow[0]}</div></div>
+function renderKPIs(s, e) {
+  const diff = e[PRICE_COL] - s[PRICE_COL];
+  const diffPct = (diff/s[PRICE_COL])*100;
+  const marginChg = e[6]-s[6];
+  const rawChg = e[1]-s[1];
+  let bigKey="", bigAbs=0;
+  for(const c of COMPONENTS){const chg=Math.abs(e[c.col]-s[c.col]);if(chg>bigAbs){bigAbs=chg;bigKey=c.key;}}
+  const cls = diff>=0?"up":"down";
+  document.getElementById("kpi-strip").innerHTML=`
+    <div class="kpi neutral"><div class="kpi-label">Pris startdato</div><div class="kpi-value">${fmt(s[PRICE_COL])} kr</div><div class="kpi-sub">${s[0]}</div></div>
+    <div class="kpi neutral"><div class="kpi-label">Pris sluttdato</div><div class="kpi-value">${fmt(e[PRICE_COL])} kr</div><div class="kpi-sub">${e[0]}</div></div>
     <div class="kpi ${cls}"><div class="kpi-label">Samlet endring</div><div class="kpi-value">${diff>=0?"+":""}${fmt(diff)} kr</div><div class="kpi-sub">${pct(diffPct)}</div></div>
-    <div class="kpi ${rawChg>=0?"up":"down"}"><div class="kpi-label">Råvareprisendring</div><div class="kpi-value">${rawChg>=0?"+":""}${fmt(rawChg)} kr</div><div class="kpi-sub">av ${fmt(diff>=0?diff:-diff,2)} kr total</div></div>
-    <div class="kpi ${marginChg>=0?"up":"down"}"><div class="kpi-label">Marginendring</div><div class="kpi-value">${marginChg>=0?"+":""}${fmt(marginChg)} kr</div><div class="kpi-sub">Bruttofortjeneste</div></div>
-    <div class="kpi neutral"><div class="kpi-label">Største driver</div><div class="kpi-value" style="font-size:var(--text-base)">${biggestKey}</div><div class="kpi-sub">+${fmt(biggestAbs)} kr endring</div></div>
-  `;
+    <div class="kpi ${rawChg>=0?"up":"down"}"><div class="kpi-label">Råvarepris (kol.D)</div><div class="kpi-value">${rawChg>=0?"+":""}${fmt(rawChg)} kr</div><div class="kpi-sub">av ${fmt(Math.abs(diff))} kr total</div></div>
+    <div class="kpi ${marginChg>=0?"up":"down"}"><div class="kpi-label">Margin (kol.K)</div><div class="kpi-value">${marginChg>=0?"+":""}${fmt(marginChg)} kr</div><div class="kpi-sub">Bruttofortjeneste</div></div>
+    <div class="kpi neutral"><div class="kpi-label">Største driver</div><div class="kpi-value" style="font-size:var(--text-sm);padding-top:2px">${bigKey}</div><div class="kpi-sub">+${fmt(bigAbs)} kr endring</div></div>`;
 }
 
-// ─── WATERFALL CHART ──────────────────────────────────────────────────────
-function buildWaterfall(startRow, endRow) {
-  const text = getCSSVar("--text");
-  const muted = getCSSVar("--text-muted");
-  const border = getCSSVar("--border");
-  const primary = getCSSVar("--primary");
-  const up = getCSSVar("--up");
-  const down = getCSSVar("--down");
+// ─── FOSSEFALLSGRAF ───────────────────────────────────────────────────────
+function buildWaterfall(s, e) {
+  const textColor = css("--text");
+  const muted = css("--text-muted");
+  const border = css("--border");
+  const primary = css("--primary");
+  const upColor = css("--up");
+  const downColor = css("--down");
 
-  // Build waterfall data
-  // Labels: Start | comp1 | comp2 | ... | End
-  const labels = [startRow[0]];
-  const floatBase = [0]; // invisible base for floating bars
-  const barValues = [startRow[8]]; // actual visible bar heights
-  const barColors = [primary];
+  // Startpunkt: totalpris på startdato (kol M)
+  const labels = [s[0]];
+  const bases  = [0];
+  const values = [s[PRICE_COL]];
+  const colors = [primary];
+  const tooltipVals = [];
 
-  let running = startRow[8];
-  const changes = [];
+  let running = s[PRICE_COL];
 
-  for (const c of COMPONENTS) {
-    const chg = endRow[c.col] - startRow[c.col];
-    changes.push({key:c.key, start:startRow[c.col], end:endRow[c.col], chg});
+  for(const c of COMPONENTS){
+    const chg = e[c.col] - s[c.col];
+    tooltipVals.push(chg);
     labels.push(c.key);
-    if (chg >= 0) {
-      floatBase.push(running);
-      barValues.push(chg);
-      barColors.push(up);
+    if(chg >= 0){
+      bases.push(running);
+      values.push(chg);
+      colors.push(upColor);
     } else {
-      floatBase.push(running + chg);
-      barValues.push(-chg);
-      barColors.push(down);
+      bases.push(running + chg);
+      values.push(-chg);
+      colors.push(downColor);
     }
     running += chg;
   }
 
-  labels.push(endRow[0]);
-  floatBase.push(0);
-  barValues.push(endRow[8]);
-  barColors.push(primary);
+  // Sluttdato: totalpris på sluttdato (kol M)
+  labels.push(e[0]);
+  bases.push(0);
+  values.push(e[PRICE_COL]);
+  colors.push(primary);
 
   const ctx = document.getElementById("waterfall-chart").getContext("2d");
-  if (wfChart) wfChart.destroy();
+  if(wfChart) wfChart.destroy();
 
   wfChart = new Chart(ctx, {
-    type: "bar",
-    data: {
-      labels,
-      datasets: [
-        {
-          label: "Base (usynlig)",
-          data: floatBase,
-          backgroundColor: "transparent",
-          borderColor: "transparent",
-          stack: "wf",
-        },
-        {
-          label: "Verdi",
-          data: barValues,
-          backgroundColor: barColors,
-          borderRadius: 4,
-          borderSkipped: false,
-          stack: "wf",
-        }
-      ]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: {
-        legend: { display: false },
-        tooltip: {
-          callbacks: {
-            title: (items) => items[0].label,
-            label: (item) => {
-              if (item.datasetIndex === 0) return null;
-              const i = item.dataIndex;
-              if (i === 0 || i === labels.length - 1) return ` Totalpris: ${fmt(item.raw)} kr`;
-              const chg = changes[i - 1].chg;
-              const sign = chg >= 0 ? "+" : "";
-              return ` Endring: ${sign}${fmt(chg)} kr`;
-            },
-            filter: (item) => item.datasetIndex !== 0,
-          },
-          backgroundColor: getCSSVar("--surface"),
-          titleColor: text,
-          bodyColor: muted,
-          borderColor: border,
-          borderWidth: 1,
-        }
-      },
-      scales: {
-        x: {
-          stacked: true,
-          grid: { display: false },
-          ticks: { color: muted, font: { size: 11 }, maxRotation: 30 },
-          border: { color: border },
-        },
-        y: {
-          stacked: true,
-          grid: { color: border },
-          ticks: { color: muted, font: { size: 11 }, callback: v => fmt(v,0) + " kr" },
-          border: { color: border },
-        }
-      }
-    }
-  });
-
-  // Render table
-  const tbody = document.getElementById("table-body");
-  let rows = "";
-  for (const c of changes) {
-    const pctVal = (c.chg / c.start) * 100;
-    const cls = c.chg > 0.005 ? "up" : c.chg < -0.005 ? "down" : "flat";
-    rows += `<tr>
-      <td>${c.key}</td>
-      <td>${fmt(c.start)} kr</td>
-      <td>${fmt(c.end)} kr</td>
-      <td>${c.chg>=0?"+":""}${fmt(c.chg)} kr</td>
-      <td><span class="badge ${cls}">${c.chg>=0?"+":""}${fmt(pctVal,1)} %</span></td>
-    </tr>`;
-  }
-  const totalChg = endRow[8] - startRow[8];
-  const totalPct = (totalChg / startRow[8]) * 100;
-  const tcls = totalChg >= 0 ? "up" : "down";
-  rows += `<tr>
-    <td><strong>Totalpris</strong></td>
-    <td><strong>${fmt(startRow[8])} kr</strong></td>
-    <td><strong>${fmt(endRow[8])} kr</strong></td>
-    <td><strong>${totalChg>=0?"+":""}${fmt(totalChg)} kr</strong></td>
-    <td><span class="badge ${tcls}">${totalChg>=0?"+":""}${fmt(totalPct,1)} %</span></td>
-  </tr>`;
-  tbody.innerHTML = rows;
-}
-
-// ─── TREND CHART ──────────────────────────────────────────────────────────
-function buildTrend() {
-  const muted = getCSSVar("--text-muted");
-  const border = getCSSVar("--border");
-  const primary = getCSSVar("--primary");
-  const labels = allRows.map(r => r[0].slice(0,7));
-  const prices = allRows.map(r => r[8]);
-  const raw = allRows.map(r => r[1]);
-
-  const ctx = document.getElementById("trend-chart").getContext("2d");
-  if (trendChart) trendChart.destroy();
-
-  trendChart = new Chart(ctx, {
-    type: "line",
-    data: {
-      labels,
-      datasets: [
-        { label:"Utsalgspris", data:prices, borderColor:primary, backgroundColor:"transparent", pointRadius:0, tension:0.3, borderWidth:2 },
-        { label:"Råvarepris",  data:raw,    borderColor:"#e07a5f", backgroundColor:"transparent", pointRadius:0, tension:0.3, borderWidth:2, borderDash:[4,3] },
-      ]
-    },
-    options: {
-      responsive:true, maintainAspectRatio:false,
-      plugins: { legend:{ labels:{ color:muted, font:{size:11} } }, tooltip:{ mode:"index", intersect:false } },
-      scales: {
-        x:{ grid:{display:false}, ticks:{color:muted,font:{size:10},maxRotation:0,maxTicksLimit:6}, border:{color:border} },
-        y:{ grid:{color:border}, ticks:{color:muted,font:{size:10},callback:v=>fmt(v,0)+" kr"}, border:{color:border} }
-      }
-    }
-  });
-}
-
-// ─── DONUT CHART ──────────────────────────────────────────────────────────
-function buildDonut(endRow) {
-  const muted = getCSSVar("--text-muted");
-  const ctx = document.getElementById("donut-chart").getContext("2d");
-  if (donutChart) donutChart.destroy();
-
-  donutChart = new Chart(ctx, {
-    type:"doughnut",
+    type:"bar",
     data:{
-      labels: COMPONENTS.map(c=>c.key),
-      datasets:[{ data: COMPONENTS.map(c=>endRow[c.col]), backgroundColor: COMPONENTS.map(c=>c.color), borderWidth:0, hoverOffset:6 }]
+      labels,
+      datasets:[
+        {label:"Base",data:bases,backgroundColor:"transparent",borderColor:"transparent",stack:"wf"},
+        {label:"Verdi",data:values,backgroundColor:colors,borderRadius:4,borderSkipped:false,stack:"wf"}
+      ]
     },
     options:{
-      responsive:true, maintainAspectRatio:false, cutout:"62%",
+      responsive:true,maintainAspectRatio:false,
       plugins:{
-        legend:{ position:"right", labels:{color:muted,font:{size:11},boxWidth:12,padding:10} },
-        tooltip:{ callbacks:{ label: i => ` ${fmt(i.raw)} kr (${fmt(i.raw/endRow[8]*100,1)} %)` } }
+        legend:{display:false},
+        tooltip:{
+          callbacks:{
+            title: items => items[0].label,
+            label: item => {
+              if(item.datasetIndex===0) return null;
+              const i = item.dataIndex;
+              const n = labels.length;
+              if(i===0) return ` Utsalgspris (start): ${fmt(item.raw)} kr`;
+              if(i===n-1) return ` Utsalgspris (slutt): ${fmt(item.raw)} kr`;
+              const chg = tooltipVals[i-1];
+              return ` Endring: ${chg>=0?"+":""}${fmt(chg)} kr`;
+            },
+            filter: item => item.datasetIndex!==0
+          },
+          backgroundColor:css("--surface"),titleColor:textColor,bodyColor:muted,
+          borderColor:border,borderWidth:1,padding:10
+        }
+      },
+      scales:{
+        x:{stacked:true,grid:{display:false},ticks:{color:muted,font:{size:11},maxRotation:35},border:{color:border}},
+        y:{stacked:true,grid:{color:border},ticks:{color:muted,font:{size:11},callback:v=>fmt(v,0)+" kr"},border:{color:border}}
+      }
+    }
+  });
+
+  // Tabell
+  let rows="";
+  for(const c of COMPONENTS){
+    const sv=s[c.col], ev=e[c.col], chg=ev-sv;
+    const pp=(chg/sv)*100;
+    const cls=chg>0.005?"up":chg<-0.005?"down":"flat";
+    rows+=`<tr>
+      <td>${c.key}</td><td style="color:var(--text-muted)">${c.excelCol}</td>
+      <td>${fmt(sv)} kr</td><td>${fmt(ev)} kr</td>
+      <td>${chg>=0?"+":""}${fmt(chg)} kr</td>
+      <td><span class="badge ${cls}">${chg>=0?"+":""}${fmt(pp,1)} %</span></td>
+    </tr>`;
+  }
+  const tc=e[PRICE_COL]-s[PRICE_COL], tp=(tc/s[PRICE_COL])*100;
+  rows+=`<tr>
+    <td>Utsalgspris (kol. M)</td><td style="color:var(--text-muted)">M</td>
+    <td>${fmt(s[PRICE_COL])} kr</td><td>${fmt(e[PRICE_COL])} kr</td>
+    <td>${tc>=0?"+":""}${fmt(tc)} kr</td>
+    <td><span class="badge ${tc>=0?"up":"down"}">${tc>=0?"+":""}${fmt(tp,1)} %</span></td>
+  </tr>`;
+  document.getElementById("table-body").innerHTML=rows;
+}
+
+// ─── TRENDGRAF ────────────────────────────────────────────────────────────
+function buildTrend(){
+  const muted=css("--text-muted"), border=css("--border"), primary=css("--primary");
+  const labels=allRows.map(r=>r[0].slice(0,7));
+  const prices=allRows.map(r=>r[PRICE_COL]);
+  const raw=allRows.map(r=>r[1]);
+  const ctx=document.getElementById("trend-chart").getContext("2d");
+  if(trendChart) trendChart.destroy();
+  trendChart=new Chart(ctx,{
+    type:"line",
+    data:{labels,datasets:[
+      {label:"Utsalgspris (M)",data:prices,borderColor:primary,backgroundColor:"transparent",pointRadius:0,tension:0.3,borderWidth:2},
+      {label:"Råvarepris (D)",data:raw,borderColor:"#c0392b",backgroundColor:"transparent",pointRadius:0,tension:0.3,borderWidth:2,borderDash:[4,3]}
+    ]},
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{labels:{color:muted,font:{size:11}}},tooltip:{mode:"index",intersect:false}},
+      scales:{
+        x:{grid:{display:false},ticks:{color:muted,font:{size:10},maxRotation:0,maxTicksLimit:6},border:{color:border}},
+        y:{grid:{color:border},ticks:{color:muted,font:{size:10},callback:v=>fmt(v,0)+" kr"},border:{color:border}}
+      }
+    }
+  });
+}
+
+// ─── SMULTRING ────────────────────────────────────────────────────────────
+function buildDonut(e){
+  const muted=css("--text-muted");
+  const ctx=document.getElementById("donut-chart").getContext("2d");
+  if(donutChart) donutChart.destroy();
+  donutChart=new Chart(ctx,{
+    type:"doughnut",
+    data:{
+      labels:COMPONENTS.map(c=>c.key),
+      datasets:[{data:COMPONENTS.map(c=>e[c.col]),backgroundColor:COMPONENTS.map(c=>c.color),borderWidth:0,hoverOffset:6}]
+    },
+    options:{
+      responsive:true,maintainAspectRatio:false,cutout:"62%",
+      plugins:{
+        legend:{position:"right",labels:{color:muted,font:{size:11},boxWidth:12,padding:8}},
+        tooltip:{callbacks:{label:i=>` ${fmt(i.raw)} kr (${fmt(i.raw/e[PRICE_COL]*100,1)} %)`}}
       }
     }
   });
 }
 
 // ─── MAIN ─────────────────────────────────────────────────────────────────
-function buildCharts() {
-  const dateStart = document.getElementById("date-start").value;
-  const dateEnd   = document.getElementById("date-end").value;
-  const startRow  = findRow(allRows, dateStart);
-  const endRow    = findRow(allRows, dateEnd);
-  renderKPIs(startRow, endRow);
-  buildWaterfall(startRow, endRow);
+function buildAll(){
+  const s = findRow(allRows, document.getElementById("date-start").value);
+  const e = findRow(allRows, document.getElementById("date-end").value);
+  renderKPIs(s, e);
+  buildWaterfall(s, e);
   buildTrend();
-  buildDonut(endRow);
+  buildDonut(e);
 }
 
-document.getElementById("btn-update").addEventListener("click", buildCharts);
-
-loadData().then(buildCharts);
+document.getElementById("btn-update").addEventListener("click", buildAll);
+loadData().then(buildAll);
 </script>
 </body>
 </html>
