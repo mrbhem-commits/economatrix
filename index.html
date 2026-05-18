@@ -223,14 +223,14 @@ const INNHOLD_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQmTaejBjga
 // M=12 Utsalgspris SSB      ← totalpris
 
 const COMP = [
-  {key:"Råvarepris (NOK/kg)", col:3,  color:"#c0392b"},
-  {key:"Raffinering",         col:4,  color:"#e67e22"},
-  {key:"Frakt til Norge",     col:5,  color:"#d4a017"},
-  {key:"Særavgift",           col:6,  color:"#27ae60"},
-  {key:"Pakking & emballasje",col:7,  color:"#2980b9"},
-  {key:"Frakt og lager i NO", col:8,  color:"#8e44ad"},
-  {key:"Bruttofortjeneste",   col:10, color:"#c0392b"},
-  {key:"MVA",                 col:11, color:"#16a085"},
+  {key:"Råvarepris (NOK/kg)", col:3,  color:"#e63946"},
+  {key:"Raffinering",         col:4,  color:"#f4a261"},
+  {key:"Frakt til Norge",     col:5,  color:"#e9c46a"},
+  {key:"Særavgift",           col:6,  color:"#2a9d8f"},
+  {key:"Pakking & emballasje",col:7,  color:"#457b9d"},
+  {key:"Frakt og lager i NO", col:8,  color:"#a8dadc"},
+  {key:"Bruttofortjeneste",   col:10, color:"#6a0572"},
+  {key:"MVA",                 col:11, color:"#606c38"},
 ];
 const PRICE_COL = 12; // kol M = Utsalgspris SSB
 
@@ -322,6 +322,8 @@ async function loadSukkerData(){
       sukkerRows.push(row);
     }
     if(sukkerRows.length===0)throw new Error("Ingen gyldige rader");
+    // Sorter stigende på dato
+    sukkerRows.sort((a,b)=>new Date(a[0])-new Date(b[0]));
     note.textContent="✓ Google Sheets ("+sukkerRows.length+" rader)";
     note.style.color="var(--down)";
     console.log("Første rad:", sukkerRows[0]);
