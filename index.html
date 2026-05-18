@@ -15,7 +15,7 @@
     --primary:#01696f;--primary-hover:#0c4e54;
     --up:#b94040;--up-bg:#fae8e8;--down:#437a22;--down-bg:#e8f4e0;
     --radius-sm:.375rem;--radius-md:.5rem;--radius-lg:.75rem;
-    --shadow-sm:0 1px 2px oklch(0.2 0.01 80/0.06);--shadow-md:0 4px 12px oklch(0.2 0.01 80/0.08);
+    --shadow-sm:0 1px 2px oklch(0.2 0.01 80/0.06);
     --font:"Inter",sans-serif;
     --text-xs:clamp(0.72rem,0.68rem + 0.2vw,0.82rem);
     --text-sm:clamp(0.875rem,0.82rem + 0.28vw,1rem);
@@ -59,8 +59,9 @@
   .controls{display:flex;gap:var(--sp4);align-items:flex-end;flex-wrap:wrap;margin-bottom:var(--sp6);padding:var(--sp5);background:var(--surface);border-radius:var(--radius-lg);border:1px solid var(--border);box-shadow:var(--shadow-sm)}
   .field{display:flex;flex-direction:column;gap:var(--sp1)}
   .field label{font-size:var(--text-xs);font-weight:500;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em}
-  .field input[type="date"]{padding:var(--sp2) var(--sp3);border:1px solid var(--border);border-radius:var(--radius-md);background:var(--surface-2);color:var(--text);font-size:var(--text-sm)}
-  .field input[type="date"]:focus{outline:2px solid var(--primary);outline-offset:2px}
+  .field input[type="date"],.field input[type="number"]{padding:var(--sp2) var(--sp3);border:1px solid var(--border);border-radius:var(--radius-md);background:var(--surface-2);color:var(--text);font-size:var(--text-sm);width:160px}
+  .field input:focus{outline:2px solid var(--primary);outline-offset:2px}
+  .field .hint{font-size:var(--text-xs);color:var(--text-muted);margin-top:2px}
   .btn-primary{padding:var(--sp2) var(--sp6);background:var(--primary);color:#fff;border-radius:var(--radius-md);font-size:var(--text-sm);font-weight:500;height:38px;align-self:flex-end}
   .btn-primary:hover{background:var(--primary-hover)}
   .data-note{font-size:var(--text-xs);color:var(--text-muted);align-self:flex-end;padding-bottom:var(--sp2)}
@@ -80,7 +81,9 @@
   .legend-item{display:flex;align-items:center;gap:var(--sp2);font-size:var(--text-xs);color:var(--text-muted)}
   .legend-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
   .chart-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp6)}
-  @media(max-width:700px){.chart-grid{grid-template-columns:1fr}}
+  .chart-grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:var(--sp6)}
+  @media(max-width:900px){.chart-grid-3{grid-template-columns:1fr 1fr}}
+  @media(max-width:700px){.chart-grid,.chart-grid-3{grid-template-columns:1fr}}
   .table-wrap{overflow-x:auto;margin-top:var(--sp4)}
   table{width:100%;border-collapse:collapse;font-size:var(--text-sm)}
   th{text-align:left;padding:var(--sp2) var(--sp3);font-size:var(--text-xs);font-weight:500;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em;border-bottom:1px solid var(--border);white-space:nowrap}
@@ -90,6 +93,12 @@
   .badge.up{background:var(--up-bg);color:var(--up)}
   .badge.down{background:var(--down-bg);color:var(--down)}
   .badge.flat{background:var(--surface-2);color:var(--text-muted)}
+  /* pris-input-kort */
+  .price-input-card{background:var(--primary);color:#fff;border-radius:var(--radius-lg);padding:var(--sp4) var(--sp5);display:flex;align-items:center;gap:var(--sp4);flex-wrap:wrap;margin-bottom:var(--sp4)}
+  .price-input-card label{font-size:var(--text-xs);font-weight:600;text-transform:uppercase;letter-spacing:.05em;opacity:.85}
+  .price-input-card input{width:110px;padding:var(--sp2) var(--sp3);border-radius:var(--radius-md);border:none;background:rgba(255,255,255,.2);color:#fff;font-size:var(--text-sm);font-weight:600}
+  .price-input-card input::placeholder{opacity:.6}
+  .price-input-card .price-hint{font-size:var(--text-xs);opacity:.75}
   .prose{font-size:var(--text-base);line-height:1.85;color:var(--text);max-width:72ch}
   .prose p{margin-bottom:var(--sp4)}
   .prose p:last-child{margin-bottom:0}
@@ -98,14 +107,14 @@
   @keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
   .skeleton{background:linear-gradient(90deg,var(--surface-offset) 25%,var(--border) 50%,var(--surface-offset) 75%);background-size:200% 100%;animation:shimmer 1.5s ease-in-out infinite;border-radius:var(--radius-sm);height:1em;margin-bottom:.75em}
   footer{text-align:center;padding:var(--sp8) 0 var(--sp4);color:var(--text-faint);font-size:var(--text-xs)}
-  @media(max-width:600px){.controls{flex-direction:column}.btn-primary{width:100%}.chart-wrap{height:260px}.sec-btn{padding:var(--sp2) var(--sp3);font-size:var(--text-xs)}}
+  @media(max-width:600px){.controls{flex-direction:column}.btn-primary{width:100%}.chart-wrap{height:260px}.sec-btn{padding:var(--sp2) var(--sp3)}}
 </style>
 </head>
 <body>
 <div class="app">
 <header>
   <div class="logo">
-    <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-label="Prisinnsyn logo">
       <rect x="2" y="16" width="6" height="14" fill="currentColor" opacity=".3" rx="1"/>
       <rect x="10" y="8" width="6" height="22" fill="currentColor" opacity=".6" rx="1"/>
       <rect x="18" y="12" width="6" height="18" fill="currentColor" opacity=".45" rx="1"/>
@@ -123,29 +132,29 @@
 </header>
 
 <div class="product-tabs" role="tablist">
-  <button class="prod-tab active" role="tab" data-prod="sukker" aria-selected="true"><span>🍬</span> Sukker</button>
-  <button class="prod-tab soon" disabled title="Kommer snart"><span>☕</span> Kaffe <small style="font-size:.75em;opacity:.7">(snart)</small></button>
-  <button class="prod-tab soon" disabled title="Kommer snart"><span>⛽</span> Bensin <small style="font-size:.75em;opacity:.7">(snart)</small></button>
+  <button class="prod-tab active" role="tab" data-prod="sukker">🍬 Sukker</button>
+  <button class="prod-tab" role="tab" data-prod="kaffe">☕ Kaffe</button>
+  <button class="prod-tab soon" disabled>⛽ Bensin <small style="font-size:.75em;opacity:.7">(snart)</small></button>
 </div>
 
+<!-- ═══════════ SUKKER ═══════════ -->
 <div class="product-panel active" id="prod-sukker">
   <div class="section-nav">
     <button class="sec-btn active" data-prod="sukker" data-sec="graf">Graf</button>
     <button class="sec-btn" data-prod="sukker" data-sec="analyse">Analyse</button>
     <button class="sec-btn" data-prod="sukker" data-sec="metodikk">Metodikk</button>
   </div>
-
   <div class="sec-panel active" id="sukker-graf">
     <section class="controls">
       <div class="field"><label for="sukker-start">Startdato</label><input type="date" id="sukker-start" value="2023-11-06"></div>
       <div class="field"><label for="sukker-end">Sluttdato</label><input type="date" id="sukker-end"></div>
       <button class="btn-primary" id="sukker-btn">Oppdater graf</button>
-      <span class="data-note" id="sukker-note">Laster data...</span>
+      <span class="data-note" id="sukker-note">Laster...</span>
     </section>
     <div class="kpis" id="sukker-kpis"></div>
     <div class="card">
-      <div class="card-title">Fossefallsanalyse – prisendring per kostnadskomponent</div>
-      <div class="card-desc">Første stolpe = utsalgspris på startdato. Midtstolpene viser endringen per komponent. Siste stolpe = utsalgspris på sluttdato. Rød = økning, grønn = reduksjon.</div>
+      <div class="card-title">Fossefallsanalyse – prisendring per komponent</div>
+      <div class="card-desc">Første stolpe = utsalgspris på startdato. Midtstolpene viser endringen per komponent. Siste stolpe = utsalgspris på sluttdato.</div>
       <div class="chart-wrap"><canvas id="sukker-wf"></canvas></div>
       <div class="legend">
         <div class="legend-item"><div class="legend-dot" style="background:var(--primary)"></div>Totalpris (SSB)</div>
@@ -155,107 +164,221 @@
     </div>
     <div class="card">
       <div class="card-title">Detaljtabell</div>
-      <div class="table-wrap">
-        <table><thead><tr><th>Komponent</th><th>Start (kr)</th><th>Slutt (kr)</th><th>Endring (kr)</th><th>Endring (%)</th></tr></thead>
-        <tbody id="sukker-tbody"></tbody></table>
-      </div>
+      <div class="table-wrap"><table><thead><tr><th>Komponent</th><th>Start (kr)</th><th>Slutt (kr)</th><th>Endring (kr)</th><th>Endring (%)</th></tr></thead><tbody id="sukker-tbody"></tbody></table></div>
     </div>
-    <div class="chart-grid">
+    <div class="chart-grid-3">
       <div class="card">
-        <div class="card-title">Pristrend over tid</div>
-        <div class="card-desc" style="margin-bottom:var(--sp4)">Utsalgspris (SSB) og råvarepris (NOK/kg)</div>
-        <div class="chart-wrap" style="height:240px"><canvas id="sukker-trend"></canvas></div>
+        <div class="card-title">Pristrend</div>
+        <div class="card-desc" style="margin-bottom:var(--sp4)">Utsalgspris vs. råvarepris over tid</div>
+        <div class="chart-wrap" style="height:220px"><canvas id="sukker-trend"></canvas></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Kostnadsutvikling</div>
+        <div class="card-desc" style="margin-bottom:var(--sp4)">Stablet areal – alle komponenter over tid</div>
+        <div class="chart-wrap" style="height:220px"><canvas id="sukker-area"></canvas></div>
       </div>
       <div class="card">
         <div class="card-title">Kostnadssammensetning</div>
-        <div class="card-desc" style="margin-bottom:var(--sp4)">Andel per komponent på valgt sluttdato</div>
-        <div class="chart-wrap" style="height:240px"><canvas id="sukker-donut"></canvas></div>
+        <div class="price-input-card">
+          <div><label for="sukker-custom-price">Din butikkpris (kr/kg)</label><div class="price-hint">Standard: SSB-pris</div></div>
+          <input type="number" id="sukker-custom-price" placeholder="f.eks. 45" min="1" max="200" step="0.5">
+        </div>
+        <div class="chart-wrap" style="height:220px"><canvas id="sukker-donut"></canvas></div>
       </div>
     </div>
   </div>
-
   <div class="sec-panel" id="sukker-analyse">
     <div class="card">
       <div class="card-title">Analyse – Sukker</div>
-      <div class="text-meta">
-        <span id="sukker-analyse-dato"></span>
-        <span id="sukker-analyse-badge" class="text-badge" style="display:none">Oppdatert</span>
-      </div>
-      <div class="prose" id="sukker-analyse-tekst">
-        <div class="skeleton" style="width:100%"></div><div class="skeleton" style="width:88%"></div>
-        <div class="skeleton" style="width:94%"></div><div class="skeleton" style="width:55%"></div>
-      </div>
+      <div class="text-meta"><span id="sukker-analyse-dato"></span><span id="sukker-analyse-badge" class="text-badge" style="display:none">Oppdatert</span></div>
+      <div class="prose" id="sukker-analyse-tekst"><div class="skeleton" style="width:100%"></div><div class="skeleton" style="width:88%"></div><div class="skeleton" style="width:55%"></div></div>
     </div>
   </div>
-
   <div class="sec-panel" id="sukker-metodikk">
     <div class="card">
       <div class="card-title">Metodikk – Sukker</div>
-      <div class="prose" id="sukker-metodikk-tekst">
-        <div class="skeleton" style="width:100%"></div><div class="skeleton" style="width:82%"></div>
-        <div class="skeleton" style="width:96%"></div><div class="skeleton" style="width:55%"></div>
-      </div>
+      <div class="prose" id="sukker-metodikk-tekst"><div class="skeleton" style="width:100%"></div><div class="skeleton" style="width:82%"></div><div class="skeleton" style="width:55%"></div></div>
     </div>
   </div>
 </div>
 
-<footer>Clearfjord Prisinnsyn · Kilde: SSB, ICE Futures Europe · clearfjord.com</footer>
+<!-- ═══════════ KAFFE ═══════════ -->
+<div class="product-panel" id="prod-kaffe">
+  <div class="section-nav">
+    <button class="sec-btn active" data-prod="kaffe" data-sec="graf">Graf</button>
+    <button class="sec-btn" data-prod="kaffe" data-sec="analyse">Analyse</button>
+    <button class="sec-btn" data-prod="kaffe" data-sec="metodikk">Metodikk</button>
+  </div>
+  <div class="sec-panel active" id="kaffe-graf">
+    <section class="controls">
+      <div class="field"><label for="kaffe-start">Startdato</label><input type="date" id="kaffe-start" value="2023-11-06"></div>
+      <div class="field"><label for="kaffe-end">Sluttdato</label><input type="date" id="kaffe-end"></div>
+      <button class="btn-primary" id="kaffe-btn">Oppdater graf</button>
+      <span class="data-note" id="kaffe-note">Laster...</span>
+    </section>
+    <div class="kpis" id="kaffe-kpis"></div>
+    <div class="card">
+      <div class="card-title">Fossefallsanalyse – prisendring per komponent</div>
+      <div class="card-desc">Første stolpe = utsalgspris på startdato. Midtstolpene viser endringen per komponent. Siste stolpe = utsalgspris på sluttdato.</div>
+      <div class="chart-wrap"><canvas id="kaffe-wf"></canvas></div>
+      <div class="legend">
+        <div class="legend-item"><div class="legend-dot" style="background:var(--primary)"></div>Totalpris (SSB)</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--up)"></div>Økning</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--down)"></div>Reduksjon</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Detaljtabell</div>
+      <div class="table-wrap"><table><thead><tr><th>Komponent</th><th>Start (kr)</th><th>Slutt (kr)</th><th>Endring (kr)</th><th>Endring (%)</th></tr></thead><tbody id="kaffe-tbody"></tbody></table></div>
+    </div>
+    <div class="chart-grid-3">
+      <div class="card">
+        <div class="card-title">Pristrend</div>
+        <div class="card-desc" style="margin-bottom:var(--sp4)">Utsalgspris vs. råvarepris over tid</div>
+        <div class="chart-wrap" style="height:220px"><canvas id="kaffe-trend"></canvas></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Kostnadsutvikling</div>
+        <div class="card-desc" style="margin-bottom:var(--sp4)">Stablet areal – alle komponenter over tid</div>
+        <div class="chart-wrap" style="height:220px"><canvas id="kaffe-area"></canvas></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Kostnadssammensetning</div>
+        <div class="price-input-card">
+          <div><label for="kaffe-custom-price">Din butikkpris (kr/250g)</label><div class="price-hint">Standard: SSB-pris</div></div>
+          <input type="number" id="kaffe-custom-price" placeholder="f.eks. 60" min="1" max="500" step="0.5">
+        </div>
+        <div class="chart-wrap" style="height:220px"><canvas id="kaffe-donut"></canvas></div>
+      </div>
+    </div>
+  </div>
+  <div class="sec-panel" id="kaffe-analyse">
+    <div class="card">
+      <div class="card-title">Analyse – Kaffe</div>
+      <div class="text-meta"><span id="kaffe-analyse-dato"></span><span id="kaffe-analyse-badge" class="text-badge" style="display:none">Oppdatert</span></div>
+      <div class="prose" id="kaffe-analyse-tekst"><div class="skeleton" style="width:100%"></div><div class="skeleton" style="width:88%"></div><div class="skeleton" style="width:55%"></div></div>
+    </div>
+  </div>
+  <div class="sec-panel" id="kaffe-metodikk">
+    <div class="card">
+      <div class="card-title">Metodikk – Kaffe</div>
+      <div class="prose" id="kaffe-metodikk-tekst"><div class="skeleton" style="width:100%"></div><div class="skeleton" style="width:82%"></div><div class="skeleton" style="width:55%"></div></div>
+    </div>
+  </div>
+</div>
+
+<footer>Prisinnsyn · Clearfjord · Kilde: SSB, ICE Futures · clearfjord.com</footer>
 </div>
 
 <script>
-// Sett dagens dato som default sluttdato
-(function(){
-  const today = new Date().toISOString().slice(0,10);
-  document.getElementById("sukker-end").value = today;
-})();
-
-// ── KONFIGURASJON ──────────────────────────────────────────────────────────
+// ════════════════════════════════════════════════════
+// KONFIGURASJON
+// ════════════════════════════════════════════════════
 const SUKKER_URL  = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQmTaejBjgaTSGQFzZaMN_FLJHzGyJg39EgKoPC6XOVysem075xRKYYA-_2RG5FKhSfW-8wffoxIRXH/pub?gid=1663124790&single=true&output=csv";
 const INNHOLD_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQmTaejBjgaTSGQFzZaMN_FLJHzGyJg39EgKoPC6XOVysem075xRKYYA-_2RG5FKhSfW-8wffoxIRXH/pub?gid=1485464095&single=true&output=csv";
+// Bytt null med URL når kaffe-arket er publisert:
+const KAFFE_URL   = null;
+// const KAFFE_URL = "https://docs.google.com/...?sheet=kaffe&output=csv";
 
-// ── KOLONNER I SUKKER-ARKET (0-basert CSV-indeks) ─────────────────────────
-// A=0  Dato
-// B=1  Sukker Marked USD/tonn
-// C=2  Markedspris USD/kg
-// D=3  Hvitt sukker NOK/kg  ← råvarepris
-// E=4  Raffinering
-// F=5  Frakt til Norge
-// G=6  Særavgift sukker
-// H=7  Pakking & Emballasje
-// I=8  Frakt og lager i Norge
-// J=9  Total
-// K=10 Bruttofortjeneste
-// L=11 MVA
-// M=12 Utsalgspris SSB      ← totalpris
-
-const COMP = [
-  {key:"Råvarepris (NOK/kg)", col:3,  color:"#e63946"},
-  {key:"Raffinering",         col:4,  color:"#f4a261"},
-  {key:"Frakt til Norge",     col:5,  color:"#e9c46a"},
-  {key:"Særavgift",           col:6,  color:"#2a9d8f"},
-  {key:"Pakking & emballasje",col:7,  color:"#457b9d"},
-  {key:"Frakt og lager i NO", col:8,  color:"#a8dadc"},
-  {key:"Bruttofortjeneste",   col:10, color:"#6a0572"},
-  {key:"MVA",                 col:11, color:"#606c38"},
+// ════════════════════════════════════════════════════
+// KOLONNER
+// Sukker: A=0,D=3,E=4,F=5,G=6,H=7,I=8,J=9,K=10,L=11,M=12
+// Kaffe:  A=0,E=4,F=5,G=6,H=7,I=8,K=10,L=11,M=12
+// ════════════════════════════════════════════════════
+const SUKKER_COMP = [
+  {key:"Råvarepris",           col:3,  color:"#e63946"},
+  {key:"Raffinering",          col:4,  color:"#f4a261"},
+  {key:"Frakt til Norge",      col:5,  color:"#e9c46a"},
+  {key:"Særavgift",            col:6,  color:"#2a9d8f"},
+  {key:"Pakking & emballasje", col:7,  color:"#457b9d"},
+  {key:"Frakt og lager i NO",  col:8,  color:"#a8dadc"},
+  {key:"Bruttofortjeneste",    col:10, color:"#6a0572"},
+  {key:"MVA",                  col:11, color:"#606c38"},
 ];
-const PRICE_COL = 12; // kol M = Utsalgspris SSB
+const SUKKER_PRICE = 12;
 
-// ── UTILS ─────────────────────────────────────────────────────────────────
+const KAFFE_COMP = [
+  {key:"Råvarepris (m/svinn)",  col:4,  color:"#6f4e37"},
+  {key:"Frakt til Norge",       col:5,  color:"#c7a165"},
+  {key:"Brenning & pakking",    col:6,  color:"#e9c46a"},
+  {key:"Emballasje",            col:7,  color:"#457b9d"},
+  {key:"Frakt og lager i NO",   col:8,  color:"#a8dadc"},
+  {key:"Bruttofortjeneste",     col:10, color:"#6a0572"},
+  {key:"MVA",                   col:11, color:"#606c38"},
+];
+const KAFFE_PRICE = 12;
+
+// Demo-data kaffe (NOK/250g, realistiske verdier)
+const KAFFE_DEMO = [
+  ["2020-01-01",0,0,0,0, 12.50,2.10,4.20,1.80,1.40,0,12.00,5.10,39.10],
+  ["2020-07-01",0,0,0,0, 13.00,2.15,4.25,1.82,1.42,0,12.20,5.18,40.02],
+  ["2021-01-01",0,0,0,0, 14.20,2.20,4.30,1.85,1.45,0,12.80,5.44,42.24],
+  ["2021-07-01",0,0,0,0, 15.50,2.25,4.35,1.88,1.48,0,13.20,5.62,44.28],
+  ["2022-01-01",0,0,0,0, 20.10,2.50,4.50,1.95,1.55,0,14.50,6.26,51.36],
+  ["2022-07-01",0,0,0,0, 24.80,2.70,4.65,2.00,1.60,0,15.80,7.02,58.57],
+  ["2023-01-01",0,0,0,0, 27.50,2.85,4.80,2.05,1.65,0,17.00,7.67,63.52],
+  ["2023-07-01",0,0,0,0, 28.90,2.90,4.85,2.08,1.68,0,17.60,7.98,65.99],
+  ["2023-11-01",0,0,0,0, 30.20,2.95,4.90,2.10,1.70,0,18.20,8.26,68.31],
+  ["2024-01-01",0,0,0,0, 31.50,3.00,4.95,2.12,1.72,0,18.80,8.54,70.63],
+  ["2024-07-01",0,0,0,0, 34.20,3.10,5.00,2.15,1.75,0,19.60,8.94,74.74],
+  ["2025-01-01",0,0,0,0, 38.50,3.20,5.10,2.18,1.78,0,20.80,9.46,81.02],
+  ["2025-07-01",0,0,0,0, 41.00,3.30,5.15,2.20,1.80,0,21.50,9.77,84.72],
+];
+
+// ════════════════════════════════════════════════════
+// UTILS
+// ════════════════════════════════════════════════════
 const fmt = (n,d=2) => Number(n).toLocaleString("nb-NO",{minimumFractionDigits:d,maximumFractionDigits:d});
 const css = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
-const toHtml = s => s.split(/\n+/).filter(l=>l.trim()).map(l=>`<p>${l.trim()}</p>`).join("");
+const toHtml = s => s.split(/
++/).filter(l=>l.trim()).map(l=>`<p>${l.trim()}</p>`).join("");
 
-function findRow(rows, dateStr){
+function parseDate(s){
+  if(!s)return new Date(0);
+  const dm=s.match(/^(\d{1,2})\.(\d{1,2})\.(\d{4})$/);
+  if(dm)return new Date(dm[3],dm[2]-1,dm[1]);
+  const ds=s.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+  if(ds)return new Date(ds[3],ds[2]-1,ds[1]);
+  return new Date(s);
+}
+
+function parseCSVLine(line){
+  const r=[];let cur="",inQ=false;
+  for(let i=0;i<line.length;i++){
+    if(line[i]==='"\'&&line[i+1]==='"'){cur+='"';i++;}
+    else if(line[i]==='"\'){inQ=!inQ;}
+    else if(line[i]===','&&!inQ){r.push(cur.trim());cur="";}
+    else cur+=line[i];
+  }
+  r.push(cur.trim());return r;
+}
+
+function parseNum(s){
+  if(!s||s.trim()==="")return 0;
+  let v=s.replace(/[\s\u00a0]/g,"");
+  if((v.match(/,/g)||[]).length===1&&!(v.match(/\./g)))v=v.replace(",",".");
+  else v=v.replace(/\./g,"").replace(",",".");
+  return parseFloat(v)||0;
+}
+
+function findRow(rows,dateStr){
   const t=new Date(dateStr).getTime();
   let best=null,bd=Infinity;
-  for(const r of rows){
-    const d=new Date(r[0]).getTime(),diff=t-d;
-    if(diff>=0&&diff<bd){bd=diff;best=r;}
-  }
+  for(const r of rows){const d=new Date(r[0]).getTime(),diff=t-d;if(diff>=0&&diff<bd){bd=diff;best=r;}}
   return best||rows[0];
 }
 
-// ── TABS ──────────────────────────────────────────────────────────────────
+// ════════════════════════════════════════════════════
+// TABS
+// ════════════════════════════════════════════════════
+document.querySelectorAll(".prod-tab:not(.soon)").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    document.querySelectorAll(".prod-tab").forEach(b=>{b.classList.remove("active");});
+    document.querySelectorAll(".product-panel").forEach(p=>p.classList.remove("active"));
+    btn.classList.add("active");
+    document.getElementById("prod-"+btn.dataset.prod).classList.add("active");
+  });
+});
 document.querySelectorAll(".sec-btn").forEach(btn=>{
   btn.addEventListener("click",()=>{
     const p=btn.dataset.prod;
@@ -266,209 +389,314 @@ document.querySelectorAll(".sec-btn").forEach(btn=>{
   });
 });
 
-// ── TEMA ──────────────────────────────────────────────────────────────────
+// ════════════════════════════════════════════════════
+// TEMA
+// ════════════════════════════════════════════════════
 (function(){
   const btn=document.querySelector("[data-theme-toggle]"),html=document.documentElement;
   let dark=window.matchMedia("(prefers-color-scheme:dark)").matches;
   html.setAttribute("data-theme",dark?"dark":"light");icon();
-  btn.addEventListener("click",()=>{dark=!dark;html.setAttribute("data-theme",dark?"dark":"light");icon();if(sukkerRows.length)buildSukker();});
+  btn.addEventListener("click",()=>{dark=!dark;html.setAttribute("data-theme",dark?"dark":"light");icon();rebuildAll();});
   function icon(){btn.innerHTML=dark
     ?'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>'
     :'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';}
 })();
 
-// ── DATA ──────────────────────────────────────────────────────────────────
-let sukkerRows=[], sukkerWf=null, sukkerTrend=null, sukkerDonut=null;
+// Dagens dato
+(function(){
+  const today=new Date().toISOString().slice(0,10);
+  document.getElementById("sukker-end").value=today;
+  document.getElementById("kaffe-end").value=today;
+})();
 
-function parseCSVLine(line){
-  // Håndterer komma inni anførselstegn
-  const result=[];let cur="",inQ=false;
-  for(let i=0;i<line.length;i++){
-    if(line[i]==='"'&&line[i+1]==='"'){cur+='"';i++;}
-    else if(line[i]==='"'){inQ=!inQ;}
-    else if(line[i]===','&&!inQ){result.push(cur.trim());cur="";}
-    else cur+=line[i];
-  }
-  result.push(cur.trim());
-  return result;
-}
-
-function parseNumber(s){
-  if(!s||s.trim()==="")return 0;
-  // Støtter både 1.234,56 (NO) og 1,234.56 (EN)
-  let v=s.replace(/[\s ]/g,"");
-  if(/^[0-9.,\-]+$/.test(v)){
-    if((v.match(/,/g)||[]).length===1&&(v.match(/\./g)||[]).length===0)v=v.replace(",",".");
-    else v=v.replace(/\./g,"").replace(",",".");
-  }
-  return parseFloat(v)||0;
-}
-
-async function loadSukkerData(){
-  const note=document.getElementById("sukker-note");
-  try{
-    const res=await fetch(SUKKER_URL);
-    if(!res.ok)throw new Error("HTTP "+res.status);
-    const text=await res.text();
-    const lines=text.trim().split("\n");
-    // Finn header-rad (første rad med "Dato" eller hopp over)
-    let startLine=0;
-    if(lines[0].toLowerCase().includes("dato")||lines[0].toLowerCase().includes("date"))startLine=1;
-    sukkerRows=[];
-    for(let i=startLine;i<lines.length;i++){
-      const cols=parseCSVLine(lines[i]);
-      if(cols.length<13)continue;
-      const dato=cols[0].replace(/"/g,"").trim();
-      if(!dato||dato.toLowerCase()==="dato")continue;
-      const price=parseNumber(cols[PRICE_COL]);
-      if(!price||price<=0)continue;
-      // Lagre alle kolonner som tall (indeks 0=dato, 1-12=tall)
-      const row=[dato];
-      for(let c=1;c<=12;c++)row.push(parseNumber(cols[c]));
-      sukkerRows.push(row);
-    }
-    if(sukkerRows.length===0)throw new Error("Ingen gyldige rader");
-    // Normaliser og sorter datoer stigende
-    function parseDate(s){
-      if(!s)return new Date(0);
-      // DD.MM.YYYY
-      const dm=s.match(/^(\d{1,2})\.(\d{1,2})\.(\d{4})$/);
-      if(dm)return new Date(dm[3],dm[2]-1,dm[1]);
-      // DD/MM/YYYY
-      const ds=s.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
-      if(ds)return new Date(ds[3],ds[2]-1,ds[1]);
-      // YYYY-MM-DD eller annet ISO
-      return new Date(s);
-    }
-    // Lagre normalisert dato som ISO for x-akse
-    sukkerRows=sukkerRows.map(r=>{const d=parseDate(r[0]);return[isNaN(d)?r[0]:d.toISOString().slice(0,10),...r.slice(1)];});
-    sukkerRows.sort((a,b)=>new Date(a[0])-new Date(b[0]));
-    note.textContent="✓ Google Sheets ("+sukkerRows.length+" rader)";
-    note.style.color="var(--down)";
-    console.log("Første rad:", sukkerRows[0]);
-    console.log("Siste rad:", sukkerRows[sukkerRows.length-1]);
-  }catch(e){
-    note.textContent="⚠ Feil: "+e.message+" – kontakt administrator";
-    note.style.color="var(--up)";
-    console.error("Sheets-feil:",e);
-  }
-}
-
-async function loadSukkerContent(){
-  try{
-    const res=await fetch(INNHOLD_URL);
-    if(!res.ok)throw new Error();
-    const text=await res.text();
-    const lines=text.trim().split("\n").slice(1);
-    const c={};
-    for(const l of lines){
-      const cols=parseCSVLine(l);
-      if(cols.length>=2)c[cols[0].trim()]=cols[1].trim();
-    }
-    const dato=c["analyse_dato"]||"";
-    document.getElementById("sukker-analyse-dato").textContent=dato?"Sist oppdatert: "+dato:"";
-    if(dato)document.getElementById("sukker-analyse-badge").style.display="inline";
-    document.getElementById("sukker-analyse-tekst").innerHTML=toHtml(c["analyse_tekst"]||"Analysetekst mangler i arket «innhold».");
-    document.getElementById("sukker-metodikk-tekst").innerHTML=toHtml(c["metodikk_tekst"]||"Metodikktekst mangler i arket «innhold».");
-  }catch(e){
-    console.warn("Innhold-feil:",e);
-    document.getElementById("sukker-analyse-tekst").textContent="Kunne ikke hente analysetekst.";
-    document.getElementById("sukker-metodikk-tekst").textContent="Kunne ikke hente metodikktekst.";
-  }
-}
-
-// ── KPI ───────────────────────────────────────────────────────────────────
-function buildKPIs(s,e){
-  const diff=e[PRICE_COL]-s[PRICE_COL],pct=(diff/s[PRICE_COL])*100;
-  const rawChg=e[3]-s[3], marginChg=e[10]-s[10];
+// ════════════════════════════════════════════════════
+// GENERISKE CHART-BYGGER-FUNKSJONER
+// ════════════════════════════════════════════════════
+function buildKPIs(elId, s, e, comp, priceCol){
+  const diff=e[priceCol]-s[priceCol], pct=(diff/s[priceCol])*100;
+  const rawChg=e[comp[0].col]-s[comp[0].col];
+  const marginComp=comp.find(c=>c.key.includes("Brutto"));
+  const marginChg=marginComp?(e[marginComp.col]-s[marginComp.col]):0;
   let bk="",ba=0;
-  for(const c of COMP){const ch=Math.abs(e[c.col]-s[c.col]);if(ch>ba){ba=ch;bk=c.key;}}
-  document.getElementById("sukker-kpis").innerHTML=`
-    <div class="kpi neutral"><div class="kpi-label">Pris startdato</div><div class="kpi-value">${fmt(s[PRICE_COL])} kr</div><div class="kpi-sub">${s[0]}</div></div>
-    <div class="kpi neutral"><div class="kpi-label">Pris sluttdato</div><div class="kpi-value">${fmt(e[PRICE_COL])} kr</div><div class="kpi-sub">${e[0]}</div></div>
+  for(const c of comp){const ch=Math.abs(e[c.col]-s[c.col]);if(ch>ba){ba=ch;bk=c.key;}}
+  document.getElementById(elId).innerHTML=`
+    <div class="kpi neutral"><div class="kpi-label">Pris startdato</div><div class="kpi-value">${fmt(s[priceCol])} kr</div><div class="kpi-sub">${s[0]}</div></div>
+    <div class="kpi neutral"><div class="kpi-label">Pris sluttdato</div><div class="kpi-value">${fmt(e[priceCol])} kr</div><div class="kpi-sub">${e[0]}</div></div>
     <div class="kpi ${diff>=0?"up":"down"}"><div class="kpi-label">Samlet endring</div><div class="kpi-value">${diff>=0?"+":""}${fmt(diff)} kr</div><div class="kpi-sub">${(pct>=0?"+":"")+fmt(pct,1)+" %"}</div></div>
-    <div class="kpi ${rawChg>=0?"up":"down"}"><div class="kpi-label">Råvarepris</div><div class="kpi-value">${rawChg>=0?"+":""}${fmt(rawChg)} kr</div><div class="kpi-sub">kol. D</div></div>
-    <div class="kpi ${marginChg>=0?"up":"down"}"><div class="kpi-label">Bruttofortjeneste</div><div class="kpi-value">${marginChg>=0?"+":""}${fmt(marginChg)} kr</div><div class="kpi-sub">kol. K</div></div>
-    <div class="kpi neutral"><div class="kpi-label">Største driver</div><div class="kpi-value" style="font-size:var(--text-sm);padding-top:4px">${bk}</div><div class="kpi-sub">${fmt(ba)} kr endring</div></div>`;
+    <div class="kpi ${rawChg>=0?"up":"down"}"><div class="kpi-label">Råvarepris</div><div class="kpi-value">${rawChg>=0?"+":""}${fmt(rawChg)} kr</div><div class="kpi-sub">endring</div></div>
+    <div class="kpi ${marginChg>=0?"up":"down"}"><div class="kpi-label">Bruttofortjeneste</div><div class="kpi-value">${marginChg>=0?"+":""}${fmt(marginChg)} kr</div><div class="kpi-sub">endring</div></div>
+    <div class="kpi neutral"><div class="kpi-label">Største driver</div><div class="kpi-value" style="font-size:var(--text-sm);padding-top:4px">${bk}</div><div class="kpi-sub">${fmt(ba)} kr</div></div>`;
 }
 
-// ── FOSSEFALL ─────────────────────────────────────────────────────────────
-function buildWF(s,e){
+let charts={};
+function destroyChart(id){if(charts[id]){charts[id].destroy();delete charts[id];}}
+
+function buildWF(canvasId, tbodyId, s, e, comp, priceCol){
   const mu=css("--text-muted"),bo=css("--border"),pr=css("--primary"),up=css("--up"),dn=css("--down"),tx=css("--text");
-  const labels=[s[0]],bases=[0],vals=[s[PRICE_COL]],cols=[pr],tips=[];
-  let run=s[PRICE_COL];
-  for(const c of COMP){
+  const labels=[s[0]],bases=[0],vals=[s[priceCol]],cols=[pr],tips=[];
+  let run=s[priceCol];
+  for(const c of comp){
     const chg=e[c.col]-s[c.col];tips.push(chg);labels.push(c.key);
     if(chg>=0){bases.push(run);vals.push(chg);cols.push(up);}
     else{bases.push(run+chg);vals.push(-chg);cols.push(dn);}
     run+=chg;
   }
-  labels.push(e[0]);bases.push(0);vals.push(e[PRICE_COL]);cols.push(pr);
-  const ctx=document.getElementById("sukker-wf").getContext("2d");
-  if(sukkerWf)sukkerWf.destroy();
-  sukkerWf=new Chart(ctx,{type:"bar",data:{labels,datasets:[
-    {data:bases,backgroundColor:"transparent",borderColor:"transparent",stack:"w"},
-    {data:vals,backgroundColor:cols,borderRadius:4,borderSkipped:false,stack:"w"}
-  ]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},
-    tooltip:{callbacks:{title:i=>i[0].label,label:i=>{
-      if(i.datasetIndex===0)return null;
-      const idx=i.dataIndex,n=labels.length;
-      if(idx===0)return` Utsalgspris (start): ${fmt(i.raw)} kr`;
-      if(idx===n-1)return` Utsalgspris (slutt): ${fmt(i.raw)} kr`;
-      const ch=tips[idx-1];return` Endring: ${ch>=0?"+":""}${fmt(ch)} kr`;},
-      filter:i=>i.datasetIndex!==0},
-      backgroundColor:css("--surface"),titleColor:tx,bodyColor:mu,borderColor:bo,borderWidth:1,padding:10}},
-    scales:{
-      x:{stacked:true,grid:{display:false},ticks:{color:mu,font:{size:11},maxRotation:35},border:{color:bo}},
-      y:{stacked:true,grid:{color:bo},ticks:{color:mu,font:{size:11},callback:v=>fmt(v,0)+" kr"},border:{color:bo}}
-    }}});
-  // Tabell
+  labels.push(e[0]);bases.push(0);vals.push(e[priceCol]);cols.push(pr);
+  destroyChart(canvasId);
+  charts[canvasId]=new Chart(document.getElementById(canvasId).getContext("2d"),{
+    type:"bar",data:{labels,datasets:[
+      {data:bases,backgroundColor:"transparent",borderColor:"transparent",stack:"w"},
+      {data:vals,backgroundColor:cols,borderRadius:4,borderSkipped:false,stack:"w"}
+    ]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},
+      tooltip:{callbacks:{title:i=>i[0].label,label:i=>{
+        if(i.datasetIndex===0)return null;
+        const idx=i.dataIndex,n=labels.length;
+        if(idx===0)return` Start: ${fmt(i.raw)} kr`;
+        if(idx===n-1)return` Slutt: ${fmt(i.raw)} kr`;
+        const ch=tips[idx-1];return` Endring: ${ch>=0?"+":""}${fmt(ch)} kr`;},
+        filter:i=>i.datasetIndex!==0},
+        backgroundColor:css("--surface"),titleColor:tx,bodyColor:mu,borderColor:bo,borderWidth:1,padding:10}},
+      scales:{
+        x:{stacked:true,grid:{display:false},ticks:{color:mu,font:{size:11},maxRotation:35},border:{color:bo}},
+        y:{stacked:true,grid:{color:bo},ticks:{color:mu,font:{size:11},callback:v=>fmt(v,0)+" kr"},border:{color:bo}}
+      }}});
   let rows="";
-  for(const c of COMP){
+  for(const c of comp){
     const sv=s[c.col],ev=e[c.col],chg=ev-sv,pp=sv?((chg/sv)*100):0,cls=chg>0.005?"up":chg<-0.005?"down":"flat";
     rows+=`<tr><td>${c.key}</td><td>${fmt(sv)} kr</td><td>${fmt(ev)} kr</td><td>${chg>=0?"+":""}${fmt(chg)} kr</td><td><span class="badge ${cls}">${chg>=0?"+":""}${fmt(pp,1)} %</span></td></tr>`;
   }
-  const tc=e[PRICE_COL]-s[PRICE_COL],tp=s[PRICE_COL]?(tc/s[PRICE_COL])*100:0;
-  rows+=`<tr><td>Utsalgspris (SSB)</td><td>${fmt(s[PRICE_COL])} kr</td><td>${fmt(e[PRICE_COL])} kr</td><td>${tc>=0?"+":""}${fmt(tc)} kr</td><td><span class="badge ${tc>=0?"up":"down"}">${tc>=0?"+":""}${fmt(tp,1)} %</span></td></tr>`;
-  document.getElementById("sukker-tbody").innerHTML=rows;
+  const tc=e[priceCol]-s[priceCol],tp=s[priceCol]?(tc/s[priceCol])*100:0;
+  rows+=`<tr><td>Utsalgspris (SSB)</td><td>${fmt(s[priceCol])} kr</td><td>${fmt(e[priceCol])} kr</td><td>${tc>=0?"+":""}${fmt(tc)} kr</td><td><span class="badge ${tc>=0?"up":"down"}">${tc>=0?"+":""}${fmt(tp,1)} %</span></td></tr>`;
+  document.getElementById(tbodyId).innerHTML=rows;
 }
 
-function buildTrend(){
+function buildTrend(canvasId, rows, comp, priceCol){
   const mu=css("--text-muted"),bo=css("--border"),pr=css("--primary");
-  const ctx=document.getElementById("sukker-trend").getContext("2d");
-  if(sukkerTrend)sukkerTrend.destroy();
-  sukkerTrend=new Chart(ctx,{type:"line",data:{
-    labels:sukkerRows.map(r=>r[0]),
-    datasets:[
-      {label:"Utsalgspris SSB",data:sukkerRows.map(r=>r[PRICE_COL]),borderColor:pr,backgroundColor:"transparent",pointRadius:0,tension:0.3,borderWidth:2},
-      {label:"Råvarepris NOK/kg",data:sukkerRows.map(r=>r[3]),borderColor:"#c0392b",backgroundColor:"transparent",pointRadius:0,tension:0.3,borderWidth:2,borderDash:[4,3]}
+  destroyChart(canvasId);
+  charts[canvasId]=new Chart(document.getElementById(canvasId).getContext("2d"),{
+    type:"line",data:{labels:rows.map(r=>r[0]),datasets:[
+      {label:"Utsalgspris",data:rows.map(r=>r[priceCol]),borderColor:pr,backgroundColor:"transparent",pointRadius:0,tension:0.3,borderWidth:2},
+      {label:"Råvarepris",data:rows.map(r=>r[comp[0].col]),borderColor:comp[0].color,backgroundColor:"transparent",pointRadius:0,tension:0.3,borderWidth:2,borderDash:[4,3]}
     ]},options:{responsive:true,maintainAspectRatio:false,
-    plugins:{legend:{labels:{color:mu,font:{size:11}}},tooltip:{mode:"index",intersect:false}},
-    scales:{x:{grid:{display:false},ticks:{color:mu,font:{size:10},maxRotation:0,maxTicksLimit:8},border:{color:bo}},
-      y:{grid:{color:bo},ticks:{color:mu,font:{size:10},callback:v=>fmt(v,0)+" kr"},border:{color:bo}}}}});
+      plugins:{legend:{labels:{color:mu,font:{size:11}}},tooltip:{mode:"index",intersect:false}},
+      scales:{x:{grid:{display:false},ticks:{color:mu,font:{size:10},maxRotation:0,maxTicksLimit:7},border:{color:bo}},
+        y:{grid:{color:bo},ticks:{color:mu,font:{size:10},callback:v=>fmt(v,0)+" kr"},border:{color:bo}}}}});
 }
 
-function buildDonut(e){
+function buildArea(canvasId, rows, comp){
+  const mu=css("--text-muted"),bo=css("--border");
+  const datasets=comp.map(c=>({
+    label:c.key,
+    data:rows.map(r=>r[c.col]),
+    backgroundColor:c.color+"99",
+    borderColor:c.color,
+    borderWidth:1,
+    fill:true,
+    pointRadius:0,
+    tension:0.3,
+    stack:"area"
+  }));
+  destroyChart(canvasId);
+  charts[canvasId]=new Chart(document.getElementById(canvasId).getContext("2d"),{
+    type:"line",data:{labels:rows.map(r=>r[0]),datasets},
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false},tooltip:{mode:"index",intersect:false}},
+      scales:{
+        x:{grid:{display:false},ticks:{color:mu,font:{size:10},maxRotation:0,maxTicksLimit:7},border:{color:bo}},
+        y:{stacked:true,grid:{color:bo},ticks:{color:mu,font:{size:10},callback:v=>fmt(v,0)+" kr"},border:{color:bo}}
+      }}});
+}
+
+function buildDonut(canvasId, row, comp, priceCol, customPrice){
   const mu=css("--text-muted");
-  const ctx=document.getElementById("sukker-donut").getContext("2d");
-  if(sukkerDonut)sukkerDonut.destroy();
-  sukkerDonut=new Chart(ctx,{type:"doughnut",data:{
-    labels:COMP.map(c=>c.key),
-    datasets:[{data:COMP.map(c=>e[c.col]),backgroundColor:COMP.map(c=>c.color),borderWidth:0,hoverOffset:6}]
-  },options:{responsive:true,maintainAspectRatio:false,cutout:"62%",
-    plugins:{legend:{position:"right",labels:{color:mu,font:{size:11},boxWidth:12,padding:8}},
-      tooltip:{callbacks:{label:i=>` ${fmt(i.raw)} kr (${fmt(i.raw/e[PRICE_COL]*100,1)} %)`}}}}});
+  // Beregn komponenter basert på custom-pris hvis angitt
+  let compVals, totalPrice;
+  if(customPrice && customPrice>0 && customPrice!==row[priceCol]){
+    totalPrice=customPrice;
+    const exMva=customPrice/1.15;
+    const mvaComp=comp.find(c=>c.key==="MVA");
+    const marginComp=comp.find(c=>c.key.includes("Brutto"));
+    const fixedSum=comp.filter(c=>c!==mvaComp&&c!==marginComp).reduce((s,c)=>s+row[c.col],0);
+    const newMva=exMva*0.15;
+    const newMargin=exMva-fixedSum;
+    compVals=comp.map(c=>{
+      if(c===mvaComp)return Math.max(0,newMva);
+      if(c===marginComp)return Math.max(0,newMargin);
+      return row[c.col];
+    });
+  } else {
+    totalPrice=row[priceCol];
+    compVals=comp.map(c=>row[c.col]);
+  }
+  destroyChart(canvasId);
+  charts[canvasId]=new Chart(document.getElementById(canvasId).getContext("2d"),{
+    type:"doughnut",
+    data:{labels:comp.map(c=>c.key),datasets:[{data:compVals,backgroundColor:comp.map(c=>c.color),borderWidth:0,hoverOffset:6}]},
+    options:{responsive:true,maintainAspectRatio:false,cutout:"62%",
+      plugins:{
+        legend:{position:"right",labels:{color:mu,font:{size:11},boxWidth:12,padding:8}},
+        tooltip:{callbacks:{label:i=>` ${fmt(i.raw)} kr (${fmt(i.raw/totalPrice*100,1)} %)`}}
+      }}});
 }
 
+// ════════════════════════════════════════════════════
+// INNHOLD (tekst fra Sheets)
+// ════════════════════════════════════════════════════
+const DEMO_INNHOLD = {
+  analyse_dato:"18.05.2026",
+  analyse_tekst:`Sukker er blant de mest påslåtte dagligvarene i norske butikker. I Tyskland koster en kilo sukker rundt 1 euro – det vil si omtrent 11–12 kroner. I Norge betaler du 38 kroner for det samme kiloet.
+
+Butikkjedene peker gjerne på den norske særavgiften på sukker som forklaring. Men særavgiften er på 9,50 kroner per kilo – selv om du legger til høyere norske lønninger og transport, er det langt igjen til 38 kroner. Differansen havner i stor grad som fortjeneste hos dagligvarekjedene.
+
+Det som gjør dette ekstra påfallende er utviklingen de siste årene. Råvareprisen på sukker på verdensmarkedet nådde en topp for fire til fem år siden, og har siden falt betydelig. Likevel har utsalgsprisen i norske butikker økt fra rundt 30–32 kroner per kilo til 38 kroner i dag. Prisene på råvarene har gått ned – men det merker ikke norske forbrukere.
+
+Fossefallsgrafen over viser akkurat dette: hvilke komponenter som faktisk har drevet prisveksten, og hvor mye av slutt­prisen som går til produsent, avgifter og butikkjeden.`,
+  metodikk_tekst:`Kostnadsmodellen beregner hva en kilo sukker koster å bringe fra verdensmarked til norsk butikkhylle, komponent for komponent.
+
+Råvareprisen hentes automatisk fra London-børsen (ICE Futures Europe), der hvitt sukker handles i USD per tonn. Prisen omregnes til norske kroner per kilo ved hjelp av daglig valutakurs NOK/USD.
+
+Transport til Norge dekker sjøfrakt fra produksjonsland til norsk havn. Pakking og emballasje er et estimat basert på bransjenormer for 1 kg forbrukerpakninger. Frakt og lager i Norge dekker innlands logistikk fra havn til butikk.
+
+Særavgiften på sukker er fastsatt av norske myndigheter og oppdateres manuelt. MVA er 15 prosent av prisen eksklusive MVA. Bruttofortjenesten er differansen mellom utsalgsprisen (SSB) og summen av alle øvrige komponenter – det er det faktiske beløpet som er igjen til pakker og butikkjede.`,
+  kaffe_analyse_dato:"18.05.2026",
+  kaffe_analyse_tekst:`Kaffe er verdens nest mest handlede råvare etter olje, og prisene på verdensmarkedet har de siste årene svingt kraftig. Norske forbrukere har merket dette godt: en pakke kaffe på 250 gram koster i dag over 80 kroner i mange norske butikker.
+
+Det som er interessant er sammenhengen mellom råvarepris og utsalgspris. Da kaffeprisene på New York-børsen skjøt i været i 2022–2024, fulgte norske butikkpriser raskt etter. Men da råvareprisene siden har stabilisert seg, har butikkprisene holdt seg høye. Mønsteret er det samme som for sukker: priser går raskt opp, men sakte ned.
+
+Bruttofortjenesten til butikkjedene har økt i absolutte kroner i takt med prisveksten. Smultringdiagrammet viser hvordan din lokale butikkpris brytes ned – skriv inn prisen du faktisk betalte, så ser du nøyaktig hva som gikk til råvare, transport, brenning og butikkmargin.`,
+  kaffe_metodikk_tekst:`Kostnadsmodellen for kaffe beregner prisen per 250 gram ferdig kaffe fra råbønne på verdensmarked til norsk butikkhylle.
+
+Råvareprisen hentes fra ICE Futures (New York) for arabica-kaffe (koffeinholdig standardkaffe), notert i USD per pund. Prisen omregnes til NOK per kilo via daglig valutakurs. Et viktig justeringsledd er svinnfaktoren for tørking: under tørkeprosessen mister kaffebønnene 18–20 prosent av vekten. Modellen legger derfor til et tillegg på ca. 22 prosent på råvareprisen for å kompensere for dette vekttapet, slik at prisen reflekterer kostnaden per kilo ferdig (tørket) råkaffebunn.
+
+Frakt til Norge dekker sjøfrakt fra produksjonsland (primært Brasil, Colombia og Vietnam) til norsk havn. Brenning og pakking inkluderer kostnadene ved industriell kaffebrenning samt pakking i forbrukerpakninger. Emballasje er estimert separat da kaffepakninger (ventilposer, aluminiumsfolie) er mer kostbare enn standard matvarepakninger.
+
+MVA på kaffe er 15 prosent i Norge. Bruttofortjenesten er beregnet som differansen mellom utsalgspris eksklusive MVA og summen av alle kostnadsledd. Denne reflekterer samlet margin for importør, grossist og butikk.`
+};
+
+async function loadInnhold(){
+  let c=DEMO_INNHOLD;
+  try{
+    const res=await fetch(INNHOLD_URL);
+    if(!res.ok)throw new Error();
+    const lines=(await res.text()).trim().split("
+").slice(1);
+    c={...DEMO_INNHOLD};
+    for(const l of lines){
+      const cols=parseCSVLine(l);
+      if(cols.length>=2&&cols[0])c[cols[0].trim()]=cols[1].replace(/^"|"$/g,"").replace(/""/g,'"').trim();
+    }
+  }catch(e){console.warn("Innhold-feil, bruker demo");}
+
+  // Sukker
+  const sd=c["analyse_dato"]||"";
+  document.getElementById("sukker-analyse-dato").textContent=sd?"Sist oppdatert: "+sd:"";
+  if(sd)document.getElementById("sukker-analyse-badge").style.display="inline";
+  document.getElementById("sukker-analyse-tekst").innerHTML=toHtml(c["analyse_tekst"]||"");
+  document.getElementById("sukker-metodikk-tekst").innerHTML=toHtml(c["metodikk_tekst"]||"");
+
+  // Kaffe
+  const kd=c["kaffe_analyse_dato"]||"";
+  document.getElementById("kaffe-analyse-dato").textContent=kd?"Sist oppdatert: "+kd:"";
+  if(kd)document.getElementById("kaffe-analyse-badge").style.display="inline";
+  document.getElementById("kaffe-analyse-tekst").innerHTML=toHtml(c["kaffe_analyse_tekst"]||"");
+  document.getElementById("kaffe-metodikk-tekst").innerHTML=toHtml(c["kaffe_metodikk_tekst"]||"");
+}
+
+// ════════════════════════════════════════════════════
+// DATA-LASTING
+// ════════════════════════════════════════════════════
+let sukkerRows=[], kaffeRows=[];
+
+async function loadRows(url, note, demo){
+  if(!url){
+    if(note)note.textContent="⚠ Demo-data";
+    return demo;
+  }
+  try{
+    const res=await fetch(url);
+    if(!res.ok)throw new Error("HTTP "+res.status);
+    const lines=(await res.text()).trim().split("
+");
+    let start=0;
+    if(lines[0].toLowerCase().includes("dato")||lines[0].toLowerCase().includes("date"))start=1;
+    const rows=[];
+    for(let i=start;i<lines.length;i++){
+      const cols=parseCSVLine(lines[i]);
+      if(cols.length<13)continue;
+      const dato=cols[0].replace(/"/g,"").trim();
+      if(!dato||dato.toLowerCase()==="dato")continue;
+      const row=[dato];
+      for(let c=1;c<=12;c++)row.push(parseNum(cols[c]));
+      if(row[12]<=0)continue;
+      rows.push(row);
+    }
+    if(!rows.length)throw new Error("Ingen rader");
+    rows.sort((a,b)=>{const da=parseDate(a[0]),db=parseDate(b[0]);return da-db;});
+    rows.forEach(r=>{const d=parseDate(r[0]);if(!isNaN(d))r[0]=d.toISOString().slice(0,10);});
+    if(note){note.textContent="✓ Google Sheets ("+rows.length+" rader)";note.style.color="var(--down)";}
+    return rows;
+  }catch(e){
+    if(note){note.textContent="⚠ "+e.message;note.style.color="var(--up)";}
+    return demo;
+  }
+}
+
+// ════════════════════════════════════════════════════
+// BUILD SUKKER
+// ════════════════════════════════════════════════════
 function buildSukker(){
-  if(!sukkerRows.length){console.warn("Ingen data");return;}
+  if(!sukkerRows.length)return;
   const s=findRow(sukkerRows,document.getElementById("sukker-start").value);
   const e=findRow(sukkerRows,document.getElementById("sukker-end").value);
-  buildKPIs(s,e);buildWF(s,e);buildTrend();buildDonut(e);
+  buildKPIs("sukker-kpis",s,e,SUKKER_COMP,SUKKER_PRICE);
+  buildWF("sukker-wf","sukker-tbody",s,e,SUKKER_COMP,SUKKER_PRICE);
+  buildTrend("sukker-trend",sukkerRows,SUKKER_COMP,SUKKER_PRICE);
+  buildArea("sukker-area",sukkerRows,SUKKER_COMP);
+  const cp=parseFloat(document.getElementById("sukker-custom-price").value)||0;
+  buildDonut("sukker-donut",e,SUKKER_COMP,SUKKER_PRICE,cp);
 }
-
 document.getElementById("sukker-btn").addEventListener("click",buildSukker);
-Promise.all([loadSukkerData(),loadSukkerContent()]).then(buildSukker);
+document.getElementById("sukker-custom-price").addEventListener("input",()=>{
+  if(sukkerRows.length){
+    const e=findRow(sukkerRows,document.getElementById("sukker-end").value);
+    const cp=parseFloat(document.getElementById("sukker-custom-price").value)||0;
+    buildDonut("sukker-donut",e,SUKKER_COMP,SUKKER_PRICE,cp);
+  }
+});
+
+// ════════════════════════════════════════════════════
+// BUILD KAFFE
+// ════════════════════════════════════════════════════
+function buildKaffe(){
+  if(!kaffeRows.length)return;
+  const s=findRow(kaffeRows,document.getElementById("kaffe-start").value);
+  const e=findRow(kaffeRows,document.getElementById("kaffe-end").value);
+  buildKPIs("kaffe-kpis",s,e,KAFFE_COMP,KAFFE_PRICE);
+  buildWF("kaffe-wf","kaffe-tbody",s,e,KAFFE_COMP,KAFFE_PRICE);
+  buildTrend("kaffe-trend",kaffeRows,KAFFE_COMP,KAFFE_PRICE);
+  buildArea("kaffe-area",kaffeRows,KAFFE_COMP);
+  const cp=parseFloat(document.getElementById("kaffe-custom-price").value)||0;
+  buildDonut("kaffe-donut",e,KAFFE_COMP,KAFFE_PRICE,cp);
+}
+document.getElementById("kaffe-btn").addEventListener("click",buildKaffe);
+document.getElementById("kaffe-custom-price").addEventListener("input",()=>{
+  if(kaffeRows.length){
+    const e=findRow(kaffeRows,document.getElementById("kaffe-end").value);
+    const cp=parseFloat(document.getElementById("kaffe-custom-price").value)||0;
+    buildDonut("kaffe-donut",e,KAFFE_COMP,KAFFE_PRICE,cp);
+  }
+});
+
+function rebuildAll(){buildSukker();buildKaffe();}
+
+// ════════════════════════════════════════════════════
+// INIT
+// ════════════════════════════════════════════════════
+Promise.all([
+  loadRows(SUKKER_URL, document.getElementById("sukker-note"), []).then(r=>{sukkerRows=r;}),
+  loadRows(KAFFE_URL,  document.getElementById("kaffe-note"),  KAFFE_DEMO).then(r=>{kaffeRows=r;}),
+  loadInnhold()
+]).then(()=>{buildSukker();buildKaffe();});
 </script>
 </body>
 </html>
