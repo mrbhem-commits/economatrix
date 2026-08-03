@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="no" data-theme="light">
-  
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -112,8 +111,7 @@
 </style>
 </head>
 <body>
-<!-- TODO: Legg til ny produktfane for Appelsinjuice ved å kopiere Kaffe-blokken og bytte ids/tekster. -->
-
+<!-- Patched: added Appelsinjuice to existing webside -->
 <div class="app">
 <header>
   <div class="logo">
@@ -137,6 +135,7 @@
 <div class="product-tabs" role="tablist">
   <button class="prod-tab active" role="tab" data-prod="sukker">🍬 Sukker</button>
   <button class="prod-tab" role="tab" data-prod="kaffe">☕ Kaffe</button>
+  <button class="prod-tab" role="tab" data-prod="appelsinjuice">🍊 Appelsinjuice</button>
   <button class="prod-tab soon" disabled>⛽ Bensin <small style="font-size:.75em;opacity:.7">(snart)</small></button>
 </div>
 
@@ -183,7 +182,7 @@
       <div class="card">
         <div class="card-title">Kostnadssammensetning</div>
         <div class="price-input-card">
-          <div><label for="sukker-custom-price">Din butikkpris (kr/kg)</label><div class="price-hint">Standard: SSB-pris</div></div>
+          <div><label for="sukker-custom-price">Din butikkpris (kr/liter)</label><div class="price-hint">Standard: SSB-pris</div></div>
           <input type="number" id="sukker-custom-price" placeholder="f.eks. 45" min="1" max="200" step="0.5">
         </div>
         <div class="chart-wrap" style="height:220px"><canvas id="sukker-donut"></canvas></div>
@@ -192,14 +191,14 @@
   </div>
   <div class="sec-panel" id="sukker-analyse">
     <div class="card">
-      <div class="card-title">Analyse – Sukker</div>
+      <div class="card-title">Analyse – Appelsinjuice</div>
       <div class="text-meta"><span id="sukker-analyse-dato"></span><span id="sukker-analyse-badge" class="text-badge" style="display:none">Oppdatert</span></div>
       <div class="prose" id="sukker-analyse-tekst"><div class="skeleton" style="width:100%"></div><div class="skeleton" style="width:88%"></div><div class="skeleton" style="width:55%"></div></div>
     </div>
   </div>
   <div class="sec-panel" id="sukker-metodikk">
     <div class="card">
-      <div class="card-title">Metodikk – Sukker</div>
+      <div class="card-title">Metodikk – Appelsinjuice</div>
       <div class="prose" id="sukker-metodikk-tekst"><div class="skeleton" style="width:100%"></div><div class="skeleton" style="width:82%"></div><div class="skeleton" style="width:55%"></div></div>
     </div>
   </div>
@@ -248,7 +247,7 @@
       <div class="card">
         <div class="card-title">Kostnadssammensetning</div>
         <div class="price-input-card">
-          <div><label for="kaffe-custom-price">Din butikkpris (kr/250g)</label><div class="price-hint">Standard: SSB-pris</div></div>
+          <div><label for="kaffe-custom-price">Din butikkpris (kr/liter)</label><div class="price-hint">Standard: SSB-pris</div></div>
           <input type="number" id="kaffe-custom-price" placeholder="f.eks. 60" min="1" max="500" step="0.5">
         </div>
         <div class="chart-wrap" style="height:220px"><canvas id="kaffe-donut"></canvas></div>
@@ -257,14 +256,14 @@
   </div>
   <div class="sec-panel" id="kaffe-analyse">
     <div class="card">
-      <div class="card-title">Analyse – Kaffe</div>
+      <div class="card-title">Analyse – Appelsinjuice</div>
       <div class="text-meta"><span id="kaffe-analyse-dato"></span><span id="kaffe-analyse-badge" class="text-badge" style="display:none">Oppdatert</span></div>
       <div class="prose" id="kaffe-analyse-tekst"><div class="skeleton" style="width:100%"></div><div class="skeleton" style="width:88%"></div><div class="skeleton" style="width:55%"></div></div>
     </div>
   </div>
   <div class="sec-panel" id="kaffe-metodikk">
     <div class="card">
-      <div class="card-title">Metodikk – Kaffe</div>
+      <div class="card-title">Metodikk – Appelsinjuice</div>
       <div class="prose" id="kaffe-metodikk-tekst"><div class="skeleton" style="width:100%"></div><div class="skeleton" style="width:82%"></div><div class="skeleton" style="width:55%"></div></div>
     </div>
   </div>
@@ -698,5 +697,36 @@ Promise.all([
   loadInnhold()
 ]).then(()=>{buildSukker();buildKaffe();});
 </script>
+
+<script>window.APPELSINJUICE_META = {"sheet": "AppelsinJuice", "date_col": "V", "component_cols": ["W", "X", "Y", "Z", "AA", "AB", "AC", "AD"], "ratio_l_per_kg_concentrate": 8.38, "preview": [{"date": "2026-04-09", "cons_price": 40.8768581, "finished_price": 4.877906694, "mix": 1.2, "freight": 0.7, "pack": 1.8, "inland": 0.8577906694, "margin": 16.60104365, "vat": 3.905511152}, {"date": "2026-04-10", "cons_price": 41.33722961, "finished_price": 4.932843629, "mix": 1.2, "freight": 0.7, "pack": 1.8, "inland": 0.8632843629, "margin": 16.54061302, "vat": 3.905511152}, {"date": "2026-04-11", "cons_price": 41.33722961, "finished_price": 4.932843629, "mix": 1.2, "freight": 0.7, "pack": 1.8, "inland": 0.8632843629, "margin": 16.54061302, "vat": 3.905511152}, {"date": "2026-04-12", "cons_price": 41.33722961, "finished_price": 4.932843629, "mix": 1.2, "freight": 0.7, "pack": 1.8, "inland": 0.8632843629, "margin": 16.54061302, "vat": 3.905511152}, {"date": "2026-04-13", "cons_price": 41.09836925, "finished_price": 4.904340006, "mix": 1.2, "freight": 0.7, "pack": 1.8, "inland": 0.8604340006, "margin": 16.57196701, "vat": 3.905511152}]};</script>
+
+<script>window.APPELSINJUICE_META = {"sheet": "AppelsinJuice", "date_col": "V", "component_cols": ["W", "X", "Y", "Z", "AA", "AB", "AC", "AD"], "ratio_l_per_kg_concentrate": 8.38, "rows": [{"date": "Dato", "cons_price": "Markedspris konsentrat i NOK/kg", "finished_price": "Pris utblandet konsentrat (NOK/liter ferdig juice)", "mix": "Blanding med vann og tapping", "freight": "Frakt til Norge", "pack": "Pakking & Emballasje", "inland": "Inland Logistics", "margin": "Margin", "vat": "MVA"}, {"date": "2026-08-03", "cons_price": 32.57660656, "finished_price": 3.887423217, "mix": 1.2, "freight": 0.7, "pack": 1.8, "inland": 0.7587423217, "margin": 17.74079098, "vat": 3.913043478}, {"date": "2026-08-02", "cons_price": 32.5567936, "finished_price": 3.885058902, "mix": 1.2, "freight": 0.7, "pack": 1.8, "inland": 0.7585058902, "margin": 17.74339173, "vat": 3.913043478}, {"date": "2026-08-01", "cons_price": 32.5567936, "finished_price": 3.885058902, "mix": 1.2, "freight": 0.7, "pack": 1.8, "inland": 0.7585058902, "margin": 17.74339173, "vat": 3.913043478}, {"date": "2026-07-31", "cons_price": 32.5567936, "finished_price": 3.885058902, "mix": 1.2, "freight": 0.7, "pack": 1.8, "inland": 0.7585058902, "margin": 17.74339173, "vat": 3.913043478}, {"date": "2026-07-30", "cons_price": 30.87778633, "finished_price": 3.68470004, "mix": 1.2, "freight": 0.7, "pack": 1.8, "inland": 0.738470004, "margin": 17.96378648, "vat": 3.913043478}, {"date": "2026-07-29", "cons_price": 29.44503674, "finished_price": 3.513727535, "mix": 1.2, "freight": 0.7, "pack": 1.8, "inland": 0.7213727535, "margin": 18.15185623, "vat": 3.913043478}, {"date": "2026-07-28", "cons_price": 29.14356927, "finished_price": 3.477752896, "mix": 1.2, "freight": 0.7, "pack": 1.8, "inland": 0.7177752896, "margin": 18.19142834, "vat": 3.913043478}, {"date": "2026-07-27", "cons_price": 29.86186256, "finished_price": 3.563468086, "mix": 1.2, "freight": 0.7, "pack": 1.8, "inland": 0.7263468086, "margin": 18.09714163, "vat": 3.913043478}, {"date": "2026-07-26", "cons_price": 30.03863455, "finished_price": 3.584562596, "mix": 1.2, "freight": 0.7, "pack": 1.8, "inland": 0.7284562596, "margin": 18.07393767, "vat": 3.913043478}, {"date": "2026-07-25", "cons_price": 30.03863455, "finished_price": 3.584562596, "mix": 1.2, "freight": 0.7, "pack": 1.8, "inland": 0.7284562596, "margin": 18.07393767, "vat": 3.913043478}, {"date": "2026-07-24", "cons_price": 30.03863455, "finished_price": 3.584562596, "mix": 1.2, "freight": 0.7, "pack": 1.8, "inland": 0.7284562596, "margin": 18.07393767, "vat": 3.913043478}, {"date": "2026-07-23", "cons_price": 31.04083061, "finished_price": 3.704156397, "mix": 1.2, "freight": 0.7, "pack": 1.8, "inland": 0.7404156397, "margin": 17.94238448, "vat": 3.913043478}, {"date": "2026-07-22", "cons_price": 31.91510222, "finished_price": 3.808484752, "mix": 1.2, "freight": 0.7, "pack": 1.8, "inland": 0.7508484752, "margin": 17.82762329, "vat": 3.913043478}, {"date": "2026-07-21", "cons_price": 30.65470903, "finished_price": 3.658079837, "mix": 1.2, "freight": 0.7, "pack": 1.8, "inland": 0.7358079837, "margin": 17.9930687, "vat": 3.913043478}, {"date": "2026-07-20", "cons_price": 31.33992825, "finished_price": 3.73984824, "mix": 1.2, "freight": 0.7, "pack": 1.8, "inland": 0.743984824, "margin": 17.90312346, "vat": 3.913043478}, {"date": "2026-07-19", "cons_price": 29.44660366, "finished_price": 3.513914518, "mix": 1.2, "freight": 0.7, "pack": 1.8, "inland": 0.7213914518, "margin": 18.15165055, "vat": 3.913043478}, {"date": "2026-07-18", "cons_price": 29.44660366, "finished_price": 3.513914518, "mix": 1.2, "freight": 0.7, "pack": 1.8, "inland": 0.7213914518, "margin": 18.15165055, "vat": 3.913043478}, {"date": "2026-07-17", "cons_price": 29.44660366, "finished_price": 3.513914518, "mix": 1.2, "freight": 0.7, "pack": 1.8, "inland": 0.7213914518, "margin": 18.15165055, "vat": 3.913043478}, {"date": "2026-07-16", "cons_price": 28.46424889, "finished_price": 3.396688412, "mix": 1.2, "freight": 0.7, "pack": 1.8, "inland": 0.7096688412, "margin": 18.28059927, "vat": 3.913043478}]};</script>
 </body>
-</html>
+</html><!-- ═══════════ APPELSINJUICE ═══════════ -->
+<div class="product-panel" id="prod-appelsinjuice">
+  <div class="section-nav">
+    <button class="sec-btn active" data-prod="appelsinjuice" data-sec="graf">Graf</button>
+    <button class="sec-btn" data-prod="appelsinjuice" data-sec="analyse">Analyse</button>
+    <button class="sec-btn" data-prod="appelsinjuice" data-sec="metodikk">Metodikk</button>
+  </div>
+
+  <div class="sec-panel active" id="appelsinjuice-graf">
+    <div class="controls">
+      <div><label for="appelsinjuice-start">Startdato</label><input type="date" id="appelsinjuice-start"></div>
+      <div><label for="appelsinjuice-end">Sluttdato</label><input type="date" id="appelsinjuice-end"></div>
+      <button class="btn-primary" id="appelsinjuice-refresh">Oppdater graf</button>
+      <span class="status" id="appelsinjuice-status">Laster...</span>
+    </div>
+    <div class="grid-2">
+      <div class="card chart-card"><h3>Fossefallsanalyse – prisendring per komponent</h3><p class="muted">Første stolpe = utsalgspris på startdato. Midtstolpene viser endringen per komponent. Siste stolpe = utsalgspris på sluttdato.</p><div class="chart-wrap"><canvas id="appelsinjuice-wf"></canvas></div></div>
+      <div class="card chart-card"><div class="kpis" id="appelsinjuice-kpis"></div><div class="table-wrap"><table><thead><tr><th>Komponent</th><th>Start (kr)</th><th>Slutt (kr)</th><th>Endring (kr)</th><th>Endring (%)</th></tr></thead><tbody id="appelsinjuice-table"></tbody></table></div></div>
+    </div>
+    <div class="grid-2" style="margin-top:var(--sp5)">
+      <div class="card chart-card"><h3>Pristrend</h3><p class="muted">Utsalgspris vs. råvarepris over tid</p><div class="chart-wrap"><canvas id="appelsinjuice-trend"></canvas></div></div>
+      <div class="card chart-card"><h3>Kostnadsutvikling</h3><p class="muted">Stablet areal – alle komponenter over tid</p><div class="chart-wrap"><canvas id="appelsinjuice-area"></canvas></div></div>
+    </div>
+    <div class="card chart-card" style="margin-top:var(--sp5)"><h3>Kostnadssammensetning</h3><p class="muted">Din butikkpris (kr/liter)</p><div class="chart-wrap"><canvas id="appelsinjuice-donut"></canvas></div></div>
+  </div>
+  <div class="sec-panel" id="appelsinjuice-analyse"><div class="card"><div class="card-title">Analyse – Appelsinjuice</div><p class="muted">Appelsinjuice viser en kraftig prisoppgang i råvaren, etterfulgt av fallende råvarepriser. Samtidig holder dagligvareprisene i Norge seg høyere en stund, fordi prisfall i verdikjeden ofte kommer med forsinkelse.</p><div class="text-meta"><span id="appelsinjuice-analyse-dato"></span><span id="appelsinjuice-analyse-badge" class="text-badge" style="display:none">Oppdatert</span></div></div></div>
+  <div class="sec-panel" id="appelsinjuice-metodikk"><div class="card"><div class="card-title">Metodikk – Appelsinjuice</div><p class="muted">Appelsinjuice bygger på appelsinjuicekonsentrat fra verdensmarkedene. Modellen tar utgangspunkt i at 1 kg konsentrat blir til 8.38 liter ferdig juice, og følger ellers samme logikk som sukker, men uten særavgift.</p><div class="prose" id="appelsinjuice-metodikk-tekst"></div></div></div>
+</div>
