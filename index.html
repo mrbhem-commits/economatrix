@@ -263,7 +263,11 @@
   <div class="sec-panel" id="kaffe-metodikk">
     <div class="card">
       <div class="card-title">Metodikk – Kaffe</div>
-      <div class="prose" id="kaffe-metodikk-tekst"><div class="skeleton" style="width:100%"></div><div class="skeleton" style="width:82%<!-- ═══════════ APPELSINJUICE ═══════════ -->
+      <div class="prose" id="kaffe-metodikk-tekst"><div class="skeleton" style="width:100%"></div><div class="skeleton" style="width:82%"></div><div class="skeleton" style="width:55%"></div></div>
+    </div>
+  </div>
+</div>
+<!-- Appelsinjuice -->
 <div class="product-panel" id="prod-appelsinjuice">
   <div class="section-nav">
     <button class="sec-btn active" data-prod="appelsinjuice" data-sec="graf">Graf</button>
@@ -328,10 +332,6 @@
   </div>
 </div>
 
-"></div><div class="skeleton" style="width:55%"></div></div>
-    </div>
-  </div>
-</div>
 
 <footer>Prisinnsyn · Clearfjord · Kilde: SSB, ICE Futures · clearfjord.com</footer>
 </div>
@@ -904,6 +904,7 @@ const APPELSINJUICE_DEMO = [
   ["2026-08-03", 3.8874, 1.2, 0.7, 1.8, 0.7587, 17.7408, 3.913, 30.0]
 ];
 
+
 // ════════════════════════════════════════════════════
 // UTILS
 // ════════════════════════════════════════════════════
@@ -1282,7 +1283,6 @@ document.getElementById("kaffe-custom-price").addEventListener("input",()=>{
     buildDonut("kaffe-donut",e,KAFFE_COMP,KAFFE_PRICE,cp);
   }
 });
-
 
 function buildAppelsinjuice(){
   if(!appelsinjuiceRows.length)return;
